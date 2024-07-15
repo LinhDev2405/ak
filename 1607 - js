@@ -1,0 +1,64 @@
+document.addEventListener("DOMContentLoaded", () => {
+	const form = document.getElementById("contact__form");
+
+	form.addEventListener("submit", function (event) {
+		event.preventDefault();
+		const inputs = form.querySelectorAll("[data-rules]");
+		let isValid = true;
+
+		inputs.forEach((input) => {
+			const rules = input.getAttribute("data-rules").split("|");
+			const errorElement = input.nextElementSibling;
+			const errorMessage = validateInput(input, rules);
+
+			errorElement.innerText = errorMessage || "";
+
+			if (errorMessage) {
+				isValid = false;
+			}
+
+			input.addEventListener("input", () => {
+				const newErrorMessage = validateInput(input, rules);
+				errorElement.innerText = newErrorMessage || "";
+			});
+		});
+
+		if (isValid) {
+			form.submit();
+		}
+	});
+
+	function validateInput(input, rules) {
+		const value = input.value.trim();
+
+		for (let rule of rules) {
+			if (rule === "required" && value === "") {
+				return "この項目は必須です。";
+			}
+
+			if (rule === "email" && !validateEmail(value)) {
+				return "無効な電子メール";
+			}
+
+			if (rule.startsWith("max:") && value.length !== parseInt(rule.split(":")[1])) {
+				return `電話番号は ${rule.split(":")[1]} 桁である必要があります`;
+			}
+
+			if (rule === "number" && !validateNumber(value)) {
+				return "数字を入力してください";
+			}
+		}
+
+		return null;
+	}
+
+	function validateEmail(email) {
+		const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return re.test(String(email).toLowerCase());
+	}
+
+	function validateNumber(number) {
+		const re = /^[0-9]+$/;
+		return re.test(number);
+	}
+});
