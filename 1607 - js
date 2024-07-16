@@ -40,11 +40,11 @@ document.addEventListener("DOMContentLoaded", () => {
 				return "無効な電子メール";
 			}
 
-			if (rule.startsWith("max:") && value.length !== parseInt(rule.split(":")[1])) {
+			if (rule.startsWith("max:") && !validatePhoneNumberLength(value, parseInt(rule.split(":")[1]))) {
 				return `電話番号は ${rule.split(":")[1]} 桁である必要があります`;
 			}
 
-			if (rule === "number" && !validateNumber(value)) {
+			if (rule === "number" && !validatePhoneNumber(value)) {
 				return "数字を入力してください";
 			}
 		}
@@ -57,8 +57,13 @@ document.addEventListener("DOMContentLoaded", () => {
 		return re.test(String(email).toLowerCase());
 	}
 
-	function validateNumber(number) {
-		const re = /^[0-9]+$/;
-		return re.test(number);
+	function validatePhoneNumber(phoneNumber) {
+		const re = /^(\d{2}-\d{4}-\d{4}|\d{3}-\d{4}-\d{4})$/;
+		return re.test(phoneNumber);
+	}
+
+	function validatePhoneNumberLength(phoneNumber, maxLength) {
+		const stripped = phoneNumber.replace(/-/g, "");
+		return stripped.length <= maxLength;
 	}
 });
