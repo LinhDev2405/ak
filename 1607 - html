@@ -35,7 +35,7 @@
 					</h3>
 				</div>
 				<div class="l-container-w640">
-					<form action="" class="c-form" id="contact__form">
+					<form action="" class="c-form" id="contact__form" novalidate>
 						<div class="c-form__item">
 							<div class="c-form__item--left">
 								<p class="c-form__text">任意</p>
