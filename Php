@@ -1,0 +1,39 @@
+<?php
+function generateBreadcrumb() {
+    // Lấy URL hiện tại
+    $currentUrl = $_SERVER['REQUEST_URI'];
+    // Tách URL thành các phần
+    $urlParts = explode('/', trim($currentUrl, '/'));
+    
+    // Mảng để lưu các phần của breadcrumb
+    $breadcrumb = [];
+    
+    // Thêm phần tử "Home"
+    $breadcrumb[] = '<li class="breadcrumb-item"><a href="/">Home</a></li>';
+    
+    // Biến lưu đường dẫn tích lũy
+    $path = '';
+    
+    // Tạo breadcrumb từ các phần của URL
+    $totalParts = count($urlParts);
+    foreach ($urlParts as $index => $part) {
+        $path .= '/' . $part;
+        // Nếu là phần tử cuối hoặc chỉ có một phần tử thì không cho click
+        if ($index == $totalParts - 1 || $totalParts == 1) {
+            $breadcrumb[] = '<li class="breadcrumb-item"><span>' . ucfirst($part) . '</span></li>';
+        } else {
+            $breadcrumb[] = '<li class="breadcrumb-item"><a href="' . $path . '">' . ucfirst($part) . '</a></li>';
+        }
+    }
+    
+    // Gộp các phần lại thành chuỗi HTML
+    $breadcrumbHtml = '<nav aria-label="breadcrumb"><ol class="breadcrumb">';
+    $breadcrumbHtml .= implode('', $breadcrumb);
+    $breadcrumbHtml .= '</ol></nav>';
+    
+    return $breadcrumbHtml;
+}
+
+// Ví dụ sử dụng
+echo generateBreadcrumb();
+?>
