@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Breadcrumb Example</title>
+    <style>
+        .breadcrumb {
+            list-style: none;
+            display: flex;
+            padding: 0;
+            margin: 0;
+        }
+
+        .breadcrumb-item {
+            margin-right: 0.5rem;
+        }
+
+        .breadcrumb-item a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .breadcrumb-item a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb-item + .breadcrumb-item:before {
+            content: ">";
+            margin-right: 0.5rem;
+        }
+
+        .breadcrumb-item span {
+            color: #6c757d; /* Màu xám cho phần tử không thể click */
+        }
+    </style>
+</head>
+<body>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" id="breadcrumb"></ol>
+    </nav>
+
+    <script>
+        function generateBreadcrumb() {
+            // Lấy URL hiện tại
+            const currentUrl = window.location.pathname;
+            // Tách URL thành các phần
+            const urlParts = currentUrl.split('/').filter(part => part.length > 0);
+
+            // Mảng để lưu các phần của breadcrumb
+            const breadcrumb = [];
+
+            // Thêm phần tử "Home"
+            breadcrumb.push('<li class="breadcrumb-item"><a href="/">Home</a></li>');
+
+            // Biến lưu đường dẫn tích lũy
+            let path = '';
+
+            // Tạo breadcrumb từ các phần của URL
+            const totalParts = urlParts.length;
+            urlParts.forEach((part, index) => {
+                path += '/' + part;
+                // Nếu là phần tử cuối hoặc chỉ có một phần tử thì không cho click
+                if (index === totalParts - 1 || totalParts === 1) {
+                    breadcrumb.push('<li class="breadcrumb-item"><span>' + part.charAt(0).toUpperCase() + part.slice(1) + '</span></li>');
+                } else {
+                    breadcrumb.push('<li class="breadcrumb-item"><a href="' + path + '">' + part.charAt(0).toUpperCase() + part.slice(1) + '</a></li>');
+                }
+            });
+
+            // Gộp các phần lại thành chuỗi HTML
+            const breadcrumbHtml = breadcrumb.join('');
+            document.getElementById('breadcrumb').innerHTML = breadcrumbHtml;
+        }
+
+        // Gọi hàm để tạo breadcrumb
+        generateBreadcrumb();
+    </script>
+</body>
+</html>
