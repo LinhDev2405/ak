@@ -1,78 +1,92 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Breadcrumb Example</title>
-    <style>
-        .breadcrumb {
-            list-style: none;
-            display: flex;
-            padding: 0;
-            margin: 0;
-        }
+const items = [
+	{ id: 1, name: "Item 1", categories: [1, 2] },
+	{ id: 2, name: "Item 2", categories: [2, 3] },
+	{ id: 3, name: "Item 3", categories: [3, 4] },
+	{ id: 4, name: "Item 4", categories: [4, 1] },
+	{ id: 5, name: "Item 5", categories: [1, 3] },
+	{ id: 6, name: "Item 6", categories: [2, 4] },
+	{ id: 7, name: "Item 7", categories: [3, 1] },
+	{ id: 8, name: "Item 8", categories: [4, 2] },
+	{ id: 9, name: "Item 9", categories: [1, 4] },
+	{ id: 10, name: "Item 10", categories: [2, 3] },
+	{ id: 11, name: "Item 11", categories: [3, 4] },
+	{ id: 12, name: "Item 12", categories: [4, 1] },
+	{ id: 13, name: "Item 13", categories: [1, 2] },
+	{ id: 14, name: "Item 14", categories: [2, 3] },
+	{ id: 15, name: "Item 15", categories: [3, 4] },
+	{ id: 16, name: "Item 16", categories: [4, 1] },
+	{ id: 17, name: "Item 17", categories: [1, 3] },
+	{ id: 18, name: "Item 18", categories: [2, 4] },
+	{ id: 19, name: "Item 19", categories: [3, 1] },
+	{ id: 20, name: "Item 20", categories: [4, 2] },
+];
 
-        .breadcrumb-item {
-            margin-right: 0.5rem;
-        }
+const itemsPerPage = 5;
+let currentPage = 1;
+let currentTab = 0;
 
-        .breadcrumb-item a {
-            text-decoration: none;
-            color: #007bff;
-        }
+document.addEventListener("DOMContentLoaded", () => {
+	const urlParams = new URLSearchParams(window.location.search);
+	currentPage = parseInt(urlParams.get("page")) || 1;
+	currentTab = parseInt(urlParams.get("tab")) || 0;
 
-        .breadcrumb-item a:hover {
-            text-decoration: underline;
-        }
+	document.querySelectorAll(".tab-button").forEach((button) => {
+		button.addEventListener("click", () => {
+			currentTab = parseInt(button.getAttribute("data-tab"));
+			currentPage = 1;
+			updateURL();
+			renderItems();
+		});
+	});
 
-        .breadcrumb-item + .breadcrumb-item:before {
-            content: ">";
-            margin-right: 0.5rem;
-        }
+	renderItems();
+});
 
-        .breadcrumb-item span {
-            color: #6c757d; /* Màu xám cho phần tử không thể click */
-        }
-    </style>
-</head>
-<body>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb" id="breadcrumb"></ol>
-    </nav>
+function renderItems() {
+	const filteredItems =
+		currentTab === 0 ? items : items.filter((item) => item.categories.includes(currentTab));
 
-    <script>
-        function generateBreadcrumb() {
-            // Lấy URL hiện tại
-            const currentUrl = window.location.pathname;
-            // Tách URL thành các phần
-            const urlParts = currentUrl.split('/').filter(part => part.length > 0);
+	const startIndex = (currentPage - 1) * itemsPerPage;
+	const paginatedItems = filteredItems.slice(startIndex, startIndex + itemsPerPage);
 
-            // Mảng để lưu các phần của breadcrumb
-            const breadcrumb = [];
+	const itemList = document.getElementById("item-list");
+	itemList.innerHTML = paginatedItems.map((item) => `<li>${item.name}</li>`).join("");
 
-            // Thêm phần tử "Home"
-            breadcrumb.push('<li class="breadcrumb-item"><a href="/">Home</a></li>');
+	renderPagination(filteredItems.length);
+	updateActiveTab();
+}
 
-            // Biến lưu đường dẫn tích lũy
-            let path = '';
+function updateActiveTab() {
+	document.querySelectorAll(".tab-button").forEach((button) => {
+		button.classList.toggle("active", parseInt(button.getAttribute("data-tab")) === currentTab);
+	});
+}
 
-            // Tạo breadcrumb từ các phần của URL
-            const totalParts = urlParts.length;
-            urlParts.forEach((part, index) => {
-                path += '/' + part;
-                // Nếu là phần tử cuối hoặc chỉ có một phần tử thì không cho click
-                if (index === totalParts - 1 || totalParts === 1) {
-                    breadcrumb.push('<li class="breadcrumb-item"><span>' + part.charAt(0).toUpperCase() + part.slice(1) + '</span></li>');
-                } else {
-                    breadcrumb.push('<li class="breadcrumb-item"><a href="' + path + '">' + part.charAt(0).toUpperCase() + part.slice(1) + '</a></li>');
-                }
-            });
+function updateURL() {
+	const url = new URL(window.location);
+	url.searchParams.set("page", currentPage);
+	if (currentTab > 0) url.searchParams.set("tab", currentTab);
+	window.history.pushState({}, "", url);
+}
 
-            // Gộp các phần lại thành chuỗi HTML
-            const breadcrumbHtml = breadcrumb.join('');
-            document.getElementById('breadcrumb').innerHTML = breadcrumbHtml;
-        }
+function renderPagination(totalItems) {
+	const totalPages = Math.ceil(totalItems / itemsPerPage);
+	const pagination = document.getElementById("pagination");
+	pagination.innerHTML = "";
 
-        // Gọi hàm để tạo breadcrumb
-        generateBreadcrumb();
-    </script>
-</body>
-</html>
+	if (totalPages > 1) {
+		pagination.innerHTML += getPageLink(totalPages, currentPage - 1, "Previous");
+		for (let i = 1; i <= totalPages; i++) {
+			pagination.innerHTML += getPageLink(totalPages, i, i, i === currentPage);
+		}
+		pagination.innerHTML += getPageLink(totalPages, currentPage + 1, "Next");
+	}
+}
+
+function getPageLink(totalPages, pageNumber, text, isActive = false) {
+	return `<a href="?page=${pageNumber}
+	${currentTab > 0 ? `&tab=${currentTab}` : ""}" 
+	class="link ${isActive ? "active" : ""} ${
+		pageNumber < 1 || pageNumber > totalPages ? "hidden" : ""
+	}">${text}</a>`;
+}
