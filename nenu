@@ -1,0 +1,1086 @@
+const newsArr = [
+	{
+		date: "2019.03.08",
+		title: "2020年「新卒会社説明会」日程について",
+		url: "./new-single.html",
+	},
+	{
+		date: "2019.03.07",
+		title: "愛work Challenge！2020 合同会社説明会について",
+		url: "./new-single.html",
+	},
+	{
+		date: "2019.03.06",
+		title: "八幡浜みなっと みなと交流館館長の経営者インタビューを更新しました",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "新しい社員インタビューを更新しました",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "新しい社員インタビューを更新しました",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "新しい社員インタビューを更新しました",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "新しい社員インタビューを更新しました",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "新しい社員インタビューを更新しました",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "新しい社員インタビューを更新しました",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "新しい社員インタビューを更新しました",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "新しい社員インタビューを更新しました",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "新しい社員インタビューを更新しました",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+	{
+		date: "2018.10.15",
+		title: "テキストテキストテキストテキストテキストテキストテキストテキストテキスト",
+		url: "./new-single.html",
+	},
+];
+
+const companyArr = [
+	{
+		avatar: "info-1.jpg",
+		company: "株式会社悠遊社",
+		address: "愛媛県松山市",
+		advice: '「とてもやりがいのある仕事です。<br class="is-pc"> 若い人こそ飛び込んで来てください。」',
+		role: "介護・福祉",
+	},
+	{
+		avatar: "info-2.jpg",
+		company: "やまと印刷株式会社",
+		address: "愛媛県四国中央市",
+		advice: 'やりたいことを汲んでくれるから<br class="is-pc">精一杯いろいろなことに挑戦できる',
+		role: "印刷",
+	},
+	{
+		avatar: "info-3.jpg",
+		company: "北辰会グループ",
+		address: "愛媛県西条市",
+		advice: 'コミュニケーションでつながり深める<br class="is-pc">「気づき」を成長の原動力に',
+		role: "介護・福祉",
+	},
+	{
+		avatar: "info-4.jpg",
+		company: "株式会社フロントエンド",
+		address: "愛媛県松山市",
+		advice: 'その会社で何をするのかより、<br class="is-pc">誰と一緒に働きたいかで選んだ',
+		role: "ソフトウェア",
+	},
+	{
+		avatar: "info-5.jpg",
+		company: "株式会社フジ",
+		address: "愛媛県松山市",
+		advice: '採用担当に積極的にアプローチ<br class="is-pc">第一志望入社を叶え、現場で活躍中',
+		role: "スーパーマーケット",
+	},
+	{
+		avatar: "info-6.jpg",
+		company: "株式会社フジファミリーフーズ",
+		address: "愛媛県松山市",
+		advice: 'お客様が満足するサービス提供を<br class="is-pc">目指しスタッフ全員が連携し、<br class="is-pc">臨機応変な対応を',
+		role: "外食",
+	},
+	{
+		avatar: "info-7.jpg",
+		company: "株式会社アート不動産",
+		address: "愛媛県松山市",
+		advice: '若い社員も意見を言える風通しの良さ。<br class="is-pc">就活では会社の雰囲気を最優先',
+		role: "不動産",
+	},
+	{
+		avatar: "info-8.jpg",
+		company: "株式会社ありがとうサービス",
+		address: "愛媛県今治市",
+		advice: '自分の好きなことを仕事に<br class="is-pc">仲間とともに日々成長を実感',
+		role: "専門店",
+	},
+	{
+		avatar: "info-9.jpg",
+		company: "株式会社イオタオーエーシステム",
+		address: "愛媛県松山市",
+		advice: '顧客とのコミュニケーションを大切に、<br class="is-pc">女性初のエンジニアとして成長を続ける',
+		role: "通信・インフラ",
+	},
+	{
+		avatar: "info-1.jpg",
+		company: "株式会社悠遊社",
+		address: "愛媛県松山市",
+		advice: '「とてもやりがいのある仕事です。<br class="is-pc"> 若い人こそ飛び込んで来てください。」',
+		role: "介護・福祉",
+	},
+	{
+		avatar: "info-2.jpg",
+		company: "やまと印刷株式会社",
+		address: "愛媛県四国中央市",
+		advice: 'やりたいことを汲んでくれるから<br class="is-pc">精一杯いろいろなことに挑戦できる',
+		role: "印刷",
+	},
+	{
+		avatar: "info-3.jpg",
+		company: "北辰会グループ",
+		address: "愛媛県西条市",
+		advice: 'コミュニケーションでつながり深める<br class="is-pc">「気づき」を成長の原動力に',
+		role: "介護・福祉",
+	},
+	{
+		avatar: "info-4.jpg",
+		company: "株式会社フロントエンド",
+		address: "愛媛県松山市",
+		advice: 'その会社で何をするのかより、<br class="is-pc">誰と一緒に働きたいかで選んだ',
+		role: "ソフトウェア",
+	},
+	{
+		avatar: "info-5.jpg",
+		company: "株式会社フジ",
+		address: "愛媛県松山市",
+		advice: '採用担当に積極的にアプローチ<br class="is-pc">第一志望入社を叶え、現場で活躍中',
+		role: "スーパーマーケット",
+	},
+	{
+		avatar: "info-6.jpg",
+		company: "株式会社フジファミリーフーズ",
+		address: "愛媛県松山市",
+		advice: 'お客様が満足するサービス提供を<br class="is-pc">目指しスタッフ全員が連携し、<br class="is-pc">臨機応変な対応を',
+		role: "外食",
+	},
+	{
+		avatar: "info-7.jpg",
+		company: "株式会社アート不動産",
+		address: "愛媛県松山市",
+		advice: '若い社員も意見を言える風通しの良さ。<br class="is-pc">就活では会社の雰囲気を最優先',
+		role: "不動産",
+	},
+	{
+		avatar: "info-8.jpg",
+		company: "株式会社ありがとうサービス",
+		address: "愛媛県今治市",
+		advice: '自分の好きなことを仕事に<br class="is-pc">仲間とともに日々成長を実感',
+		role: "専門店",
+	},
+];
+
+const interviewArr = [
+	{
+		img: "pick-1.jpg",
+		url: "/",
+		label: "経営者インタビュー",
+		action: "就活には業界研究を<br>愛媛県の企業冊子を作成",
+		role: "愛媛大学理学部物理学科　教授",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-1.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: `他人も巻き込み 一生使える自己分析を`,
+		role: "(株)四国中央キャリア　代表取締役",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-4.jpg",
+		url: "/",
+		label: "経営者インタビュー",
+		action: "質の高いサービスを提供 地域の生活を支える企業に",
+		role: "株式会社フジ　代表取締役社長兼ＣＯＯ",
+		categories: ["1", "3"],
+	},
+	{
+		img: "pick-5.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "興味を持ち追求すること それが私の仕事の原動力 ",
+		role: "経営者インタビュー",
+		categories: ["1", "3"],
+	},
+	{
+		img: "pick-1.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "他人も巻き込み 一生使える自己分析を",
+		role: "(株)四国中央キャリア　代表取締役",
+		categories: ["3", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["3", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["3", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-1.jpg",
+		url: "/",
+		label: "経営者インタビュー",
+		action: "就活には業界研究を<br>愛媛県の企業冊子を作成",
+		role: "愛媛大学理学部物理学科　教授",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-1.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: `他人も巻き込み 一生使える自己分析を`,
+		role: "(株)四国中央キャリア　代表取締役",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-4.jpg",
+		url: "/",
+		label: "経営者インタビュー",
+		action: "質の高いサービスを提供 地域の生活を支える企業に",
+		role: "株式会社フジ　代表取締役社長兼ＣＯＯ",
+		categories: ["1", "3"],
+	},
+	{
+		img: "pick-5.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "興味を持ち追求すること それが私の仕事の原動力 ",
+		role: "経営者インタビュー",
+		categories: ["1", "3"],
+	},
+	{
+		img: "pick-1.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "他人も巻き込み 一生使える自己分析を",
+		role: "(株)四国中央キャリア　代表取締役",
+		categories: ["3", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["3", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["3", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-1.jpg",
+		url: "/",
+		label: "経営者インタビュー",
+		action: "就活には業界研究を<br>愛媛県の企業冊子を作成",
+		role: "愛媛大学理学部物理学科　教授",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-1.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: `他人も巻き込み 一生使える自己分析を`,
+		role: "(株)四国中央キャリア　代表取締役",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-4.jpg",
+		url: "/",
+		label: "経営者インタビュー",
+		action: "質の高いサービスを提供 地域の生活を支える企業に",
+		role: "株式会社フジ　代表取締役社長兼ＣＯＯ",
+		categories: ["1", "3"],
+	},
+	{
+		img: "pick-5.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "興味を持ち追求すること それが私の仕事の原動力 ",
+		role: "経営者インタビュー",
+		categories: ["1", "3"],
+	},
+	{
+		img: "pick-1.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "他人も巻き込み 一生使える自己分析を",
+		role: "(株)四国中央キャリア　代表取締役",
+		categories: ["3", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["3", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["3", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["1", "2"],
+	},
+	{
+		img: "pick-3.jpg",
+		url: "/",
+		label: "就活コラム",
+		action: "県内食品業界はもちろん、愛媛全域が盛り上がるようなイベントを。",
+		role: "",
+		categories: ["1", "2"],
+	},
+];
+
+// open menu
+const body = document.body;
+const btnMenu = document.querySelector(".js-hamburger");
+const overlay = document.querySelector(".js-overlay");
+
+btnMenu.addEventListener("click", () => {
+	overlay.classList.toggle("is-open");
+	body.classList.toggle("is-overflow-hidden");
+});
+
+const closeBtns = document.querySelectorAll(".js-close");
+
+closeBtns.forEach((btn) => {
+	btn.addEventListener("click", () => {
+		overlay.classList.remove("is-open");
+		body.classList.remove("is-overflow-hidden");
+		btn.classList.remove("is-open");
+	});
+});
+
+const headerContent = document.querySelector(".js-headerContent-content");
+const headerLink = document.querySelector(".js-headerContent-link");
+
+function handleScroll() {
+	headerContent.classList.toggle("is-scroll", window.scrollY > 80);
+	headerLink.classList.toggle("is-scroll", window.scrollY > 80);
+}
+window.addEventListener("scroll", handleScroll);
+
+document.addEventListener("DOMContentLoaded", () => {
+	new Swiper(".myswiper", {
+		centeredSlides: true,
+		effect: "fade",
+		loop: true,
+		autoplay: {
+			delay: 4500,
+			disableOnInteraction: false,
+		},
+	});
+
+	new Swiper(".mypickswiper", {
+		slidesPerView: 1.86,
+		centeredSlides: true,
+		spaceBetween: 15,
+		pagination: {
+			el: ".swiper-pagination",
+			clickable: true,
+		},
+		loop: true,
+		autoplay: {
+			delay: 4500,
+			disableOnInteraction: false,
+		},
+		navigation: {
+			nextEl: ".js-pick-prev",
+			prevEl: ".js-pick-next",
+		},
+		breakpoints: {
+			400: {
+				slidesPerView: 2.5,
+			},
+			600: {
+				slidesPerView: 3.5,
+			},
+			768: {
+				slidesPerView: 3.5,
+			},
+			1240: {
+				slidesPerView: 3.85,
+			},
+			1640: {
+				slidesPerView: 5.61,
+			},
+		},
+	});
+
+	new Swiper(".myscompanyswiper", {
+		centeredSlides: true,
+		effect: "fade",
+		loop: true,
+		autoplay: {
+			delay: 4500,
+			disableOnInteraction: false,
+		},
+		pagination: {
+			el: ".swiper-pagination",
+			clickable: true,
+		},
+	});
+});
+
+const currentPath =
+	window.location.pathname.replace("/~training/nguyennhatlinh/13-html-wp/html", "").slice(1) ||
+	"index.html";
+const links = document.querySelectorAll(".c-gnav a");
+
+links.forEach((link) => {
+	if (link.getAttribute("href") === currentPath) {
+		const isPageNew =
+			link.getAttribute("href") === "news.html" || link.getAttribute("href") === "new-single.html";
+
+		const listItem = link.parentElement;
+		listItem.classList.add("is-active", `${isPageNew && "is-active--pnew"}`);
+		listItem.textContent = link.textContent;
+	}
+});
+
+const breadcrumbList = document.querySelectorAll(".c-breadcrumb");
+const content = currentPath.split(".")[0];
+const newContent = `${content[0]}${content.slice(1)}`;
+
+breadcrumbList.forEach((breadcrumb) => {
+	if (content !== "index") {
+		const newItem = document.createElement("li");
+		newItem.textContent = getJpName(newContent);
+		newItem.classList.add("u-lc1");
+		breadcrumb.appendChild(newItem);
+
+		if (breadcrumb.firstElementChild) {
+			breadcrumb.firstElementChild.classList.add("u-ud8");
+		}
+	} else {
+		const aElement = document.querySelector(".c-breadcrumb li a");
+		const liElement = aElement.parentElement;
+		liElement.textContent = aElement.textContent;
+	}
+});
+
+// unit function
+function getJpName(name) {
+	const map = {
+		company: "企業一覧",
+		"company-single": "株式会社悠遊社",
+		contact: "お問い合わせ",
+		interview: "インタビュー一覧",
+		confirm: "お問い合わせ内容確認",
+		complete: "お問い合わせ完了",
+		about: "愛媛シゴト図鑑とは",
+		"interview-single": "就活には業界研究を 愛媛県の企業冊子を作成",
+		news: "ニュース一覧",
+		"new-single": "2020年「新卒会社説明会」日程について",
+	};
+	return map[name] || "見つかりません";
+}
+
+// form contact
+document.addEventListener("DOMContentLoaded", () => {
+	const form = document.querySelector(".js-contact-form");
+
+	form?.addEventListener("submit", function (event) {
+		event.preventDefault();
+		const errorTitle = document.querySelector(".js-error-title");
+		const content = document.querySelector(".js-content");
+		const inputs = form.querySelectorAll("[data-rules]");
+		let isValid = true;
+
+		inputs.forEach((input) => {
+			const rules = input.getAttribute("data-rules").split("|");
+			const errorElement = input.nextElementSibling;
+			const errorMessage = validateInput(input, rules);
+
+			errorElement.innerText = errorMessage || "";
+			if (errorMessage) {
+				isValid = false;
+				content.classList.add("u-mter");
+				errorTitle.style.display = "block";
+				errorElement.style.display = "block";
+			}
+
+			input.addEventListener("input", () => {
+				const newErrorMessage = validateInput(input, rules);
+				errorElement.innerText = newErrorMessage || "";
+			});
+		});
+
+		if (isValid) {
+			content.classList.remove("u-mter");
+			form.submit();
+			window.location.href = "./confirm.html";
+		}
+	});
+
+	function validateInput(input, rules) {
+		const value = input.value.trim();
+
+		for (let rule of rules) {
+			if (rule === "name" && value === "") {
+				return "『氏名』を入力してください。";
+			}
+
+			if (rule === "email" && !validateEmail(value)) {
+				return "『メールアドレス』を入力してください。";
+			}
+
+			if (rule.startsWith("max:") && !validatePhoneNumberLength(value, parseInt(rule.split(":")[1]))) {
+				return `『電話番号』を入力してください。`;
+			}
+
+			if (rule === "number" && !validatePhoneNumber(value)) {
+				return "『電話番号』を入力してください。";
+			}
+
+			if (rule === "content" && value === "") {
+				return "『お問い合わせ内容』を入力してください。";
+			}
+		}
+
+		return null;
+	}
+
+	function validateEmail(email) {
+		const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return regex.test(String(email).toLowerCase());
+	}
+
+	function validatePhoneNumber(phoneNumber) {
+		const regex = /^(\d{2}(-)?\d{4}(-)?\d{4}|\d{3}(-)?\d{4}(-)?\d{4})$/;
+		return regex.test(phoneNumber);
+	}
+
+	function validatePhoneNumberLength(phoneNumber, maxLength) {
+		const stripped = phoneNumber.replace(/-/g, "");
+		return stripped.length <= maxLength;
+	}
+});
+
+// interview init
+const urlParams = new URLSearchParams(window.location.search);
+let currentPage = parseInt(urlParams.get("page")) || 1;
+let currentTab = parseInt(urlParams.get("tab")) || 0;
+
+function initRenderInterview(items, itemsPerPage) {
+	function updateURL() {
+		const url = new URL(window.location.href);
+		url.searchParams.set("page", currentPage);
+		url.searchParams.set("tab", currentTab);
+		window.history.replaceState({}, "", url);
+	}
+
+	function renderItems() {
+		const filteredItems =
+			currentTab === 0 ? items : items.filter((item) => item.categories.includes(String(currentTab)));
+
+		const startIndex = (currentPage - 1) * itemsPerPage;
+		const paginatedItems = filteredItems?.slice(startIndex, startIndex + itemsPerPage);
+
+		const itemContent = document.querySelector(".js-tab-content");
+
+		if (itemContent)
+			itemContent.innerHTML = paginatedItems
+				.map(
+					(item) => `           
+            <a href="./interview-single.html" class="c-card">
+              <div class="c-card__top">
+                <img class="c-card__img c-card__img--interview" src="./assets/img/pc/${item.img}" alt="${item.label}">
+                <span class="c-card__label">
+                  ${item.label}
+                </span>
+              </div>
+              <div class="c-card__wrap c-card__wrap--interview">
+                <h3 class="c-card__title c-card__title--interview">
+                  ${item.action}
+                </h3>
+                <p class="c-card__desc c-card__desc--interview">
+                  ${item.role}
+                </p>
+                <img src="./assets/img/arrow-primary.png" alt="arrow-icon" class="c-btn__icon c-btn__icon--interview">
+              </div>
+            </a>`
+				)
+				.join("");
+
+		renderPagination(filteredItems?.length, itemsPerPage, ".js-interview-pagination");
+		updateActiveTab();
+	}
+
+	function updateActiveTab() {
+		document.querySelectorAll(".js-tab").forEach((button) => {
+			button.classList.toggle("active", parseInt(button.getAttribute("data-tab")) === currentTab);
+		});
+	}
+
+	document.querySelectorAll(".js-tab").forEach((button) => {
+		button.addEventListener("click", () => {
+			currentTab = parseInt(button.getAttribute("data-tab"));
+			currentPage = 1;
+			updateURL();
+			renderItems();
+		});
+	});
+
+	renderItems();
+}
+
+// company init
+function initRenderCompany(items, itemsPerPage) {
+	function renderItems() {
+		const startIndex = (currentPage - 1) * itemsPerPage;
+		const paginatedItems = items?.slice(startIndex, startIndex + itemsPerPage);
+
+		const itemContent = document.querySelector(".js-company-content");
+		if (itemContent)
+			itemContent.innerHTML = paginatedItems
+				.map(
+					(item) => `           
+             <a href="./company-single.html" class="c-company__item c-company__item--big">
+                <img class="c-company__img c-company__img--big" src="./assets/img/pc/${item.avatar}"
+                  alt="${item.avatar}">
+                <div class="c-company__data c-company__data--static">
+                  <h2 class="c-company__name u-lc2">
+                    ${item.company}
+                  </h2>
+                  <span class="c-company__address u-lc1">
+                    ${item.address}
+                  </span>
+                  <p class="c-company__advice c-company__advice--big lc4">
+                    ${item.advice}
+                  </p>
+                  <span class="c-company__role c-company__role--big u-lc1">
+                    ${item.role}
+                  </span>
+                  <img src="./assets/img/arrow-primary.png" alt="arrow-icon" class="c-btn__icon c-btn__icon--company">
+                </div>
+              </a>`
+				)
+				.join("");
+
+		renderPagination(items?.length, itemsPerPage, ".js-company-pagination");
+	}
+	renderItems();
+}
+
+// new init
+function initRenderNew(items, itemsPerPage) {
+	function renderItems() {
+		const startIndex = (currentPage - 1) * itemsPerPage;
+		const paginatedItems = items.slice(startIndex, startIndex + itemsPerPage);
+
+		const itemContent = document.querySelector(".js-new-content");
+		if (itemContent)
+			itemContent.innerHTML = paginatedItems
+				.map(
+					(item) => `           
+             <a href="${item.url}" class="news-content__item">
+                <span class="news-content__date">
+                  ${item.date}
+                </span>
+                <p class="news-content__itemtitle u-lc2">
+                  ${item.title}
+                </p>
+              </a>`
+				)
+				.join("");
+
+		renderPagination(items?.length, itemsPerPage, ".js-new-pagination");
+	}
+	renderItems();
+}
+
+function renderPagination(totalItems, itemsPerPage, querySelector) {
+	const totalPages = Math.ceil(totalItems / itemsPerPage);
+	const pagination = document.querySelector(querySelector);
+	if (pagination) {
+		pagination.innerHTML = "";
+		if (totalPages > 1) {
+			pagination.innerHTML += getPageLink(totalPages, currentPage - 1, "PREV", true);
+			for (let i = 1; i <= totalPages; i++) {
+				pagination.innerHTML += getPageLink(totalPages, i, i, false, i === currentPage);
+			}
+			pagination.innerHTML += getPageLink(totalPages, currentPage + 1, "NEXT", true);
+		}
+	}
+}
+
+function getPageLink(totalPages, pageNumber, text, notPage = false, isActive = false) {
+	return `<a href="?page=${pageNumber}"
+	class="c-pagination__btn
+   ${isActive ? "active" : ""} 
+   	${currentTab > 0 ? `&tab=${currentTab}` : ""}
+   ${pageNumber < 1 || pageNumber > totalPages ? "is-hidden" : ""} ${
+		notPage ? (text === "PREV" ? "c-pagination__btn--prev" : "c-pagination__btn--next") : ""
+	}">${text}</a>`;
+}
+
+initRenderInterview(interviewArr, 9);
+initRenderCompany(companyArr, 9);
+initRenderNew(newsArr, 10);
+
+
+------
+
+				<div class="c-header__top">
+					<a href="./404.html" class="c-header__toplink js-headerContent-link">
+						<p class="c-header__desc">掲載・取材依頼の企業様へ</p>
+						<img src="./assets/img/arrow.png" alt="arrow-icon" />
+					</a>
+				</div>
+				<div class="c-header__content js-headerContent-content false">
+
+
+scompany
+
+								<div class="swiper-slide u-center">
+									<div class="swiper-box">
+										<img
+											src="./assets/img/info-5.jpg"
+											alt="scompany-1"
+											class="scompany-intro__img"
+										/>
+									</div>
+								</div>
+								<p class="scompany-intro__name">若手社員　福島 快人さん</p>
+
+
+btn back 
+					<div class="u-center">
+						<a href="./company.htm;" class="c-btn c-btn--mt40">
+							企業一覧はこちら
+							<img src="./assets/img/arrow.png" alt="arrow-icon" class="c-btn__icon" />
+						</a>
+					</div>
+
+sinterview
+					<div class="u-center">
+						<a href="./interview.html" class="c-btn c-btn--mt51 c-btn--mt0">
+							<img
+								src="./assets/img/arrow-left.png"
+								alt="arrow-icon"
+								class="c-btn__icon c-btn__icon--left"
+							/>
+							インタビュー一覧に戻る
+						</a>
+					</div>
+
+snew
+					<div class="u-center">
+						<a href="./news.html" class="c-btn c-btn--mt30 c-btn--mt0">
+							<img
+								src="./assets/img/arrow-left.png"
+								alt="arrow-icon"
+								class="c-btn__icon c-btn__icon--left"
+							/>
+							ニュース一覧に戻る
+						</a>
+					</div>
+----   
+
+.c-header__toplink {
+	display: flex;
+	align-items: center;
+}
+
+.c-header__toplink.is-scroll {
+	filter: drop-shadow(0 0 5px rgba(0, 0, 0, 1));
+}
+
+.c-header__content.is-scroll {
+	box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.35);
+}
+
+.scompany-intro__name {
+	color: #fbfbfb;
+	position: absolute;
+	bottom: 0;
+	padding: 21px 20px;
+	width: 100%;
+	max-width: 680px;
+	z-index: 1;
+	text-align: center;
+	font-size: 1.8rem;
+	background-color: #1cbbb4;
+}
+
+.swiper-box {
+	width: 680px;
+}
+
+.c-gnav__link--pnew {
+	padding: 31px clamp(1.7rem, 0.784rem + 0.894vw, 2.5rem) 35px;
+}
