@@ -1,69 +1,33 @@
-document.addEventListener("DOMContentLoaded", () => {
-	const form = document.getElementById("contact__form");
+var scrl_pos;
+var header = $(".c-mheader");
+var body = $("body");
 
-	form.addEventListener("submit", function (event) {
-		event.preventDefault();
-		const inputs = form.querySelectorAll("[data-rules]");
-		let isValid = true;
+function hamburgerMenu() {
+	$("#menubtn").prop("checked", false);
 
-		inputs.forEach((input) => {
-			const rules = input.getAttribute("data-rules").split("|");
-			const errorElement = input.nextElementSibling;
-			const errorMessage = validateInput(input, rules);
+	$("#menubtn").change(function () {
+		header.toggleClass("is-active");
+		$(".js-show-menu").toggleClass("is-active");
 
-			errorElement.innerText = errorMessage || "";
-
-			if (errorMessage) {
-				isValid = false;
-			}
-
-			input.addEventListener("input", () => {
-				const newErrorMessage = validateInput(input, rules);
-				errorElement.innerText = newErrorMessage || "";
-			});
-		});
-
-		if (isValid) {
-			form.submit();
+		if (body.hasClass("is-fixed")) {
+			body.removeClass("is-fixed");
+			window.scrollTo(0, scrl_pos);
+		} else {
+			scrl_pos = $(window).scrollTop();
+			body.addClass("is-fixed").css("top", -scrl_pos);
 		}
+		if ($(this).prop("checked") == true) {
+			if ($("#menuArea").length != 0) {
+				$("#menuArea").addClass("is-open");
+				$(".js-menuHeader").addClass("is-menuopen");
+				$(".c-mheader__menu-ul").addClass("is-menuopen");
+				let newLogo = $("#js-logo").attr("src").replace("logo", "logo-white");
+				$("#js-logo").attr("src", newLogo);
+			}
+		} 
 	});
-
-	function validateInput(input, rules) {
-		const value = input.value.trim();
-
-		for (let rule of rules) {
-			if (rule === "required" && value === "") {
-				return "この項目は必須です。";
-			}
-
-			if (rule === "email" && !validateEmail(value)) {
-				return "無効な電子メール";
-			}
-
-			if (rule.startsWith("max:") && !validatePhoneNumberLength(value, parseInt(rule.split(":")[1]))) {
-				return `電話番号は ${rule.split(":")[1]} 桁である必要があります`;
-			}
-
-			if (rule === "number" && !validatePhoneNumber(value)) {
-				return "数字を入力してください";
-			}
-		}
-
-		return null;
-	}
-
-	function validateEmail(email) {
-		const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		return re.test(String(email).toLowerCase());
-	}
-
-	function validatePhoneNumber(phoneNumber) {
-		const re = /^(\d{2}-\d{4}-\d{4}|\d{3}-\d{4}-\d{4})$/;
-		return re.test(phoneNumber);
-	}
-
-	function validatePhoneNumberLength(phoneNumber, maxLength) {
-		const stripped = phoneNumber.replace(/-/g, "");
-		return stripped.length <= maxLength;
-	}
-});
+	$(".is-show").click(function () {
+		$(this).toggleClass("is-active");
+		$(this).parents("li").find(".c-navFill__sub").slideToggle();
+	});
+}
