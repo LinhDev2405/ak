@@ -9,3 +9,15 @@
 // 		}, 10);
 // 	});
 // });
+
+const rightClouds = document.querySelectorAll(".right .cloud");
+
+rightClouds.forEach((cloud, index) => {
+	cloud.style.animationDelay = `${index * 2}s`;
+	cloud.addEventListener("animationiteration", () => {
+		cloud.style.opacity = "0";
+		setTimeout(() => {
+			cloud.style.opacity = "1";
+		}, 10);
+	});
+});
