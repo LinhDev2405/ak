@@ -1,3 +1,4 @@
+
 // const rightClouds = document.querySelectorAll(".right .cloud");
 
 // rightClouds.forEach((cloud, index) => {
@@ -21,3 +22,21 @@ rightClouds.forEach((cloud, index) => {
 		}, 10);
 	});
 });
+
+
+// after 10s
+
+const rightClouds = document.querySelectorAll(".right .cloud");
+
+function animateClouds() {
+	rightClouds.forEach((cloud, index) => {
+
+		cloud.style.animation = "none";
+		cloud.offsetHeight; 
+		cloud.style.animation = `moveClouds 10s linear ${index * 1.5}s`;
+	});
+}
+
+animateClouds();
+
+setInterval(animateClouds, 50000);
