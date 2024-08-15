@@ -1,0 +1,29 @@
+const menu = [
+	{ name: "Home", url: "#home" },
+	{ name: "About", url: "#about" },
+	{ name: "Services", url: "#services" },
+	{ name: "Portfolio", url: "#portfolio" },
+	{ name: "Contact", url: "#contact" },
+	{ name: "Home 1", url: "#home1" },
+	{ name: "About 1", url: "#about1" },
+	{ name: "Services 1", url: "#services1" },
+	{ name: "Portfolio 1", url: "#portfolio1" },
+];
+
+// Divide the menu into two columns
+const half = Math.ceil(menu.length / 2);
+const leftColumnMenu = menu.slice(0, half);
+const rightColumnMenu = menu.slice(half);
+
+// Function to render menu items into a column
+function renderMenu(columnElement, menuItems) {
+	columnElement.innerHTML = menuItems.map((item) => `<a href="${item.url}">${item.name}</a>`).join("");
+}
+
+// Get the column elements
+const leftColumn = document.querySelector(".left-column");
+const rightColumn = document.querySelector(".right-column");
+
+// Render the menu items into each column
+renderMenu(leftColumn, leftColumnMenu);
+renderMenu(rightColumn, rightColumnMenu);
