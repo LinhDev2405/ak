@@ -1,0 +1,10 @@
+!empty($taxonomies) -> taxonomy_terms
+
+page new -     [
+      "title" => "NEWS",
+      "titleJp" => "ニュース",
+      "sectionClass" => "c-mainvisual--news",
+      "contentClass" => "c-mainvisual__content--news",
+      "titleClass" => "c-mainvisual__title--primary",
+      "subTitleClass" => "c-mainvisual__subtitle--black",
+    ]
