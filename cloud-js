@@ -39,4 +39,74 @@ function animateClouds() {
 
 animateClouds();
 
+
+// v2
+
+document.addEventListener("DOMContentLoaded", () => {
+  const leftClouds = document.querySelectorAll(".left-cloud-container .cloud");
+  const rightClouds = document.querySelectorAll(".right-cloud-container .cloud");
+  const container = document.querySelector(".container-cloud");
+
+  function animateCloud(cloud, isLeftCloud) {
+    const stopPercent = cloud.getAttribute("data-stop-percent") || 50;
+    const containerWidth = container.clientWidth;
+    const cloudWidth = cloud.clientWidth;
+
+    // Tính toán vị trí dừng
+    const stopPosition = (containerWidth * stopPercent) / 100 - cloudWidth / 2;
+    
+    // Vị trí khởi đầu dựa trên hướng di chuyển
+    const startPosition = isLeftCloud ? -cloudWidth : containerWidth;
+    
+    function moveCloud(currentPosition) {
+      if (isLeftCloud) {
+        if (currentPosition >= stopPosition) {
+          cloud.style.transform = `translateX(${stopPosition}px)`;
+          setTimeout(() => {
+            // Quay lại vị trí khởi đầu
+            cloud.style.transition = 'transform 2s ease-in-out';
+            cloud.style.transform = `translateX(${startPosition}px)`;
+            setTimeout(() => {
+              moveCloud(startPosition);
+            }, 2000); // Quay lại sau 2 giây
+          }, 10000); // Dừng lại tại vị trí cố định trong 10 giây
+        } else {
+          cloud.style.transform = `translateX(${currentPosition + 10}px)`;
+          requestAnimationFrame(() => moveCloud(currentPosition + 10));
+        }
+      } else {
+        if (currentPosition <= stopPosition) {
+          cloud.style.transform = `translateX(${stopPosition}px)`;
+          setTimeout(() => {
+            // Quay lại vị trí khởi đầu
+            cloud.style.transition = 'transform 2s ease-in-out';
+            cloud.style.transform = `translateX(${startPosition}px)`;
+            setTimeout(() => {
+              moveCloud(startPosition);
+            }, 2000); // Quay lại sau 2 giây
+          }, 10000); // Dừng lại tại vị trí cố định trong 10 giây
+        } else {
+          cloud.style.transform = `translateX(${currentPosition - 10}px)`;
+          requestAnimationFrame(() => moveCloud(currentPosition - 10));
+        }
+      }
+    }
+
+    // Bắt đầu di chuyển từ vị trí khởi đầu
+    cloud.style.transform = `translateX(${startPosition}px)`;
+    requestAnimationFrame(() => moveCloud(startPosition));
+  }
+
+  // Animations for left clouds
+  leftClouds.forEach((cloud) => {
+    animateCloud(cloud, true);
+  });
+
+  // Animations for right clouds
+  rightClouds.forEach((cloud) => {
+    animateCloud(cloud, false);
+  });
+});
+
+
 setInterval(animateClouds, 50000);
