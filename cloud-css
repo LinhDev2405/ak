@@ -1,63 +1,3 @@
-/* body {
-	margin: 0;
-	overflow: hidden;
-	background: skyblue;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: relative;
-}
-
-.center-box {
-	width: 200px;
-	height: 200px;
-	background-color: #fff;
-	z-index: 10;
-	position: relative;
-}
-
-.cloud-container {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	height: 300px;
-	z-index: 5;
-}
-
-.left {
-	left: 10%;
-}
-
-.right {
-	right: 10%;
-}
-
-.cloud {
-	width: 100px;
-	height: 60px;
-	background: white;
-	border-radius: 50%;
-	box-shadow: 20px 20px 0 10px white, -20px 20px 0 10px white, 0 20px 0 10px white;
-	position: relative;
-}
-
-@keyframes moveClouds {
-	0% {
-		transform: translateX(0);
-	}
-	100% {
-		transform: translateX(-1400%);
-	}
-}
-
-.right .cloud {
-	animation: moveClouds 1s linear infinite;
-} */
-
 body {
 	margin: 0;
 	overflow: hidden;
@@ -69,80 +9,13 @@ body {
 	position: relative;
 }
 
-.center-box {
-	width: 200px;
-	height: 200px;
-	background-color: #fff;
-	z-index: 10;
+.container-cloud {
 	position: relative;
-}
-
-.cloud-container {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
+	width: 100%;
+	height: 100%;
 	display: flex;
-	flex-direction: column;
 	justify-content: space-between;
-	height: 300px;
-	z-index: 5;
-}
-
-.left {
-	left: 10%;
-}
-
-.right {
-	right: 10%;
-}
-
-.cloud {
-	width: 100px;
-	height: 60px;
-	background: white;
-	border-radius: 50%;
-	box-shadow: 20px 20px 0 10px white, -20px 20px 0 10px white, 0 20px 0 10px white;
-	position: relative;
-}
-
-@keyframes moveCloudsRightToLeft {
-	0% {
-		transform: translateX(0);
-	}
-	100% {
-		transform: translateX(-120%);
-	}
-}
-
-.right .cloud {
-	animation: moveCloudsRightToLeft 1s linear infinite;
-}
-
-@keyframes moveCloudsLeftToRight {
-	0% {
-		transform: translateX(0);
-	}
-	100% {
-		transform: translateX(120%);
-	}
-}
-
-.left .cloud {
-	animation: moveCloudsLeftToRight 1s linear infinite;
-	opacity: 0;
-}
-
-
-----
-body {
-	margin: 0;
-	overflow: hidden;
-	background: skyblue;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
 	align-items: center;
-	position: relative;
 }
 
 .center-box {
@@ -151,25 +24,15 @@ body {
 	background-color: #fff;
 	z-index: 10;
 	position: relative;
+	margin: 0 auto; /* Center the box horizontally */
 }
 
 .cloud-container {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	height: 300px;
-	z-index: 5;
-}
-
-.left {
-	left: 10%;
-}
-
-.right {
-	right: 10%;
+	position: relative;
 }
 
 .cloud {
@@ -181,11 +44,22 @@ body {
 	position: relative;
 }
 
-@keyframes moveClouds {
-	0% {
-		transform: translateX(0);
-	}
-	100% {
-		transform: translateX(-1400%);
-	}
+.left-cloud-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 300px;
+	position: absolute;
+	left: 20%; /* Position clouds relative to the center box */
+	transform: translateX(-100%);
+}
+
+.right-cloud-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 300px;
+	position: absolute;
+	right: 20%; /* Position clouds relative to the center box */
+	transform: translateX(100%);
 }
