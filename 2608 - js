@@ -1,0 +1,62 @@
+const body = document.body
+const btnMenu = document.querySelector('.js-show-menu')
+const overlay = document.querySelector('.js-header-overlay')
+const checkbox = btnMenu.querySelector('input[type="checkbox"]')
+const openSubNav = document.querySelector('.js-open-sub')
+const subContent = document.querySelector('.js-tab-sub')
+
+document.addEventListener('DOMContentLoaded', () => {
+  new Swiper('.js-swiper', {
+    slidesPerView: 'auto',
+    centeredSlides: true,
+    loop: true,
+    // autoplay: {
+    //   delay: 4500,
+    //   disableOnInteraction: false,
+    // },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    breakpoints: {
+      1921: {
+        slidesPerView: 3,
+      },
+      376: {
+        slidesPerView: 'auto',
+      },
+      320: {
+        slidesPerView: 1,
+      },
+    },
+  })
+
+  btnMenu.addEventListener('click', () => {
+    setTimeout(() => {
+      overlay.classList.toggle('is-open')
+      checkbox.checked = !checkbox.checked
+    }, 200)
+    body.classList.toggle('is-overflow-hidden')
+  })
+
+  // overlay.addEventListener('click', () => {
+  //   overlay.classList.remove('is-open')
+  //   checkbox.checked = false
+  //   body.classList.remove('is-overflow-hidden')
+  // })
+
+  openSubNav.addEventListener('click', () => {
+    const parent = openSubNav.parentElement
+    parent.style.borderBottom = 'none'
+    openSubNav.classList.toggle('is-height')
+    subContent.classList.toggle('is-active')
+  })
+})
+
+const header = document.querySelector('.js-header')
+function handleScroll() {
+  header.classList.toggle('is-scroll', window.scrollY > 80)
+}
+
+window.addEventListener('scroll', handleScroll)
+window.addEventListener('resize', handleScroll)
