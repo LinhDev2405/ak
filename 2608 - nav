@@ -1,0 +1,180 @@
+@use '../abstracts/' as *;
+
+.c-nav {
+  margin-top: 31px;
+  width: 100%;
+
+  &__list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-left: clamp(0rem, -8.933rem + 8.715vw, 7.8rem);
+    margin-right: clamp(2rem, -3.268rem + 5.14vw, 6.6rem);
+  }
+
+  &__item {
+    font-size: 1.7rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: $secondary;
+
+    @include tab {
+      font-size: 1.5rem;
+      font-weight: 300;
+      line-height: 1.2;
+      letter-spacing: 0.05em;
+      color: #fff;
+      border-bottom: 1px dashed #929da9;
+      width: 100%;
+
+      &:first-of-type {
+        .c-nav__link {
+          display: block;
+          padding: 16px 70px 16px 25px;
+
+          &::before {
+            content: '';
+            position: absolute;
+            right: 30px;
+            width: 2px;
+            height: 10px;
+            top: 39.5%;
+            transition: all 0.3s;
+            background-color: #fff;
+          }
+
+          &::after {
+            content: '';
+            position: absolute;
+            right: 26px;
+            width: 10px;
+            height: 2px;
+            top: 48%;
+            background-color: #fff;
+            border: 0;
+            transform: none;
+          }
+        }
+      }
+      &.is-active {
+        border-bottom: 0;
+        &::before {
+          height: 0;
+        }
+      }
+    }
+  }
+
+  &__sublist {
+    display: none;
+    position: absolute;
+    left: 50%;
+    // top: 109px;
+    top: 111px;
+    transform: translate(-50%, -50%);
+    width: 262px;
+    border: 1px solid $nav-border;
+    background-color: $white;
+    z-index: 2;
+
+    @include tab {
+      background-color: #dadfe3;
+      position: static;
+      width: 100%;
+      border: 0;
+      transform: none;
+      &.is-active {
+        display: block;
+      }
+    }
+  }
+
+  &__link {
+    display: inline-block;
+    padding-bottom: 13px;
+    border-bottom: 3px solid transparent;
+
+    @include tab {
+      display: block;
+      padding: 15px 70px 16px 25px;
+      position: relative;
+      border: 0;
+
+      &::after {
+        position: absolute;
+        content: '';
+        width: 0;
+        height: 0;
+        top: 50%;
+        right: 27px;
+        transform: translate(-50%, -50%);
+        border-top: 4px solid transparent;
+        border-bottom: 4px solid transparent;
+        border-left: 7px solid #fff;
+      }
+    }
+
+    &:hover {
+      border-bottom: 3px solid $header-border;
+      opacity: 1;
+      cursor: pointer;
+
+      @include tab {
+        border: 0;
+        opacity: 0.7;
+      }
+    }
+  }
+
+  &__subitem {
+    border-bottom: 1px solid $nav-border;
+    &:last-of-type {
+      .c-header__pc-sublink {
+        border-bottom: 0;
+      }
+    }
+
+    @include tab {
+      border-bottom: 1px solid #707070;
+      color: #3d434a;
+
+      &:first-of-type {
+        border-top: 1px solid #707070;
+      }
+    }
+  }
+
+  &__sublink {
+    display: block;
+    padding: 11px 40px 11px 30px;
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: $nav-text;
+    position: relative;
+
+    @include tab {
+      padding: 14px 70px 14px 45px;
+    }
+
+    &::after {
+      position: absolute;
+      content: '';
+      top: 50%;
+      right: 20px;
+      transform: translate(-50%, -50%);
+      border-top: 2px solid transparent;
+      border-bottom: 2px solid transparent;
+      border-left: 2px solid $secondary;
+
+      @include tab {
+        width: 0;
+        height: 0;
+        right: 27px;
+        border-top: 4px solid transparent;
+        border-bottom: 4px solid transparent;
+        border-left: 7px solid #3d434a;
+      }
+    }
+  }
+}
