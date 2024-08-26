@@ -1,0 +1,140 @@
+<header class="c-header js-header">
+  <div class="is-header-pc">
+    <div class="c-header__container">
+      <div class="c-header__boxleft">
+        <p class="c-header__slogan">(仮)こだわりのライフスタイルを彩るインテリア雑貨を厳選</p>
+        <a href="./index.html" class="c-header__link">
+          <img src="./assets/img/pc/header-logo.png" alt="ZEST Co LIFE | INTERIOR | DECOR" class="c-logo">
+        </a>
+      </div>
+      <div class="c-header__main">
+        <a href="./index.html" class="c-header__link c-header__boxlogo">
+          <img src="./assets/img/pc/header-logo.png" alt="ZEST Co LIFE | INTERIOR | DECOR" class="c-logo">
+        </a>
+
+        <nav class="c-nav">
+          <ul class="c-nav__list">
+            <li class="c-nav__item c-header__submenu">
+              <a href="#" class="c-nav__link">商品一覧</a>
+              <ul class="c-nav__sublist">
+                <li class="c-nav__subitem">
+                  <a href="#" class="c-nav__sublink">商品カテゴリー</a>
+                </li>
+                <li class="c-nav__subite">
+                  <a href="#" class="c-nav__sublink">商品カテゴリー</a>
+                </li>
+                <li class="c-nav__subitem">
+                  <a href="#" class="c-nav__sublink">商品カテゴリー</a>
+                </li>
+              </ul>
+            </li>
+            <li class="c-nav__item u-tsx6"><a href="#" class="c-nav__link">ご利用ガイド</a></li>
+            <li class="c-nav__item"><a href="#" class="c-nav__link">お問い合わせ</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="c-header__handle">
+        <ul class="c-header__handlelist">
+          <li class="c-header__handleitem">
+            <a href="#" class="c-header__handlelink">
+              <img src="./assets/img/person-plus-icon.svg" alt="新規会員登録" class="c-header__handleicon u-tsx4">
+              <span>新規会員登録</span>
+            </a>
+          </li>
+          <li class="c-header__handleitem">
+            <a href="#" class="c-header__handlelink">
+              <img src="./assets/img/person-icon.svg" alt="ログイン" class="c-header__handleicon">
+              <span>ログイン</span>
+            </a>
+          </li>
+          <li class="c-header__handleitem">
+            <a href="#" class="c-header__handlelink">
+              <img src="./assets/img/cart-icon.svg" alt="カート " class="c-header__handleicon">
+              <span>カート</span>
+            </a>
+          </li>
+        </ul>
+        <div class="c-header__handlesearch">
+          <input type="text" class="c-header__handleinput">
+          <img src="./assets/img/search-icon.svg" alt="search-icon" class="c-header__handlesicon">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="is-tab">
+    <div class="c-header__container">
+      <a href="./index.html" class="c-header__link">
+        <img src="./assets/img/pc/header-logo.png" alt="ZEST Co LIFE | INTERIOR | DECOR" class="c-logo">
+      </a>
+      <div class="c-hamburger">
+        <div class="c-hamburger__area js-show-menu">
+          <input type="checkbox">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="c-header__overlay js-header-overlay">
+    <div class="c-header__handle">
+      <div class="c-header__handlesearch">
+        <input type="text" class="c-header__handleinput">
+        <img src="./assets/img/search-icon.svg" alt="search-icon" class="c-header__handlesicon">
+      </div>
+      <ul class="c-header__handlelist">
+        <li class="c-header__handleitem">
+          <a href="#" class="c-header__handlelink">
+            <img src="./assets/img/person-plus-icon.svg" alt="新規会員登録" class="c-header__handleicon">
+            <span>新規会員登録</span>
+          </a>
+        </li>
+        <li class="c-header__handleitem">
+          <a href="#" class="c-header__handlelink">
+            <img src="./assets/img/person-icon.svg" alt="ログイン" class="c-header__handleicon">
+            <span>ログイン</span>
+          </a>
+        </li>
+        <li class="c-header__handleitem">
+          <a href="#" class="c-header__handlelink">
+            <img src="./assets/img/cart-icon.svg" alt="カート" class="c-header__handleicon">
+            <span>カート</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <nav class="c-nav">
+      <ul class="c-nav__list">
+        <li class="c-nav__item">
+          <span class="c-nav__link js-open-sub">商品一覧</span>
+          <ul class="c-nav__sublist js-tab-sub">
+            <li class="c-nav__subitem">
+              <a href="#" class="c-nav__sublink">商品カテゴリー</a>
+            </li>
+            <li class="c-nav__subitem">
+              <a href="#" class="c-nav__sublink">商品カテゴリー</a>
+            </li>
+            <li class="c-nav__subitem">
+              <a href="#" class="c-nav__sublink">商品カテゴリー</a>
+            </li>
+          </ul>
+        </li>
+        </li>
+        <li class="c-nav__item">
+          <a href="#" class="c-nav__link">ご利用ガイド</a>
+        </li>
+        <li class="c-nav__item">
+          <a href="#" class="c-nav__link">お問い合わせ</a>
+        </li>
+        <li class="c-nav__item">
+          <a href="#" class="c-nav__link">プライバシーポリシー</a>
+        </li>
+        <li class="c-nav__item">
+          <a href="#" class="c-nav__link">特定商取引法に基づく表記</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
