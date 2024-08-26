@@ -1,0 +1,30 @@
+@use '../abstracts/' as *;
+
+.is-header-pc {
+  display: flex;
+  @include tab {
+    display: none;
+  }
+}
+
+.is-tab {
+  display: none;
+  @include tab {
+    display: block;
+  }
+}
+
+.is-sp {
+  display: none;
+  @include sp {
+    display: block;
+  }
+}
+
+.is-overflow-hidden {
+  overflow: hidden;
+}
+
+.is-height::before {
+  height: 0 !important;
+}
