@@ -656,9 +656,9 @@ body {
 		width: 100%;
 	}
 
-	.c-nav__item:first-child {
+	/* .c-nav__item:first-child {
 		border-top: 1px solid #929da9;
-	}
+	} */
 
 	.c-nav__item:first-of-type .c-nav__link {
 		display: block;
