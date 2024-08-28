@@ -1,8 +1,0 @@
-      <div class="c-mheader__menubtn">
-        <label class="burger c-mheader__menubtn-area js-show-menu" for="menubtn">
-          <input type="checkbox" class="menubtnchk" id="menubtn" name="menubtn" />
-          <span></span>
-          <span></span>
-          <span></span>
-        </label>
-      </div>
