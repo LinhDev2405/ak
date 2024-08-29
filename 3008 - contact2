@@ -1,0 +1,99 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
+
+$form_data = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : array();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $_SESSION['form_data'] = $_POST;
+  header('Location: confirm-2');
+  exit;
+} else {
+  unset($_SESSION['form_data']);
+}
+?>
+
+<?php get_header(); ?>
+
+<main class="p-contact">
+  <div class="c-breadcrumb">
+    <?php echo generateBreadcrumb('', 'お問い合わせ'); ?>
+  </div>
+  <div class="c-headpage">
+    <div class="l-container2">
+      <h2 class="c-title">お問い合わせ</h2>
+    </div>
+  </div>
+
+  <div class="p-contact__content">
+    <div class="l-container">
+      <h3>メールでのお問い合わせ</h3>
+      <p class="notice">下記に必要事項をご記入の上送信下さい。弊所のコンサルタントからご連絡をさせて頂きます。</p>
+
+      <form action="confirm-2" class="js-contact-form" method="post" novalidate>
+        <table>
+          <tr>
+            <th>お名前<span class="required">必須</span></th>
+            <td>
+              <div class="p-contact__name">
+                <div class="">
+                  <input type="text" name="firstname" placeholder="姓" required data-rules="required|firstname" value="<?php echo isset($form_data['firstname']) ? htmlspecialchars($form_data['firstname']) : ''; ?>">
+                  <span class="error"></span>
+                </div>
+                <div class="">
+                  <input type="text" name="lastname" placeholder="名" required data-rules="required|lastname" value="<?php echo isset($form_data['lastname']) ? htmlspecialchars($form_data['lastname']) : ''; ?>">
+                  <span class="error"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>所属団体（社名等）</th>
+            <td>
+              <input type="text" name="company" value="<?php echo isset($form_data['company']) ? htmlspecialchars($form_data['company']) : ''; ?>">
+            </td>
+          </tr>
+          <tr>
+            <th>E-mail<span class="required">必須</span></th>
+            <td>
+              <input type="text" name="email" placeholder="例） example@gmail.com" required data-rules="required|email" value="<?php echo isset($form_data['email']) ? htmlspecialchars($form_data['email']) : ''; ?>">
+              <span class="error"></span>
+            </td>
+          </tr>
+          <tr>
+            <th>E-mail（確認）<span class="required">必須</span></th>
+            <td>
+              <input type="text" name="emailconfirm" placeholder="例） example@gmail.com" required data-rules="required|emailconfirm" value="<?php echo isset($form_data['emailconfirm']) ? htmlspecialchars($form_data['emailconfirm']) : ''; ?>">
+              <span class="error"></span>
+            </td>
+          </tr>
+          <tr>
+            <th>お電話番号</th>
+            <td>
+              <input type="tel" name="tel" placeholder="例） 000-1111-2222" required maxlength="13" data-rules="required|number|max:13" value="<?php echo isset($form_data['tel']) ? htmlspecialchars($form_data['tel']) : ''; ?>">
+              <span class="error"></span>
+            </td>
+          </tr>
+          <tr>
+            <th>ご相談内容<span class="required">必須</span></th>
+            <td>
+              <textarea name="message" required data-rules="required|message"><?php echo isset($form_data['message']) ? htmlspecialchars($form_data['message']) : ''; ?></textarea>
+              <span class="error"></span>
+            </td>
+          </tr>
+        </table>
+        <div class="l-btn l-btn--2btn">
+          <div class="c-btn">
+            <button type="button" class="c-btn__reset js-reset">リセット</button>
+          </div>
+          <div class="c-btn">
+            <button type="submit" class="c-btn__confirm" name="confirmForm">入力内容を確認する</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<?php get_footer(); ?>
