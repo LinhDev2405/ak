@@ -1,0 +1,74 @@
+<?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+if (!class_exists('PHPMailer\PHPMailer\Exception')) {
+  require 'PHPMailer/src/Exception.php';
+  require 'PHPMailer/src/PHPMailer.php';
+  require 'PHPMailer/src/SMTP.php';
+}
+
+//Create an instance; passing `true` enables exceptions
+$mail = new PHPMailer(true);
+
+
+$firstName = $_POST['firstname'];
+$lastName = $_POST['lastname'];
+$company = $_POST['company'];
+$email = $_POST['email'];
+$emailConfirm = $_POST['emailconfirm'];
+$tel = $_POST['tel'];
+$message = $_POST['message'];
+$fullname =  $firstName . $lastName;
+try {
+  //Server settings
+  $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+  $mail->isSMTP();                                            //Send using SMTP
+  $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+  $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+  $mail->Username   = 'nhatlinh.agl@gmail.com';                     //SMTP username
+  $mail->Password   = 'lkhvlychvddnalpz';                               //SMTP password
+  $mail->SMTPSecure = 'ssl';            //Enable implicit TLS encryption
+  $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+  //Recipients
+  $mail->setFrom('nhatlinh.agl@gmail.com', 'Admin');
+  $mail->addAddress($email, $fullname);
+
+  //Recipients
+  $mail->setFrom('nhatlinh.agl@gmail.com', 'Admin');
+  $mail->addAddress('nhatlinh.agl@gmail.com'); //Add a recipient
+
+  //Content
+  $mail->isHTML(true);                                  //Set email format to HTML
+  $mail->Subject = 'Here is the subject';
+  $mail->Body    = '
+  <h4>必須: ' . $fullname . '</h4> 
+  <h4>所属団体 (社名等): ' . $company . ' </h4>
+  <h4>E-mail: ' . $email . '</h4>
+  <h4>E-mail（確認): ' . $emailConfirm . '</h4>
+  <h4>お電話番号: ' . $tel . '</h4> 
+  <h4>ご相談内容: ' . $message . '</h4>
+  ';
+
+
+  $fullUrl = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+  $parsedUrl = parse_url($fullUrl);
+  $pathParts = explode('/', trim($parsedUrl['path'], '/'));
+  $desiredLevels = 2;
+  $basePath = implode('/', array_slice($pathParts, 0, $desiredLevels));
+  $baseUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . '/' . $basePath;
+
+
+  $realUrl = $baseUrl . '/contact/completed';
+  if ($mail->send()) {
+    header("Location: $realUrl");
+  } else {
+    header("Location: $baseUrl/404");
+  }
+  echo 'Message has been sent';
+} catch (Exception $e) {
+  echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+}
