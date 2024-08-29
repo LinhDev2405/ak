@@ -1,0 +1,181 @@
+$(document).ready(function () {
+	// slider ============================
+	$(".js-slider").slick({
+		infinite: true,
+		arrows: false,
+		speed: 800,
+		fade: true,
+		cssEase: "linear",
+		autoplay: true,
+	});
+
+	// Tabs - Tabs  ===============
+	$(".c-tabs li").click(function () {
+		var item = $(this);
+		var categoryId = item.data("");
+		var activeColor = item.data("color");
+
+		item.addClass("active");
+		item.css({
+			"background-color": activeColor,
+			"border-top-color": activeColor,
+		});
+
+		$(".c-tabs li").not(item).removeClass("active");
+		$(".c-tabs li").not(item).css("background-color", "");
+
+		$(".loading-bg").show();
+		$.ajax({
+			url: ajax_object.url,
+			method: "GET",
+			data: {
+				action: "load_tab_",
+				category_id: categoryId,
+				nonce: ajax_object.nonce,
+			},
+			success: function (response) {
+				$("#cat_" + categoryId)
+					.html(response)
+					.fadeIn();
+				$(".c-listpost")
+					.not("#cat_" + categoryId)
+					.hide();
+				$(".loading-bg").hide();
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				$(".loading-bg").hide();
+				console.error("AJAX Error: " + textStatus + " : " + errorThrown);
+			},
+		});
+	});
+
+	$(".chkbutton").on("change", function () {
+		var checkedValues = $(".chkbutton:checked")
+			.map(function () {
+				return this.value;
+			})
+			.get();
+
+		$(".c-column__item").each(function () {
+			var item = $(this);
+			var categories = String(item.data("categories")).split(",");
+
+			var matches = checkedValues.every(function (val) {
+				return categories.indexOf(val) !== -1;
+			});
+
+			matches ? item.show() : item.hide();
+		});
+		updateResultCount();
+	});
+
+	function updateResultCount() {
+		var visibleCount = $(".c-column__item:visible").length;
+		$(".p-service__result").text(visibleCount + "件が該当しました");
+	}
+
+	updateResultCount();
+
+	$(".js-reset").on("click", function () {
+		const div = document.getElementById("mw_wp_form_mw-wp-form-209");
+		const form2 = document.querySelector(".js-contact-form");
+		const form = div?.querySelector("form");
+
+		const inputs = form
+			? form.querySelectorAll("input, textarea, select")
+			: form2.querySelectorAll("input, textarea, select");
+		inputs.forEach((input) => {
+			input.value = "";
+		});
+
+		const errorMessage = $(form ? form : form2).find(".error");
+		errorMessage.text("");
+	});
+
+	const form = $(".js-contact-form");
+
+	form.on("submit", function (event) {
+		event.preventDefault();
+		const inputs = form.find("[data-rules]");
+		let isValid = true;
+
+		inputs.each(function () {
+			const input = $(this);
+			const rules = input.data("rules").split("|");
+
+			const errorElement = input.next();
+			const errorMessage = validateInput(input, rules);
+
+			errorElement.text(errorMessage || "");
+			if (errorMessage) {
+				isValid = false;
+				errorElement.show();
+			}
+
+			input.on("input", function () {
+				const newErrorMessage = validateInput(input, rules);
+				errorElement.text(newErrorMessage || "");
+			});
+		});
+
+		if (isValid) {
+			form.off("submit").submit();
+		}
+	});
+
+	let email = "";
+	let emailconfirm = "";
+
+	function validateInput(input, rules) {
+		const name = input.attr("name");
+		const value = input.val().trim();
+
+		if (name === "email") {
+			email = value;
+		} else if (name === "emailconfirm") {
+			emailconfirm = value;
+		}
+
+		for (let rule of rules) {
+			if (rule === "firstname" && value === "") {
+				return "名を入力してください";
+			}
+
+			if (rule === "lastname" && value === "") {
+				return "姓を入力してください";
+			}
+
+			if (rule === "email" && !validateEmail(value)) {
+				return "『メールアドレス』を入力してください。";
+			}
+
+			if (rule === "emailconfirm" && !validateEmail(value)) {
+				return "『メールアドレス』を入力してください。";
+			}
+
+			if (rule === "emailconfirm" && email !== emailconfirm) {
+				return "メールアドレスが一致しません。";
+			}
+
+			if (rule === "number" && value && !validatePhoneNumber(value)) {
+				return "『電話番号』を入力してください。";
+			}
+
+			if (rule === "message" && value === "") {
+				return "『お問い合わせ内容』を入力してください。";
+			}
+		}
+
+		return null;
+	}
+
+	function validateEmail(email) {
+		const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return regex.test(String(email).toLowerCase());
+	}
+
+	function validatePhoneNumber(phoneNumber) {
+		const regex = /^(\d{2}(-)?\d{4}(-)?\d{4}|\d{3}(-)?\d{4}(-)?\d{4})$/;
+		return regex.test(phoneNumber);
+	}
+});
