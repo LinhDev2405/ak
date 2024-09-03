@@ -1,0 +1,57 @@
+<table>
+<tr>
+<th>お名前<span class="required">必須</span></th>
+<td>
+<div class="p-contact__name">
+<div>[mwform_text name="firstname" size="60" placeholder="姓"]</div>
+<div>[mwform_text name="lastname" size="60" placeholder="名"]</div></div>
+</td>
+</tr>
+<tr>
+<th>所属団体（社名等）</th>
+<td>
+[mwform_text name="company" size="60" ]
+</td>
+</tr>
+<tr>
+<th>E-mail<span class="required">必須</span></th>
+<td>
+[mwform_email name="email" size="60" placeholder="例） example@gmail.com"]
+</td>
+</tr>
+<tr>
+<th>E-mail（確認）<span class="required">必須</span></th>
+<td>
+[mwform_email name="emailConfirm" size="60" placeholder="例） example@gmail.com"]
+</td>
+</tr>
+<tr>
+<th>お電話番号</th>
+<td>
+[mwform_text name="tel" size="60" maxlength="11" placeholder="例） 000-1111-2222"]
+</td>
+</tr>
+<tr>
+<th>画像</th>
+<td>
+<div class="js-preview-image"></div>
+[mwform_image name="image" class="js-wpform-image"]
+</td>
+</tr>
+<tr>
+<th>ご相談内容<span class="required">必須</span></th>
+<td>
+[mwform_textarea name="message" cols="50" rows="5"]
+</td>
+</tr>
+</table>
+<div class="l-btn l-btn--2btn">
+<div class="c-btn">
+[mwform_bbutton name="reset" class="c-btn__reset js-reset" value="reset"]リセット[/mwform_bbutton]
+[mwform_bback class="c-btn__back js-prev" value="back"]前の画面に戻る[/mwform_bback]
+</div>
+<div class="c-btn">
+[mwform_bconfirm class="c-btn__confirm" value="confirm"]入力内容を確認する[/mwform_bconfirm]
+[mwform_bsubmit name="mwform_bsubmit-187" class="c-btn__send" value="send"]送信する[/mwform_bsubmit]
+</div>
+</div>
