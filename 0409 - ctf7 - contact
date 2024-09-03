@@ -1,0 +1,58 @@
+// check duong dan mutistep
+<table>
+<tr>
+<th class="title-contactform7">お名前<span class="required">必須</span></th>
+<td>
+<div class="p-contact__name">
+<div>[text* firstName placeholder "姓"]</div>
+<div>[text* lastName placeholder "名"]</div>
+</div>
+</td>
+</tr>
+<tr>
+<th class="title-contactform7">所属団体（社名等）</th>
+<td>
+[text company]
+</td>
+</tr>
+<tr>
+<th class="title-contactform7">E-mail<span class="required">必須</span></th>
+<td>
+[email* your-email placeholder "例） example@gmail.com"]
+</td>
+</tr>
+<tr>
+<th class="title-contactform7">E-mail（確認）<span class="required">必須</span></th>
+<td>
+[email* emailConfirm placeholder "例） example@gmail.com"]
+</td>
+</tr>
+<tr>
+<th class="title-contactform7">お電話番号</th>
+<td>
+[tel tel minlength:10 maxlength:11 placeholder "例） 000-1111-2222"]
+</td>
+</tr>
+<tr>
+<th class="title-contactform7">画像</th>
+<td>
+<div class="js-preview-image"></div>
+[file image limit:10000000 filetypes:png|jpeg|jpg class:js-image-confirm]
+</td>
+</tr>
+<tr>
+<th class="title-contactform7">ご相談内容<span class="required">必須</span></th>
+<td>
+[textarea* message]
+</td>
+</tr>
+</table>
+<div class="l-btn l-btn--2btn">
+<div class="c-btn">
+<button type="button" class="c-btn__reset js-reset">リセット</button>
+[multistep multistep-482 first_step "/~nobita/doraemon/sizuka/suneo/chaien/contact-form-7/confirm-ctf7"]
+</div>
+<div class="c-btn">
+[submit class:c-btn__confirm "入力内容を確認する"]
+</div>
+</div>
