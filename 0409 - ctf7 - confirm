@@ -1,0 +1,58 @@
+// de y duong dan mutistep
+<table>
+<tr>
+<th>お名前<span class="required">必須</span></th>
+<td>
+<div class="p-contact__name">
+<div>[multiform "firstName"]</div>
+<div>[multiform "lastName"]</div>
+</div>
+</td>
+</tr>
+<tr>
+<th>所属団体（社名等）</th>
+<td>
+[multiform "company"]
+</td>
+</tr>
+<tr>
+<th>E-mail<span class="required">必須</span></th>
+<td>
+[multiform "your-email"]
+</td>
+</tr>
+<tr>
+<th>E-mail（確認）<span class="required">必須</span></th>
+<td>
+[multiform "emailConfirm"]
+</td>
+</tr>
+<tr>
+<th>お電話番号</th>
+<td>
+[multiform "tel"]
+</td>
+</tr>
+<tr>
+<th>画像</th>
+<td>
+<div class="js-preview-image"></div>
+[file image-2 limit:10000000 class:js-image-confirm]
+</td>
+</tr>
+<tr>
+<th>ご相談内容<span class="required">必須</span></th>
+<td>
+[multiform "message"]
+</td>
+</tr>
+</table>
+<div class="l-btn l-btn--2btn">
+<div class="c-btn">
+[previous "前の画面に戻る"]
+[multistep multistep-557 last_step send_email "/~nobita/doraemon/sizuka/suneo/chaien/contact/completed"]
+</div>
+<div class="c-btn">
+[submit class:c-btn__confirm class:js-btn-confirm "送信する"]
+</div>
+</div>
