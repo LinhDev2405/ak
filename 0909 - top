@@ -1,0 +1,86 @@
+  &-slogan {
+    &__bg {
+      background-image: url(./assets/img/slogan-bg.jpg);
+      background-size: cover;
+      background-repeat: no-repeat;
+      padding-top: 9.9%;
+    }
+
+    &__content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &__title {
+      font-size: 5.2rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      line-height: 1.635;
+      transform: translateY(-1px);
+
+      &--white {
+        color: $white;
+        border-radius: 5px;
+        background-color: #00664c;
+        padding: 0 11px 2px;
+        margin-right: 9px;
+        margin-bottom: 5px;
+      }
+
+      span {
+        display: inline-block;
+      }
+    }
+
+    &__smallimg {
+      transform: translate(72.5px, -45px);
+    }
+
+    &__main {
+      display: flex;
+      gap: 0 83px;
+      background-color: #f7f6f2;
+      margin-top: -47px;
+    }
+
+    &__mainimg {
+      height: 100%;
+      border-top-right-radius: 150px;
+      border-bottom-right-radius: 150px;
+    }
+
+    &__info {
+      margin-top: 38px;
+    }
+
+    &__history {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      line-height: 1.889;
+      color: #333;
+      width: fit-content;
+      padding-bottom: 4px;
+      border-bottom: 2px solid #2c2c2c;
+      margin-bottom: 31px;
+    }
+
+    &__company {
+      display: flex;
+      align-items: center;
+      gap: 0 27px;
+      margin-bottom: 26px;
+    }
+
+    &__wrap {
+      max-width: 600px;
+      width: 100%;
+      font-size: 1.6rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      line-height: 2;
+      margin-bottom: 54px;
+      color: #333;
+    }
+  }
