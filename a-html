@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title> Home | Kawachi Mikando </title>
+  <meta name="description" content="Home page">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.7/swiper-bundle.css"
+    integrity="sha512-+pwQ1JBCDk3EJnDMJkIylD98GjOygtUbTAIN2J4s8GXuOvB9j8THTJZBmwhw59oI75Wl8FpIJkbw72/tlFDGhA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+    integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap"
+    rel="stylesheet">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.7/swiper-bundle.min.js"
+    integrity="sha512-h5Vv+n+z0eRnlJoUlWMZ4PLQv4JfaCVtgU9TtRjNYuNltS5QCqi4D4eZn4UkzZZuG2p4VBz3YIlsB7A2NVrbww=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+  <header class="c-header js-header">
+    <a href="./index.html" class="c-header__logo">
+      <img src="./assets/img/logo.svg" alt="kawachi-mikando">
+    </a>
+    <div class="c-header__nav">
+      <nav class="c-gnav">
+        <ul class="c-gnav__navlist">
+          <li class="c-gnav__item">
+            <a href="./index.html#slogan" class="c-gnav__link "> 河内みかん堂とは </a>
+          </li>
+          <li class="c-gnav__item">
+            <a href="./index.html#concept" class="c-gnav__link "> 当園のこだわり </a>
+          </li>
+          <li class="c-gnav__item">
+            <a href="./index.html#feature" class="c-gnav__link "> 当園の特徴 </a>
+          </li>
+          <li class="c-gnav__item">
+            <a href="#" class="c-gnav__link "> 農園だより </a>
+          </li>
+          <li class="c-gnav__item">
+            <a href="./contact.html" class="c-gnav__link "> お問い合わせ </a>
+          </li>
+          <li class="c-gnav__item">
+            <a href="#" class="c-gnav__link "> オンラインショップ </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="c-header__sidebar js-sidebar">
+      <div class="c-hamburger js-show-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <a href="#" class="c-header__location" target="_blank">熊本県・河内 </a>
+      <div class="c-header__handle">
+        <ul>
+          <li class="c-header__socialitem">
+            <a href="#" target="_blank">
+              <img src="./assets/img/icons/line.svg" alt="line">
+            </a>
+          </li>
+          <li class="c-header__socialitem">
+            <a href="#" target="_blank">
+              <img src="./assets/img/icons/facebook.svg" alt="facebook">
+            </a>
+          </li>
+          <li class="c-header__socialitem">
+            <a href="#" target="_blank">
+              <img src="./assets/img/icons/instagram.svg" alt="instagram">
+            </a>
+          </li>
+          <li class="c-header__socialitem">
+            <a href="#" target="_blank">
+              <img src="./assets/img/icons/youtube.svg" alt="youtube">
+            </a>
+          </li>
+        </ul>
+        <button class="c-header__btt js-backtotop">
+          <img src="./assets/img/icons/arrow-line-up-primary.svg" alt="back-to-top">
+        </button>
+      </div>
+      <button class="is-not-pc c-header__btt js-backtotop">
+        <img src="./assets/img/icons/arrow-line-up-white.svg" alt="back-to-top">
+      </button>
+    </div>
+    <a href="#" class="c-header__buy">
+      <img src="./assets/img/icons/bag.svg" alt="ご購入はこちら" class="u-tly12">
+      <p class="c-title-vertical c-header__contentbuy">ご購入はこちら</p>
+    </a>
+    <div class="c-header__overlay js-header-overlay">
+      <div class="c-header__menu js-header-menu">
+        <ul class="c-header__list">
+          <li class="c-header__item">
+            <a href="./index.html"> ホーム </a>
+          </li>
+          <li class="c-header__item">
+            <a href="./index.html#slogan"> 河内みかん堂とは </a>
+          </li>
+          <li class="c-header__item">
+            <a href="./index.html#concept"> 当園のこだわり </a>
+          </li>
+          <li class="c-header__item">
+            <a href="./index.html#feature"> 当園の特徴 </a>
+          </li>
+          <li class="c-header__item">
+            <a href="#"> ちぎり～ず！ </a>
+          </li>
+          <li class="c-header__item">
+            <a href="#"> 農園だより </a>
+          </li>
+          <li class="c-header__item">
+            <a href="./contact.html"> お問い合わせ </a>
+          </li>
+          <li class="c-header__item">
+            <a href="#"> オンラインショップ </a>
+          </li>
+          <li class="c-header__item">
+            <a href="#"> プライバシーポリシー </a>
+          </li>
+        </ul>
+        <a href="./index.html">
+          <img src="./assets/img/logo-white.svg" alt="kawachi-mikando">
+        </a>
+        <p class="c-header__address">エンタメ農家「河内みかん堂」<br>〒861-5282<br>熊本県熊本市西区松尾町平山４１５−２８ </p>
+        <a href="tel:0000000000" class="c-header__phone">00-0000-0000</a>
+        <ul class="c-header__menusocial">
+          <li class="c-header__socialitem c-header__socialitem--white">
+            <a href="#" target="_blank">
+              <img src="./assets/img/icons/line-primary.svg" alt="line">
+            </a>
+          </li>
+          <li class="c-header__socialitem c-header__socialitem--white">
+            <a href="#" target="_blank">
+              <img src="./assets/img/icons/facebook-primary.svg" alt="facebook">
+            </a>
+          </li>
+          <li class="c-header__socialitem c-header__socialitem--white">
+            <a href="#" target="_blank">
+              <img src="./assets/img/icons/instagram-primary.svg" alt="instagram">
+            </a>
+          </li>
+          <li class="c-header__socialitem c-header__socialitem--white">
+            <a href="#" target="_blank">
+              <img src="./assets/img/icons/youtube-primary.svg" alt="youtube">
+            </a>
+          </li>
+        </ul>
+        <a href="#" class="c-header__location c-header__location--menu" target="_blank">熊本県・河内</a>
+      </div>
+    </div>
+  </header>
+  <main class="home">
+    <section class="home-mainvisual">
+      <div class="swiper home-mainvisual__swiper js-mainvisual-swiper">
+        <div class="swiper-wrapper home-mainvisual__wrapper">
+          <div class="swiper-slide home-mainvisual__slide">
+            <picture>
+              <source media="(max-width: 767px)" srcset="./assets/img/sp/mainvs-sp-1.jpg">
+              <img src="./assets/img/pc/mainvs-1.jpg" alt="mainvs-1" class="home-mainvisual__img">
+            </picture>
+          </div>
+          <div class="swiper-slide home-mainvisual__slide">
+            <picture>
+              <source media="(max-width: 767px)" srcset="./assets/img/sp/mainvs-sp-2.jpg">
+              <img src="./assets/img/pc/mainvs-2.jpg" alt="mainvs-2" class="home-mainvisual__img">
+            </picture>
+          </div>
+          <div class="swiper-slide home-mainvisual__slide">
+            <picture>
+              <source media="(max-width: 767px)" srcset="./assets/img/sp/mainvs-sp-3.jpg">
+              <img src="./assets/img/pc/mainvs-3.jpg" alt="mainvs-3" class="home-mainvisual__img">
+            </picture>
+          </div>
+          <div class="swiper-slide home-mainvisual__slide">
+            <picture>
+              <source media="(max-width: 767px)" srcset="./assets/img/sp/mainvs-sp-4.jpg">
+              <img src="./assets/img/pc/mainvs-4.jpg" alt="mainvs-4" class="home-mainvisual__img">
+            </picture>
+          </div>
+          <div class="swiper-slide home-mainvisual__slide">
+            <picture>
+              <source media="(max-width: 767px)" srcset="./assets/img/sp/mainvs-sp-5.jpg">
+              <img src="./assets/img/pc/mainvs-5.jpg" alt="mainvs-5" class="home-mainvisual__img">
+            </picture>
+          </div>
+        </div>
+        <h1 class="home-mainvisual__name">
+          <picture>
+            <source media="(max-width: 767px)" srcset="./assets/img/sp/mainvs-content-sp.png">
+            <img src="./assets/img/pc/mainvs-content.png" alt="kawachi-mikando">
+          </picture>
+        </h1>
+      </div>
+      <p class="home-mainvisual__desc">金峰山の湧き水のもと、<br>太陽に近い333ｍの高地で<br>育まれた河内みかん。</p>
+      <a href="#" class="home-mainvisual__boxvideo">
+        <div class="home-mainvisual__video">
+          <img src="./assets/img/note-red-with-text.png" alt="動画公開中！" class="home-mainvisual__note">
+          <figure>
+            <img src="./assets/img/video-thumbnail.jpg" alt="動画公開中！-thumbnail" class="home-mainvisual__thumbnail">
+          </figure>
+          <span class="home-mainvisual__btn">YouTubeをみる</span>
+        </div>
+      </a>
+    </section>
+    <section class="home-topic">
+      <picture>
+        <source media="(max-width: 767px)" srcset="./assets/img/sp/mango-sp.svg">
+        <img src="./assets/img/pc/mango.svg" alt="mango" class="c-mango">
+      </picture>
+      <div class="l-container home-topic__container">
+        <div class="home-topic__left">
+          <figure class="c-flower">
+            <img src="./assets/img/logo-flower-primary.svg" alt="green-flower" class="u-mb-3">
+          </figure>
+          <h2 class="c-title">
+            <span>TOPICS</span>
+            <span class="c-title--jp u-mt24">ぜひ、読んでほしい記事</span>
+          </h2>
+          <div class="home-topic__btn u-mt66">
+            <a href="#" class="c-btn">お知らせ一覧へ</a>
+          </div>
+        </div>
+        <ul class="home-topic__right">
+          <li class="home-topic__boxlink">
+            <a href="#" class="home-topic__link">
+              <img src="./assets/img/topic-img.jpg" loading="lazy" alt="ここにニュースが入ります。ここにニュースが入ります。ここにニュースが入ります。"
+                class="home-topic__thumbnail">
+              <div class="home-topic__top">
+                <span class="home-topic__date"> 2021.11.01 </span>
+                <span class="c-label u-lc1"> お知らせ </span>
+              </div>
+              <h3 class="home-topic__title u-lctopic"> ここにニュースが入ります。ここにニュースが入ります。ここにニュースが入ります。 </h3>
+            </a>
+          </li>
+          <li class="home-topic__boxlink">
+            <a href="#" class="home-topic__link">
+              <img src="./assets/img/topic-img.jpg" loading="lazy" alt="ここにニュースが入ります。ここにニュースが入ります。ここにニュースが入ります。"
+                class="home-topic__thumbnail">
+              <div class="home-topic__top">
+                <span class="home-topic__date"> 2021.11.01 </span>
+                <span class="c-label u-lc1"> お知らせ </span>
+              </div>
+              <h3 class="home-topic__title u-lctopic"> ここにニュースが入ります。ここにニュースが入ります。ここにニュースが入ります。 </h3>
+            </a>
+          </li>
+          <li class="home-topic__boxlink">
+            <a href="#" class="home-topic__link">
+              <img src="./assets/img/topic-img.jpg" loading="lazy" alt="ここにニュースが入ります。ここにニュースが入ります。ここにニュースが入ります。"
+                class="home-topic__thumbnail">
+              <div class="home-topic__top">
+                <span class="home-topic__date"> 2021.11.01 </span>
+                <span class="c-label u-lc1"> お知らせ </span>
+              </div>
+              <h3 class="home-topic__title u-lctopic"> ここにニュースが入ります。ここにニュースが入ります。ここにニュースが入ります。 </h3>
+            </a>
+          </li>
+        </ul>
+        <div class="u-mt66 u-center is-bp1280">
+          <a href="#" class="c-btn">お知らせ一覧へ</a>
+        </div>
+      </div>
+    </section>
+    <section class="home-slogan" id="slogan">
+      <div class="home-slogan__container">
+        <div class="l-container l-container--topic">
+          <h2 class="home-slogan__title">
+            <span class="home-slogan__title--white">“家族愛が強い農家”</span>だから<br><span>愛情たっぷり、<br
+                class="is-sp">絶品過ぎる河内みかん。</span>
+          </h2>
+          <img src="./assets/img/slogan-img.png" loading="lazy" alt="みかんの産地「熊本 河内」で50年以上の歴史。"
+            class="home-slogan__smallimg">
+        </div>
+        <div class="home-slogan__main">
+          <div class="c-boximg">
+            <img src="./assets/img/slogan-main-img.jpg" loading="lazy" alt="家族愛が強い農家だから 愛情たっぷり、絶品過ぎる河内みかん。"
+              class="c-boximg__mainimg">
+          </div>
+          <div class="home-slogan__info c-content">
+            <p class="home-slogan__history">みかんの産地「熊本 河内」で50年以上の歴史。</p>
+            <img src="./assets/img/company-name-black.svg" alt="kawachi-mikando" class="home-slogan__company">
+            <p class="c-content__wrap"> 天明2年・・・熊本にある金峰山の山肌（河内町）でみかん生産が始まり、昭和初期に河内みかんは全国トップクラスに躍り出ました。<br>
+              みかん生産に賑わいを見せる時代に初代東農園の園主「東○○」も生産をス<br class="is-not-sp">タートさせ、当時はコンテナを肩に担いだり、牛で引っ<br
+                class="is-sp">張ってみかんを運搬するという過酷な労働環境にでしたが、河内みかんは人気が高く、お客様のお喜びの声が疲れを感じさせませんでした。 二代目「東
+              聖也」に事業承継する際にはモノレールが設置され、みかん生産に変化が生まれました。その当時、南農園初代「南
+              和宏」もみかん生産をスタートさせ、東農園と南農園は仲間でもあり、良きライバルでもあり、切磋琢磨する関係となりました。<br> そんな東農園と南農園が一つになったのは、南家の○女「南
+              尚江」が東家に嫁いだことでした。それからというもの、両園は技術も労働力も共有しながら絶品みかんを作り上げていきました。家族愛が紡いできた想いは、三代目の東宗太へと受け継がれています。 </p>
+            <div class="u-center home-slogan__btn">
+              <a href="#" class="c-btn">詳しく見る</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="home-adv">
+      <div class="home-adv__container">
+        <div class="home-adv__map">
+          <img src="./assets/img/mountain.svg" alt="mountain-1" class="c-mountain">
+          <div class="l-container l-container--adv home-adv__history">
+            <div class="home-adv__content">
+              <h2 class="c-title-vertical c-title-vertical--big">
+                <span>有明海の潮風と</span>
+                <span>太陽の光をいっぱいに</span>
+                <span>浴びて育つ</span>
+                <span>絶品過ぎる河内みかん。</span>
+              </h2>
+            </div>
+            <div class="u-center">
+              <picture>
+                <source media="(max-width: 767px)" srcset="./assets/img/map-sp.png">
+                <img src="./assets/img/map.png" loading="lazy" alt="絶品過ぎる河内みかん浴びて育つ太陽の光をいっぱいに有明海の潮風と"
+                  class="home-adv__img">
+              </picture>
+            </div>
+          </div>
+          <p class="home-adv__wrap">1782年（天明2年）に河内領主牛島七郎佐衛門橘公基が、それ以前に育てられていた小みかんより優れた温州みかんの栽培を奨励したことが始まりです。
+            1934年（昭和9年）には河内町内に県立果樹実験場が設置され、生産向上や増殖を目的としてより高度なみかん栽培技術の普及が図られました。 現在は主に4代目世代が栽培に従事しており、後継者育成も進められています。
+          </p>
+        </div>
+        <div class="home-adv__cave">
+          <div class="c-boximg">
+            <img src="./assets/img/cave.jpg" loading="lazy" alt="晩年の宮本武蔵ゆかりの地“霊巌洞”" class="c-boximg__mainimg">
+          </div>
+          <div class="home-adv__info c-content">
+            <p class="home-adv__place">晩年の宮本武蔵ゆかりの地“霊巌洞”</p>
+            <p class="c-content__wrap c-content__wrap--white">
+              実は河内みかん堂の東農園があるみかん畑は、あの宮本武蔵が晩年に兵法書「五輪書」を作成したと言われている金峰山山麓にある洞窟”霊巌洞”の近くにあります。<br>
+              うっそうと茂る樹木におおわれ、神秘的な霊場として知られる雲巌禅寺の裏山に“霊巌洞”はあり、洞窟内には岩戸観音の名で知られる観音像が安置されています。ここは宮本武蔵の魂が宿る地、そんな由緒ある山麓に河内みかん堂の東農園はあります。お立ち寄りの際には是非足を運んでください。
+            </p>
+          </div>
+          <img src="./assets/img/mountain.svg" alt="mountain-1" class="c-mountain c-mountain--advbot">
+        </div>
+      </div>
+      <div class="home-adv__list swiper js-adv-swiper">
+        <div class="swiper-wrapper">
+          <a href="#" class="swiper-slide c-card">
+            <figure>
+              <img src="./assets/img/list-item.jpg" loading="lazy" alt="みかん畑名所などのイメージ">
+            </figure>
+            <div class="home-adv__boxtitle">
+              <h3 class="home-adv__itemtitle"> みかん畑<br>名所などのイメージ </h3>
+            </div>
+          </a>
+          <a href="#" class="swiper-slide c-card">
+            <figure>
+              <img src="./assets/img/list-item.jpg" loading="lazy" alt="みかん畑名所などのイメージ">
+            </figure>
+            <div class="home-adv__boxtitle">
+              <h3 class="home-adv__itemtitle"> みかん畑<br>名所などのイメージ </h3>
+            </div>
+          </a>
+          <a href="#" class="swiper-slide c-card">
+            <figure>
+              <img src="./assets/img/list-item.jpg" loading="lazy" alt="みかん畑名所などのイメージ">
+            </figure>
+            <div class="home-adv__boxtitle">
+              <h3 class="home-adv__itemtitle"> みかん畑<br>名所などのイメージ </h3>
+            </div>
+          </a>
+          <a href="#" class="swiper-slide c-card">
+            <figure>
+              <img src="./assets/img/list-item.jpg" loading="lazy" alt="みかん畑名所などのイメージ">
+            </figure>
+            <div class="home-adv__boxtitle">
+              <h3 class="home-adv__itemtitle"> みかん畑<br>名所などのイメージ </h3>
+            </div>
+          </a>
+          <a href="#" class="swiper-slide c-card">
+            <figure>
+              <img src="./assets/img/list-item.jpg" loading="lazy" alt="みかん畑名所などのイメージ">
+            </figure>
+            <div class="home-adv__boxtitle">
+              <h3 class="home-adv__itemtitle"> みかん畑<br>名所などのイメージ </h3>
+            </div>
+          </a>
+          <a href="#" class="swiper-slide c-card">
+            <figure>
+              <img src="./assets/img/list-item.jpg" loading="lazy" alt="みかん畑名所などのイメージ">
+            </figure>
+            <div class="home-adv__boxtitle">
+              <h3 class="home-adv__itemtitle"> みかん畑<br>名所などのイメージ </h3>
+            </div>
+          </a>
+          <a href="#" class="swiper-slide c-card">
+            <figure>
+              <img src="./assets/img/list-item.jpg" loading="lazy" alt="みかん畑名所などのイメージ">
+            </figure>
+            <div class="home-adv__boxtitle">
+              <h3 class="home-adv__itemtitle"> みかん畑<br>名所などのイメージ </h3>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section class="home-concept" id="concept">
+      <div class="home-concept__container">
+        <div class="home-concept__content">
+          <div class="u-center">
+            <figure class="c-flower">
+              <img src="./assets/img/logo-flower-primary.svg" alt="green-flower" class="u-mb-4">
+            </figure>
+            <h2 class="c-title home-concept__title">
+              <span>CONCEPT</span>
+              <span class="c-title--jpbig u-mt7">河内みかん堂のこだわり</span>
+            </h2>
+            <div class="home-concept__wrap">
+              <p class="c-title-vertical c-title-vertical--small">
+                <span>甘いだけではない</span>
+                <span>河内みかんをお届けします</span>
+              </p>
+              <p class="c-title-vertical c-title-vertical--small">
+                <span>時が流れ</span>
+                <span>時代は変わり</span>
+                <span>人の価値観も変わり続ける中</span>
+                <span>変わらない想い</span>
+                <span>これぞ河内みかん堂</span>
+                <span>みかんを作り続ける農園です</span>
+              </p>
+              <p class="c-title-vertical c-title-vertical--small">
+                <span>河内みかん堂は山と海に恵まれ</span>
+                <span>太陽の光が降り注ぐ畑は</span>
+                <span>先祖代々から紡いできた宝です</span>
+              </p>
+              <p class="c-title-vertical c-title-vertical--small">
+                <span>自然の中にあるみかん畑であり</span>
+                <span class="is-not-sp">そこで関わる人も自然のまま</span>
+                <span>甘いだけではない</span>
+                <span>一粒一粒にそれぞれの味があるように</span>
+                <span class="is-not-sp">働いている人もそれぞれの想いがあり</span>
+                <span class="is-sp">働いている人にもそれぞれの想いがあり</span>
+                <span>みかんに関わっています</span>
+              </p>
+              <figure>
+                <img src="./assets/img/child-with-orange.png" loading="lazy" alt="concept" class="home-concept__child">
+              </figure>
+            </div>
+            <a href="#" class="c-btn u-mt82">詳しく見る</a>
+          </div>
+          <figure>
+            <img src="./assets/img/orange.png" loading="lazy" alt="河内みかん堂のこだわり" class="home-concept__orange">
+          </figure>
+        </div>
+        <div class="home-concept__activity">
+          <picture>
+            <source media="(max-width: 767px)" srcset="./assets/img/sp/concept-main-sp.jpg">
+            <img src="./assets/img/pc/concept-main.jpg" loading="lazy" alt="concept-main-img" class="home-concept__img">
+          </picture>
+        </div>
+      </div>
+    </section>
+    <section class="home-feature" id="feature">
+      <picture>
+        <source media="(max-width: 767px)" srcset="./assets/img/sp/mango-sp.svg">
+        <img src="./assets/img/pc/mango.svg" alt="mango" class="c-mango c-mango--feature">
+      </picture>
+      <figure>
+        <img src="./assets/img/icons/arrow-multi-up.svg" alt="arrow-multi-up" class="home-feature__arrow">
+      </figure>
+      <div class="u-center">
+        <figure class="c-flower">
+          <img src="./assets/img/logo-flower-primary.svg" alt="green-flower" class="u-mb-4">
+        </figure>
+        <h2 class="c-title home-feature__maintitle">
+          <span>FEATURE</span>
+          <span class="c-title--jpbig u-mt7">河内みかん堂の特徴</span>
+        </h2>
+      </div>
+      <div class="home-feature__list is-tab">
+        <div class="home-feature__item">
+          <div class="home-feature__boxnumber">
+            <span class="home-feature__number"> 01 </span>
+          </div>
+          <div class="home-feature__boximg">
+            <picture>
+              <source media="(max-width: 767px)" srcset="./assets/img/feature-1.jpg">
+              <img src="./assets/img/feature-1.jpg" loading="lazy" alt="金峰山の自然の湧き水" class="home-feature__img">
+            </picture>
+          </div>
+          <h3 class="home-feature__title"> 金峰山の自然の湧き水 </h3>
+          <p class="home-feature__desc">
+            金峰山の自然の湧き水を使った土壌微生物が活性化しやすい環境にあるみかん農園です。日本国内でも自然の湧き水が注目されており、豊かに湧き出る金峰山の水を使うことで絶品のみかんが実ります。</p>
+        </div>
+        <div class="home-feature__item">
+          <div class="home-feature__boxnumber">
+            <span class="home-feature__number"> 02 </span>
+          </div>
+          <div class="home-feature__boximg">
+            <picture>
+              <source media="(max-width: 767px)" srcset="./assets/img/feature-2.jpg">
+              <img src="./assets/img/feature-2.jpg" loading="lazy" alt="実り豊かな自然の土壌"
+                class="home-feature__img home-feature__img--bot">
+            </picture>
+          </div>
+          <h3 class="home-feature__title"> 実り豊かな自然の土壌 </h3>
+          <p class="home-feature__desc">
+            みかんの木の状態に合わせた土壌を維持しており、根っこが肥料を最適な量吸収できるよう土の管理を徹底しております。土壌の微生物が分解した栄養を根が水とともに吸い上げることで旨味のあるみかんが実ります。</p>
+        </div>
+        <div class="home-feature__item">
+          <div class="home-feature__boxnumber">
+            <span class="home-feature__number"> 03 </span>
+          </div>
+          <div class="home-feature__boximg">
+            <picture>
+              <source media="(max-width: 767px)" srcset="./assets/img/feature-3.jpg">
+              <img src="./assets/img/feature-3.jpg" loading="lazy" alt="太陽の光と潮風"
+                class="home-feature__img home-feature__img--left">
+            </picture>
+          </div>
+          <h3 class="home-feature__title"> 太陽の光と潮風 </h3>
+          <p class="home-feature__desc">３３３ｍの高台にあるみかんの段々畑は、太陽の光を強く浴びています。高台にあることで風通しが良く、みかんの大敵である雨を潮風が乾燥させ、ミネラルを与え続けます。
+          </p>
+        </div>
+      </div>
+      <div class="home-feature__list is-not-pc">
+        <div class="swiper js-feature-swiper">
+          <div class="swiper-wrapper">
+            <div class="home-feature__item swiper-slide">
+              <div class="home-feature__boxnumber">
+                <span class="home-feature__number"> 01 </span>
+              </div>
+              <div class="home-feature__boximg">
+                <picture>
+                  <source media="(max-width: 767px)" srcset="./assets/img/feature-1.jpg">
+                  <img src="./assets/img/feature-1.jpg" loading="lazy" alt="金峰山の自然の湧き水" class="home-feature__img">
+                </picture>
+              </div>
+              <h3 class="home-feature__title"> 金峰山の自然の湧き水 </h3>
+              <p class="home-feature__desc">
+                金峰山の自然の湧き水を使った土壌微生物が活性化しやすい環境にあるみかん農園です。日本国内でも自然の湧き水が注目されており、豊かに湧き出る金峰山の水を使うことで絶品のみかんが実ります。</p>
+            </div>
+            <div class="home-feature__item swiper-slide">
+              <div class="home-feature__boxnumber">
+                <span class="home-feature__number"> 02 </span>
+              </div>
+              <div class="home-feature__boximg">
+                <picture>
+                  <source media="(max-width: 767px)" srcset="./assets/img/feature-2.jpg">
+                  <img src="./assets/img/feature-2.jpg" loading="lazy" alt="実り豊かな自然の土壌"
+                    class="home-feature__img home-feature__img--bot">
+                </picture>
+              </div>
+              <h3 class="home-feature__title"> 実り豊かな自然の土壌 </h3>
+              <p class="home-feature__desc">
+                みかんの木の状態に合わせた土壌を維持しており、根っこが肥料を最適な量吸収できるよう土の管理を徹底しております。土壌の微生物が分解した栄養を根が水とともに吸い上げることで旨味のあるみかんが実ります</p>
+            </div>
+            <div class="home-feature__item swiper-slide">
+              <div class="home-feature__boxnumber">
+                <span class="home-feature__number"> 03 </span>
+              </div>
+              <div class="home-feature__boximg">
+                <picture>
+                  <source media="(max-width: 767px)" srcset="./assets/img/feature-3.jpg">
+                  <img src="./assets/img/feature-3.jpg" loading="lazy" alt="太陽の光と潮風"
+                    class="home-feature__img home-feature__img--left">
+                </picture>
+              </div>
+              <h3 class="home-feature__title"> 太陽の光と潮風 </h3>
+              <p class="home-feature__desc">
+                ３３３ｍの高台にあるみかんの段々畑は、太陽の光を強く浴びています。高台にあることで風通しが良く、みかんの大敵である雨を潮風が乾燥させ、ミネラルを与え続けます。</p>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-button-next home-feature__next">
+          <img src="./assets/img/icons/arrow-right-big-black.svg" alt="arrow-next">
+        </div>
+        <div class="swiper-button-prev home-feature__prev">
+          <img src="./assets/img/icons/arrow-right-big-black.svg" alt="arrow-prev">
+        </div>
+      </div>
+      <div class="u-center home-feature__more">
+        <a href="#" class="c-btn">詳しく見る</a>
+      </div>
+    </section>
+    <section class="home-value">
+      <div class="home-value__container">
+        <div class="home-value__intro">
+          <div class="home-value__content c-content">
+            <h2 class="home-value__title"> 農業に新しい<br>
+              <span class="home-value__title--green">“価値”を創造する</span><br>
+              <span>エンタメ農家です!</span>
+            </h2>
+            <p class="c-content__wrap c-content__wrap--white">
+              河内みかん堂は面白くて楽しい参加型農園を目指しています。&nbsp;みかん農園がお客様と身近な存在であることで、私たちもやりがいに繋がり、美味しいみかんを作り続けることができます。親族みんなで農園の管理を行い、みかんの収穫時期にはたくさんのお客様が訪れていただいています。&nbsp;農園でエンターテイメントを提供できる集団、それが河内みかん堂です。
+            </p>
+          </div>
+          <div class="c-boximg">
+            <img src="./assets/img/value-main.jpg" loading="lazy" alt="農業に新しい価値を創造するエンタメ農家です!"
+              class="c-boximg__mainimg c-boximg__mainimg--member">
+          </div>
+        </div>
+        <div class="home-value__gallery u-center">
+          <h2>また行きたくなる参加型農園</h2>
+          <figure>
+            <img src="./assets/img/chat-line-white.svg" alt="また行きたくなる参加型農園" class="home-value__img">
+          </figure>
+          <div class="home-value__list">
+            <div class="swiper js-gallery-swipe home-value__swipe">
+              <div class="swiper-wrapper">
+                <figure class="swiper-slide c-card">
+                  <img src="./assets/img/gallery-1.jpg" loading="lazy" alt="gallery-1">
+                </figure>
+                <figure class="swiper-slide c-card">
+                  <img src="./assets/img/gallery-2.jpg" loading="lazy" alt="gallery-2">
+                </figure>
+                <figure class="swiper-slide c-card">
+                  <img src="./assets/img/gallery-3.jpg" loading="lazy" alt="gallery-3">
+                </figure>
+                <figure class="swiper-slide c-card">
+                  <img src="./assets/img/gallery-4.jpg" loading="lazy" alt="gallery-4">
+                </figure>
+                <figure class="swiper-slide c-card">
+                  <img src="./assets/img/gallery-5.jpg" loading="lazy" alt="gallery-5">
+                </figure>
+                <figure class="swiper-slide c-card">
+                  <img src="./assets/img/gallery-6.jpg" loading="lazy" alt="gallery-6">
+                </figure>
+                <figure class="swiper-slide c-card">
+                  <img src="./assets/img/gallery-7.jpg" loading="lazy" alt="gallery-7">
+                </figure>
+              </div>
+            </div>
+            <figure>
+              <img src="./assets/img/pc/mango-2.svg" alt="mango-2" class="home-value__mango">
+            </figure>
+          </div>
+        </div>
+        <div class="home-value__calendar u-center">
+          <h2>作業カレンダー</h2>
+          <div>
+            <img src="./assets/img/work-calen-1.jpg" loading="lazy" alt="作業カレンダー1">
+            <img src="./assets/img/work-calen-2.jpg" loading="lazy" alt="作業カレンダー2">
+          </div>
+          <h2>収穫体験カレンダー</h2>
+          <div>
+            <img src="./assets/img/harvest-calen-1.jpg" loading="lazy" alt="収穫体験カレンダー1">
+            <img src="./assets/img/harvest-calen-2.jpg" loading="lazy" alt="収穫体験カレンダー2">
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="home-member">
+      <div class="home-member__container">
+        <picture>
+          <source media="(max-width: 767px)" srcset="./assets/img/member-child-sp.png">
+          <img src="./assets/img/member-child.png" loading="lazy" alt="ちぎりり～ず隊員の紹介" class="home-member__child">
+        </picture>
+        <div class="u-center">
+          <figure class="c-flower">
+            <img src="./assets/img/logo-flower-primary.svg" alt="green-flower" class="u-mb-4">
+          </figure>
+          <h2 class="c-title home-member__maintitle">
+            <span>MEMBER</span>
+            <span class="c-title--jpbig u-mt7">ちぎりり～ず隊員の紹介</span>
+          </h2>
+        </div>
+        <div class="home-member__list">
+          <div class="swiper js-member-swiper home-member__swiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide home-member__slide">
+                <figure class="c-card c-card--member">
+                  <img src="./assets/img/member-1.jpg" loading="lazy" alt="東聖也">
+                </figure>
+                <div class="home-member__content">
+                  <p class="home-member__role"> ちぎり～ず隊隊長（東農園二代目園主） </p>
+                  <h2 class="home-member__name">
+                    <span> 東 </span>
+                    <span> 聖也 </span>
+                    <span class="home-member__address"> SEIYA HIGASHI </span>
+                  </h2>
+                  <div class="home-member__more">
+                    <p>得意な仕事 <span> 摘果、収穫 </span></p>
+                    <p>特技 <span> パチンコ </span>
+                    </p>
+                  </div>
+                  <div class="home-member__prefer">
+                    <p>好きなもの・場所</p>
+                    <ul>
+                      <li>料理 <span> 娘が作ってくれたみかんサンド </span></li>
+                      <li>みかんの品種 <span> 男は黙って青島！ </span></li>
+                      <li>みかん畑 <span> 自分の代で開拓した平山の園地 </span></li>
+                      <li>みかんの剥き方 <span> おヘソから </span></li>
+                    </ul>
+                  </div>
+                  <div class="home-member__desc">
+                    <span class="home-member__label">キャラクターの特徴</span>
+                    <p>
+                      <span class="u-lc3">
+                        一見物静かな感じに見えるが、とんでもない！普段からみかんに関しては情熱を燃やし、誰よりも朝早く仕事着に着替えて朝を待つ。肥後もっこす（頑固）な性格。畑を愛し、妻を大切にする河内みかん堂の大黒柱。
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-slide home-member__slide">
+                <figure class="c-card c-card--member">
+                  <img src="./assets/img/member-2.jpg" loading="lazy" alt="東尚江">
+                </figure>
+                <div class="home-member__content">
+                  <p class="home-member__role"> ちぎり~ず隊　なんも専務？（東農園のムードメーカー） </p>
+                  <h2 class="home-member__name">
+                    <span> 東 </span>
+                    <span> 尚江 </span>
+                    <span class="home-member__address"> HISAE HIGASHI </span>
+                  </h2>
+                  <div class="home-member__more">
+                    <p>得意な仕事 <span> 剪定クズ燃やし </span></p>
+                    <p>特技 <span> ラジオ投稿、雑談、POP作り </span>
+                    </p>
+                  </div>
+                  <div class="home-member__prefer">
+                    <p>好きなもの・場所</p>
+                    <ul>
+                      <li>料理 <span> そのままのみかんが好き！ </span></li>
+                      <li>みかんの品種 <span> 早生みかん </span></li>
+                      <li>みかん畑 <span> 先祖代々から栽培している日の出の園地 </span></li>
+                      <li>みかんの剥き方 <span> おヘソから </span></li>
+                    </ul>
+                  </div>
+                  <div class="home-member__desc">
+                    <span class="home-member__label">キャラクターの特徴</span>
+                    <p>
+                      <span class="u-lc3">
+                        一見物静かな感じに見えるが、とんでもない！普段からみかんに関しては情熱を燃やし、誰よりも朝早く仕事着に着替えて朝を待つ。肥後もっこす（頑固）な性格。畑を愛し、妻を大切にする河内みかん堂の大黒柱。
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-slide home-member__slide">
+                <figure class="c-card c-card--member">
+                  <img src="./assets/img/member-3.jpg" loading="lazy" alt="南和宏">
+                </figure>
+                <div class="home-member__content">
+                  <p class="home-member__role"> ちぎり～ず隊 司令塔（南農園初代園主） </p>
+                  <h2 class="home-member__name">
+                    <span> 南 </span>
+                    <span> 和宏 </span>
+                    <span class="home-member__address"> KAZUHIRO MINAMI </span>
+                  </h2>
+                  <div class="home-member__more">
+                    <p>得意な仕事 <span> みかんの作業全般 </span></p>
+                    <p>特技 <span> みかんの収穫 </span>
+                    </p>
+                  </div>
+                  <div class="home-member__prefer">
+                    <p>好きなもの・場所</p>
+                    <ul>
+                      <li>料理 <span> そのままのみかんがうまかろー？ </span></li>
+                      <li>みかんの品種 <span> 早生みかん </span></li>
+                      <li>みかん畑 <span> 不知火カントリー（ゴルフ場）に面した不知火畑 </span></li>
+                      <li>みかんの剥き方 <span> おヘソから </span></li>
+                    </ul>
+                  </div>
+                  <div class="home-member__desc">
+                    <span class="home-member__label">キャラクターの特徴</span>
+                    <p>
+                      <span class="u-lc3">
+                        一見物静かな感じに見えるが、とんでもない！普段からみかんに関しては情熱を燃やし、誰よりも朝早く仕事着に着替えて朝を待つ。肥後もっこす（頑固）な性格。畑を愛し、妻を大切にする河内みかん堂の大黒柱。
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-slide home-member__slide">
+                <figure class="c-card c-card--member">
+                  <img src="./assets/img/member-4.jpg" loading="lazy" alt="東宗太">
+                </figure>
+                <div class="home-member__content">
+                  <p class="home-member__role"> ちぎり～ず隊 切り込み隊長（東農園三代目園主） </p>
+                  <h2 class="home-member__name">
+                    <span> 東 </span>
+                    <span> 宗太 </span>
+                    <span class="home-member__address"> SOUTA HIGASHI </span>
+                  </h2>
+                  <div class="home-member__more">
+                    <p>得意な仕事 <span> みかんの運搬 </span></p>
+                    <p>特技 <span> 計算 </span>
+                    </p>
+                  </div>
+                  <div class="home-member__prefer">
+                    <p>好きなもの・場所</p>
+                    <ul>
+                      <li>料理 <span> 妹が作ってくれたみかんサンド </span></li>
+                      <li>みかんの品種 <span> 紅まどか </span></li>
+                      <li>みかん畑 <span> SS道が入っている網田の不知火畑 </span></li>
+                      <li>みかんの剥き方 <span> 和歌山剥き </span></li>
+                    </ul>
+                  </div>
+                  <div class="home-member__desc">
+                    <span class="home-member__label">キャラクターの特徴</span>
+                    <p>
+                      <span class="u-lc3">
+                        子どもの写真から飛び出したようなひょうきんな一面を持つ、時期代表。一つのことに集中すると周りが気にならなくなる。河内みかん堂のスタッフによると、どこからともなくちぎり〜ずを連れてくるらしい。
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-slide home-member__slide">
+                <figure class="c-card c-card--member">
+                  <img src="./assets/img/member-5.jpg" loading="lazy" alt="東美生">
+                </figure>
+                <div class="home-member__content">
+                  <p class="home-member__role"> ちぎり～ず隊 パティシエ（河内みかん堂の裏番長） </p>
+                  <h2 class="home-member__name">
+                    <span> 東 </span>
+                    <span> 美生 </span>
+                    <span class="home-member__address"> MIO HIGASHI </span>
+                  </h2>
+                  <div class="home-member__more">
+                    <p>得意な仕事 <span> みかんのスイーツを約20種類作れること </span></p>
+                    <p>特技 <span> 計算 </span>
+                    </p>
+                  </div>
+                  <div class="home-member__prefer">
+                    <p>好きなもの・場所</p>
+                    <ul>
+                      <li>料理 <span> みかんのタルト </span></li>
+                      <li>みかんの品種 <span> 品種問わず、小玉みかんしか勝たん </span></li>
+                      <li>みかん畑 <span> 景色がいい北原の畑！ </span></li>
+                      <li>みかんの剥き方 <span> おヘソから </span></li>
+                    </ul>
+                  </div>
+                  <div class="home-member__desc">
+                    <span class="home-member__label">キャラクターの特徴</span>
+                    <p>
+                      <span class="u-lc3">
+                        猪年に相応しく、真っ直ぐな性格で行動力がある。お菓子づくりが趣味で、ちぎり〜ずにみかんを使ったスイーツを作って喜んでもらうのが好き。思った事をズバッと言う河内みかん堂のアイドル的存在！
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-button-next home-member__next">
+            <img src="./assets/img/icons/arrow-right-black.svg" alt="arrow-next">
+          </div>
+          <div class="swiper-button-prev home-member__prev">
+            <img src="./assets/img/icons/arrow-right-black.svg" alt="arrow-prev">
+          </div>
+          <div class="swiper-pagination home-member__pagination"></div>
+        </div>
+        <div class="home-member__main">
+          <picture>
+            <source media="(max-width: 767px)" srcset="./assets/img/sp/mango-sp.svg">
+            <img src="./assets/img/pc/mango.svg" alt="mango-icon" class="c-mango c-mango--member">
+          </picture>
+          <div class="c-boximg">
+            <img src="./assets/img/member-main.jpg" loading="lazy" alt="目指せ！ちぎりマスター！ちぎり～ず隊員募集中！"
+              class="c-boximg__mainimg c-boximg__mainimg--small">
+          </div>
+          <div class="home-member__info c-content">
+            <h2 class="home-member__title">
+              <span>目指せ！ちぎりマスター！</span>
+              <span>ちぎり～ず隊員募集中！</span>
+            </h2>
+            <p class="c-content__wrap home-member__wrap"> 河内みかん堂の農園で、みかんちぎりを手<br class="is-sp">伝ってくれませんか？<br>
+              みかんちぎりを手伝ってくれる方（ちぎりーず）を募集しています！<br> 自然溢れる金峰山の段々畑で、美味しいみかんとおやつを作ってお待ちしております！ </p>
+            <div class="u-center home-member__btn">
+              <a href="#" class="c-btn">詳しく見る</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figure>
+        <img src="./assets/img/member-child-2.png" loading="lazy" alt="member-child-2"
+          class="home-member__child home-member__child--boy">
+      </figure>
+    </section>
+    <section class="home-journal">
+      <div class="u-center">
+        <figure class="c-flower">
+          <img src="./assets/img/logo-flower-primary.svg" alt="green-flower" class="u-mb-3">
+        </figure>
+        <h2 class="c-title home-journal__maintitle">
+          <span>JOÜRNAL</span>
+          <span class="c-title--jpbig u-mt7">河内みかん堂の農園だより</span>
+        </h2>
+      </div>
+      <ul class="home-journal__list">
+        <li class="home-journal__item">
+          <a href="#" class="home-journal__link">
+            <figure>
+              <img src="./assets/img/jouranl-item.jpg" loading="lazy" alt="みんな知らない、実は最高に美味しいみかんサンドの作り方"
+                class="home-journal__img">
+            </figure>
+            <div>
+              <span class="home-journal__date"> 2022.00.00 </span>
+              <h3 class="home-journal__title"> みんな知らない、実は最高に美味しいみかんサンドの作り方 </h3>
+              <div class="home-journal__tag">
+                <span>レシピ</span>
+                <span>豆知識</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="home-journal__item">
+          <a href="#" class="home-journal__link">
+            <figure>
+              <img src="./assets/img/jouranl-item.jpg" loading="lazy" alt="みんな知らない、実は最高に美味しいみかんサンドの作り方"
+                class="home-journal__img">
+            </figure>
+            <div>
+              <span class="home-journal__date"> 2022.00.00 </span>
+              <h3 class="home-journal__title"> みんな知らない、実は最高に美味しいみかんサンドの作り方 </h3>
+              <div class="home-journal__tag">
+                <span>レシピ</span>
+                <span>豆知識</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="home-journal__item">
+          <a href="#" class="home-journal__link">
+            <figure>
+              <img src="./assets/img/jouranl-item.jpg" loading="lazy" alt="みんな知らない、実は最高に美味しいみかんサンドの作り方"
+                class="home-journal__img">
+            </figure>
+            <div>
+              <span class="home-journal__date"> 2022.00.00 </span>
+              <h3 class="home-journal__title"> みんな知らない、実は最高に美味しいみかんサンドの作り方 </h3>
+              <div class="home-journal__tag">
+                <span>レシピ</span>
+                <span>豆知識</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="home-journal__item">
+          <a href="#" class="home-journal__link">
+            <figure>
+              <img src="./assets/img/jouranl-item.jpg" loading="lazy" alt="みんな知らない、実は最高に美味しいみかんサンドの作り方"
+                class="home-journal__img">
+            </figure>
+            <div>
+              <span class="home-journal__date"> 2022.00.00 </span>
+              <h3 class="home-journal__title"> みんな知らない、実は最高に美味しいみかんサンドの作り方 </h3>
+              <div class="home-journal__tag">
+                <span>レシピ</span>
+                <span>豆知識</span>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+      <div class="home-journal__list is-sp">
+        <div class="swiper js-journal-swiper">
+          <ul class="swiper-wrapper">
+            <li class="home-journal__item swiper-slide">
+              <a href="#" class="home-journal__link">
+                <figure class="home-journal__img">
+                  <img src="./assets/img/jouranl-item.jpg" loading="lazy" alt="みんな知らない、実は最高に美味しいみかんサンドの作り方">
+                </figure>
+                <div>
+                  <span class="home-journal__date"> 2022.00.00 </span>
+                  <h3 class="home-journal__title"> みんな知らない、実は最高に美味しいみかんサンドの作り方 </h3>
+                  <div class="home-journal__tag">
+                    <span>レシピ</span>
+                    <span>豆知識</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li class="home-journal__item swiper-slide">
+              <a href="#" class="home-journal__link">
+                <figure class="home-journal__img">
+                  <img src="./assets/img/jouranl-item.jpg" loading="lazy" alt="みんな知らない、実は最高に美味しいみかんサンドの作り方">
+                </figure>
+                <div>
+                  <span class="home-journal__date"> 2022.00.00 </span>
+                  <h3 class="home-journal__title"> みんな知らない、実は最高に美味しいみかんサンドの作り方 </h3>
+                  <div class="home-journal__tag">
+                    <span>レシピ</span>
+                    <span>豆知識</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li class="home-journal__item swiper-slide">
+              <a href="#" class="home-journal__link">
+                <figure class="home-journal__img">
+                  <img src="./assets/img/jouranl-item.jpg" loading="lazy" alt="みんな知らない、実は最高に美味しいみかんサンドの作り方">
+                </figure>
+                <div>
+                  <span class="home-journal__date"> 2022.00.00 </span>
+                  <h3 class="home-journal__title"> みんな知らない、実は最高に美味しいみかんサンドの作り方 </h3>
+                  <div class="home-journal__tag">
+                    <span>レシピ</span>
+                    <span>豆知識</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li class="home-journal__item swiper-slide">
+              <a href="#" class="home-journal__link">
+                <figure class="home-journal__img">
+                  <img src="./assets/img/jouranl-item.jpg" loading="lazy" alt="みんな知らない、実は最高に美味しいみかんサンドの作り方">
+                </figure>
+                <div>
+                  <span class="home-journal__date"> 2022.00.00 </span>
+                  <h3 class="home-journal__title"> みんな知らない、実は最高に美味しいみかんサンドの作り方 </h3>
+                  <div class="home-journal__tag">
+                    <span>レシピ</span>
+                    <span>豆知識</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-button-next home-journal__next">
+          <img src="./assets/img/icons/arrow-right-big-black.svg" alt="arrow-next">
+        </div>
+        <div class="swiper-button-prev home-journal__prev">
+          <img src="./assets/img/icons/arrow-right-big-black.svg" alt="arrow-prev">
+        </div>
+      </div>
+      <div class="u-center home-journal__btn">
+        <a href="#" class="c-btn">一覧を見る</a>
+      </div>
+    </section>
+    <section class="home-insta u-center">
+      <div class="home-insta__title">
+        <figure>
+          <img src="./assets/img/icons/instagram-black.svg" alt="instagram" class="home-insta__icon">
+        </figure>
+        <h2>INSTAGRAM</h2>
+      </div>
+      <ul class="home-insta__list">
+        <li class="home-insta__item">
+          <a href="#" class="home-insta__link">
+            <img src="./assets/img/instagram/insta-1.jpg" loading="lazy" alt="insta-1" class="home-insta__img">
+          </a>
+        <li class="home-insta__item">
+          <a href="#" class="home-insta__link">
+            <img src="./assets/img/instagram/insta-2.jpg" loading="lazy" alt="insta-2" class="home-insta__img">
+          </a>
+        <li class="home-insta__item">
+          <a href="#" class="home-insta__link">
+            <img src="./assets/img/instagram/insta-3.jpg" loading="lazy" alt="insta-3" class="home-insta__img">
+          </a>
+        <li class="home-insta__item">
+          <a href="#" class="home-insta__link">
+            <img src="./assets/img/instagram/insta-4.jpg" loading="lazy" alt="insta-4" class="home-insta__img">
+          </a>
+        <li class="home-insta__item">
+          <a href="#" class="home-insta__link">
+            <img src="./assets/img/instagram/insta-5.jpg" loading="lazy" alt="insta-5" class="home-insta__img">
+          </a>
+        <li class="home-insta__item">
+          <a href="#" class="home-insta__link">
+            <img src="./assets/img/instagram/insta-6.jpg" loading="lazy" alt="insta-6" class="home-insta__img">
+          </a>
+        <li class="home-insta__item">
+          <a href="#" class="home-insta__link">
+            <img src="./assets/img/instagram/insta-7.jpg" loading="lazy" alt="insta-7" class="home-insta__img">
+          </a>
+        <li class="home-insta__item">
+          <a href="#" class="home-insta__link">
+            <img src="./assets/img/instagram/insta-8.jpg" loading="lazy" alt="insta-8" class="home-insta__img">
+          </a>
+        <li class="home-insta__item">
+          <a href="#" class="home-insta__link">
+            <img src="./assets/img/instagram/insta-9.jpg" loading="lazy" alt="insta-9" class="home-insta__img">
+          </a>
+        <li class="home-insta__item">
+          <a href="#" class="home-insta__link">
+            <img src="./assets/img/instagram/insta-10.jpg" loading="lazy" alt="insta-10" class="home-insta__img">
+          </a>
+        </li>
+      </ul>
+      <div class="u-center home-insta__btn">
+        <a href="#" class="c-btn">もっと見る</a>
+      </div>
+    </section>
+  </main>
+  <footer class="c-footer c-footer--home">
+    <div class="c-footer__container">
+      <img src="./assets/img/mountain.svg" alt="mountain-1" class="c-mountain c-mountain--footer">
+      <section class="c-footer__contact u-center">
+        <h2>見学・体験、商品に関するご相談など<br>お気軽にお問い合せください！</h2>
+        <p class="c-footer__desc">日中は畑に出ている事が多く、電話は繋がらない可能性があります。<br>なるべくメールかLINEにてお問い合わせください。</p>
+        <div class="c-contact c-contact--footer">
+          <div class="c-contact__box"> メールでお問い合わせ <a href="./contact.html" class="c-contact__link">お問い合わせフォーム</a>
+          </div>
+          <div class="c-contact__box"> LINEでお問い合わせ <a href="#" target="_blank"
+              class="c-contact__link c-contact__link--line">LINEでトーク</a>
+          </div>
+          <div class="c-contact__box"> お電話でお問い合わせ <a href="tel:0000000000" class="c-contact__phone">00-0000-0000</a>
+            <p class="c-contact__time">営業時間　9:00 - 20:00</p>
+          </div>
+          <img src="./assets/img/mountain.svg" alt="mountain-1" class="c-mountain c-mountain--rfooter">
+        </div>
+      </section>
+      <div class="c-footer__nav">
+        <div class="c-footer__box">
+          <div class="c-footer__info">
+            <a href="./index.html">
+              <figure>
+                <img src="./assets/img/company-name-white.svg" alt="kawachi-mikando" class="c-footer__logo">
+              </figure>
+            </a>
+            <p>エンタメ農家「河内みかん堂」<br>〒861-5282<br>熊本県熊本市西区松尾町平山４１５−２８</p>
+            <a href="#" target="_blank" class="c-btn c-btn--google">GOOGLE MAP</a>
+          </div>
+          <ul>
+            <li><a href="./index.html">ホーム</a></li>
+            <li><a href="./index.html#slogan">河内みかん堂とは</a></li>
+            <li><a href="./index.html#concept">当園のこだわり</a></li>
+          </ul>
+          <ul>
+            <li><a href="./index.html#feature">当園の特徴</a></li>
+            <li><a href="#">ちぎり～ず！</a></li>
+            <li><a href="#">農園だより</a></li>
+          </ul>
+          <ul>
+            <li><a href="./contact.html">お問い合わせ</a></li>
+            <li><a href="#">オンラインショップ</a></li>
+            <li><a href="#">プライバシーポリシー</a></li>
+          </ul>
+        </div>
+        <p class="u-center c-footer__copy">©2023 KAGUKOKO All Right Reserved</p>
+      </div>
+    </div>
+  </footer>
+  <div class="c-mask">
+    <svg id="svg-mask" width="0" height="0" style="position: absolute; top: 0; left: 0;">
+      <defs>
+        <clipPath id="mask-sq" clipPathUnits="objectBoundingBox">
+          <path transform="scale(0.00191, 0.00191)" d="M514.3,434.1c-4.4,38-40.7,74.4-78.7,78.7c-115.4,12.3-230.7,12.3-346.1,0c-38-4.4-74.4-40.7-78.7-78.7
+	C-1.6,318.7-1.6,203.3,10.7,88c4.4-38,40.7-74.4,78.7-78.7c115.4-12.3,230.7-12.3,346.1,0c38,4.4,74.4,40.7,78.7,78.7
+	C526.6,203.3,526.6,318.7,514.3,434.1z"></path>
+        </clipPath>
+      </defs>
+    </svg>
+  </div>
+  <script type="module" src="./assets/js/main.js"></script>
+</body>
+
+</html>
