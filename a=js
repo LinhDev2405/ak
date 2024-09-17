@@ -1,0 +1,330 @@
+const body = document.body;
+const btnMenu = document.querySelector(".js-show-menu");
+const overlay = document.querySelector(".js-header-overlay");
+const headerMenu = document.querySelector(".js-header-menu");
+const sidebar = document.querySelector(".js-sidebar");
+
+const backToTop = document.querySelectorAll(".js-backtotop");
+
+document.addEventListener("DOMContentLoaded", () => {
+	new Swiper(".js-mainvisual-swiper", {
+		centeredSlides: true,
+		effect: "fade",
+		loop: true,
+		speed: 2000,
+		autoplay: {
+			delay: 3000,
+			disableOnInteraction: false,
+		},
+	});
+
+	new Swiper(".js-adv-swiper", {
+		slidesPerView: 4.35,
+		centeredSlides: true,
+		loop: true,
+		spaceBetween: 20,
+		autoplay: {
+			delay: 3500,
+			disableOnInteraction: false,
+		},
+		breakpoints: {
+			320: {
+				slidesPerView: 1.435,
+				spaceBetween: 25,
+			},
+			768: {
+				slidesPerView: 2.5,
+				spaceBetween: 25,
+			},
+
+			839: {
+				slidesPerView: 2.75,
+				spaceBetween: 55,
+			},
+
+			1024: {
+				slidesPerView: 2.3,
+				spaceBetween: 55,
+			},
+			1240: {
+				slidesPerView: 2.55,
+				spaceBetween: 55,
+			},
+			1440: {
+				slidesPerView: 3.25,
+				spaceBetween: 20,
+			},
+			1680: {
+				slidesPerView: 3.95,
+				spaceBetween: 20,
+			},
+			1880: {
+				spaceBetween: 40,
+				slidesPerView: 4.35,
+			},
+		},
+	});
+
+	new Swiper(".js-feature-swiper", {
+		centeredSlides: true,
+		slidesPerView: 1,
+		loop: true,
+		spaceBetween: 35,
+		autoplay: {
+			delay: 3000,
+			disableOnInteraction: false,
+		},
+		navigation: {
+			nextEl: ".swiper-button-next",
+			prevEl: ".swiper-button-prev",
+		},
+	});
+
+	new Swiper(".js-journal-swiper", {
+		centeredSlides: true,
+		slidesPerView: 1,
+		loop: true,
+		spaceBetween: 25,
+		autoplay: {
+			delay: 3000,
+			disableOnInteraction: false,
+		},
+		navigation: {
+			nextEl: ".swiper-button-next",
+			prevEl: ".swiper-button-prev",
+		},
+	});
+
+	new Swiper(".js-gallery-swipe", {
+		centeredSlides: true,
+		loop: true,
+		spaceBetween: 35,
+		autoplay: {
+			delay: 3500,
+			disableOnInteraction: false,
+		},
+		breakpoints: {
+			320: {
+				slidesPerView: 1.455,
+				spaceBetween: 24,
+			},
+			768: {
+				slidesPerView: 2.45,
+				spaceBetween: 25,
+			},
+
+			1024: {
+				slidesPerView: 3.5,
+			},
+			1280: {
+				slidesPerView: 3.2,
+				spaceBetween: 20,
+			},
+			1440: {
+				slidesPerView: 3.3,
+				spaceBetween: 35,
+			},
+			1680: {
+				slidesPerView: 4.168,
+				spaceBetween: 35,
+			},
+		},
+	});
+
+	new Swiper(".js-member-swiper", {
+		slidesPerView: 1,
+		centeredSlides: true,
+		loop: true,
+		autoplay: {
+			delay: 3500,
+			disableOnInteraction: false,
+		},
+		spaceBetween: 35,
+		navigation: {
+			nextEl: ".swiper-button-next",
+			prevEl: ".swiper-button-prev",
+		},
+		pagination: {
+			el: ".swiper-pagination",
+			clickable: true,
+		},
+	});
+
+	// handle menu
+	btnMenu.addEventListener("click", () => {
+		overlay.classList.toggle("is-open");
+		sidebar.classList.toggle("is-open-sidebar");
+		body.classList.toggle("is-overflow-hidden");
+	});
+
+	overlay.addEventListener("click", () => {
+		overlay.classList.remove("is-open");
+		sidebar.classList.remove("is-open-sidebar");
+		body.classList.remove("is-overflow-hidden");
+	});
+
+	headerMenu.addEventListener("click", (event) => {
+		event.stopPropagation();
+	});
+});
+
+backToTop.forEach((i) => {
+	i.addEventListener("click", function () {
+		window.scrollTo({
+			top: 0,
+		});
+	});
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+	const form = document.querySelector(".js-contact-form");
+	const errorElements = document.querySelectorAll(".js-error-message");
+	form?.addEventListener("submit", function (event) {
+		event.preventDefault();
+		const inputs = form.querySelectorAll("[data-rules]");
+		let isValid = true;
+
+		inputs.forEach((input, index) => {
+			const rules = input.getAttribute("data-rules").split("|");
+			const errorMessage = validateInput(input, rules);
+			const errorElement = errorElements[index];
+
+			errorElement.innerText = errorMessage || "";
+			if (errorMessage) {
+				isValid = false;
+				errorElement.style.display = "block";
+			}
+
+			input.addEventListener("input", () => {
+				const newErrorMessage = validateInput(input, rules);
+				errorElement.innerText = newErrorMessage || "";
+			});
+		});
+
+		if (isValid) {
+			form.submit();
+		}
+	});
+
+	let email = "";
+	let emailConfirm = "";
+
+	function validateInput(input, rules) {
+		const name = input.getAttribute("name");
+		const value = input.value.trim();
+
+		if (name === "email") {
+			email = value;
+		} else if (name === "emailConfirm") {
+			emailConfirm = value;
+		}
+
+		for (let rule of rules) {
+			if (rule === "firstName" && value === "") {
+				return "お名前を入力してください。";
+			}
+
+			if (rule === "lastName" && value === "") {
+				return "姓を入力してください。";
+			}
+
+			if (rule === "furiganaS" && value === "") {
+				return "ふりがなを入力してくださいセイ。";
+			}
+
+			if (rule === "furiganaM" && value === "") {
+				return "ふりがなを入力してくださいメイ。";
+			}
+
+			if (rule === "email" && !validateEmail(value)) {
+				return "『メールアドレス』を入力してください。";
+			}
+
+			if (rule === "confirm" && email !== emailConfirm) {
+				return "メールアドレスが一致しません。";
+			}
+
+			if (rule.startsWith("max:") && !validatePhoneNumberLength(value, parseInt(rule.split(":")[1]))) {
+				return `『電話番号』を入力してください。`;
+			}
+
+			if (value !== "" && rule === "number" && !validatePhoneNumber(value)) {
+				return "正しい電話番号の形式を入力してください";
+			}
+
+			if (rule === "content" && value === "") {
+				return "『お問い合わせ内容』を入力してください。";
+			}
+			if (rule === "agree" && !input.checked) {
+				return "メールを送信する前に利用規約に同意する";
+			}
+		}
+
+		return null;
+	}
+
+	function validateEmail(email) {
+		const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return regex.test(String(email).toLowerCase());
+	}
+
+	function validatePhoneNumber(phoneNumber) {
+		const regex = /^(\d{2}(-)?\d{4}(-)?\d{4}|\d{3}(-)?\d{4}(-)?\d{4})$/;
+		return regex.test(phoneNumber);
+	}
+
+	function validatePhoneNumberLength(phoneNumber, maxLength) {
+		const stripped = phoneNumber.replace(/-/g, "");
+		return stripped.length <= maxLength;
+	}
+});
+
+// url
+const currentPath =
+	window.location.pathname
+		// .replace("/~training/nguyennhatlinh/16-advance-11", "")
+		.slice(1) || "index.html";
+
+const links = [...document.querySelectorAll(".c-gnav a, .c-header__list a, .c-footer__box ul a")];
+
+function getDetailLink(link) {
+	const linkOriginal = link.getAttribute("href");
+	const [pathname, hash = ""] = linkOriginal.split("#");
+
+	return {
+		pathname,
+		hash,
+	};
+}
+
+function updateActiveLink() {
+	const currentHash = window.location.hash;
+
+	links.forEach((link) => {
+		link.classList.remove("is-active");
+		const { pathname, hash } = getDetailLink(link);
+
+		if (hash === "#") {
+			return;
+		}
+
+		if (pathname === `./${currentPath}` && (`#${hash}` === currentHash || (!hash && !currentHash))) {
+			link.classList.add("is-active");
+		}
+	});
+}
+
+document.addEventListener("DOMContentLoaded", updateActiveLink);
+
+window.addEventListener("hashchange", updateActiveLink);
+
+links.forEach((link) => {
+	link.addEventListener("click", (e) => {
+		const { pathname, hash } = getDetailLink(link);
+
+		if (`/${currentPath}` === "/index.html" && pathname === "./index.html" && hash) {
+			window.location.href = `${window.location.pathname}#${hash}`;
+			e.preventDefault();
+		}
+	});
+});
