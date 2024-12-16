@@ -1,0 +1,99 @@
+<?php
+// Đọc dữ liệu từ CSV (hoặc bạn có thể dùng array tĩnh để test)
+$data = [
+    ["4", "Product D", "Type 4", "400", "2020::100::2021::200::2022::300::2024::400"],
+];
+
+// Hàm xử lý để lấy dữ liệu giá sản phẩm theo năm
+function parsePrices($priceString) {
+    $priceData = explode("::", $priceString);
+    $result = [];
+    for ($i = 0; $i < count($priceData); $i += 2) {
+        $result[] = [
+            "year" => $priceData[$i],
+            "price" => (int)$priceData[$i + 1],
+        ];
+    }
+    return $result;
+}
+
+// Tìm giá trị tối đa và tối thiểu trong các sản phẩm
+$parsedData = [];
+$maxPrice = PHP_INT_MIN;
+$minPrice = PHP_INT_MAX;
+
+foreach ($data as $row) {
+    $prices = parsePrices($row[4]);
+    foreach ($prices as $price) {
+        if ($price["price"] > $maxPrice) $maxPrice = $price["price"];
+        if ($price["price"] < $minPrice) $minPrice = $price["price"];
+    }
+    $parsedData[] = [
+        "product" => $row[1],
+        "prices" => $prices,
+    ];
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biểu đồ sản phẩm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .chart-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 200px;
+            width: 100%;
+            border-left: 1px solid #000;
+            border-bottom: 1px solid #000;
+            padding: 10px;
+        }
+        .bar {
+            text-align: center;
+            width: 15%;
+        }
+        .bar div {
+            width: 100%;
+            background-color: black;
+            transition: height 0.3s;
+        }
+        .bar div.max {
+            background-color: red;
+        }
+        .bar span {
+            display: block;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Biểu đồ sản phẩm</h1>
+
+    <?php foreach ($parsedData as $product): ?>
+        <h2><?= htmlspecialchars($product["product"]) ?></h2>
+        <div class="chart-container">
+            <?php foreach ($product["prices"] as $price): ?>
+                <?php
+                // Tính chiều cao của cột theo tỷ lệ
+                $heightPercent = (($price["price"] - $minPrice) / ($maxPrice - $minPrice)) * 100;
+                ?>
+                <div class="bar">
+                    <div 
+                        class="<?= $price["price"] === $maxPrice ? 'max' : '' ?>" 
+                        style="height: <?= $heightPercent ?>%;"
+                    ></div>
+                    <span><?= htmlspecialchars($price["year"]) ?></span>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endforeach; ?>
+</body>
+</html>
