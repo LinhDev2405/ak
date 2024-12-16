@@ -1,0 +1,71 @@
+<?php
+// Đọc dữ liệu CSV và xử lý
+$data = [
+    'id' => 4,
+    'name' => 'Product D',
+    'type' => 'Type 4',
+    'price' => 400,
+    'yearlyPrices' => [
+        ['year' => 2020, 'price' => 100],
+        ['year' => 2021, 'price' => 200],
+        ['year' => 2022, 'price' => 300],
+        ['year' => 2024, 'price' => 400],
+    ],
+];
+
+// Hàm làm tròn lên đến số chẵn tròn chục
+function roundToTens($num) {
+    return ceil($num / 10) * 10;
+}
+
+// Tính các mốc giá trị
+function calculateMilestones($prices, $numMilestones = 5) {
+    $minPrice = min($prices);
+    $maxPrice = max($prices);
+    $interval = ($maxPrice - $minPrice) / ($numMilestones - 1);
+
+    $milestones = [];
+    for ($i = 0; $i < $numMilestones; $i++) {
+        $milestones[] = roundToTens($minPrice + $i * $interval);
+    }
+    return $milestones;
+}
+
+// Lấy danh sách giá qua các năm
+$prices = array_column($data['yearlyPrices'], 'price');
+$milestones = calculateMilestones($prices);
+
+// Render biểu đồ
+function renderChart($data, $milestones, $chartHeight = 200) {
+    $prices = array_column($data['yearlyPrices'], 'price');
+    $maxPrice = max($prices);
+    $minPrice = min($prices);
+
+    $output = '<div class="chart-container" style="height: ' . $chartHeight . 'px;">';
+
+    // Tạo trục Y
+    $output .= '<div class="y-axis">';
+    foreach (array_reverse($milestones) as $milestone) {
+        $output .= '<span>' . $milestone . '</span>';
+    }
+    $output .= '</div>';
+
+    // Tạo các cột
+    $output .= '<div class="bars">';
+    foreach ($data['yearlyPrices'] as $entry) {
+        $relativeHeight = ($entry['price'] - $minPrice) / ($maxPrice - $minPrice) * 100;
+        $colorClass = $entry['price'] === $maxPrice ? 'red' : 'black';
+
+        $output .= '<div class="bar">';
+        $output .= '<div class="' . $colorClass . '" style="height: ' . $relativeHeight . '%"></div>';
+        $output .= '<span>' . $entry['year'] . '</span>';
+        $output .= '</div>';
+    }
+    $output .= '</div>';
+
+    $output .= '</div>';
+    return $output;
+}
+
+// Gọi hàm và xuất HTML
+echo renderChart($data, $milestones);
