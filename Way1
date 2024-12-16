@@ -1,0 +1,75 @@
+// script.js
+// Dữ liệu CSV giả lập
+const data = [
+  {
+    id: 4,
+    name: "Product D",
+    type: "Type 4",
+    price: 400,
+    yearlyPrices: [
+      { year: 2020, price: 100 },
+      { year: 2021, price: 200 },
+      { year: 2022, price: 300 },
+      { year: 2024, price: 400 },
+    ],
+  },
+];
+
+// Hàm làm tròn lên đến số chẵn tròn chục
+const roundToTens = (num) => Math.ceil(num / 10) * 10;
+
+// Tính mốc giá trị
+const calculateMilestones = (prices, numMilestones = 5) => {
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+  const interval = (maxPrice - minPrice) / (numMilestones - 1);
+
+  const milestones = [];
+  for (let i = 0; i < numMilestones; i++) {
+    milestones.push(roundToTens(minPrice + i * interval));
+  }
+  return milestones;
+};
+
+// Vẽ biểu đồ
+const renderChart = (product) => {
+  const chart = document.getElementById("chart");
+
+  // Lấy danh sách giá qua các năm
+  const prices = product.yearlyPrices.map((p) => p.price);
+  const milestones = calculateMilestones(prices);
+
+  // Tạo trục Y
+  const yAxis = document.createElement("div");
+  yAxis.className = "y-axis";
+  milestones.reverse().forEach((milestone) => {
+    const span = document.createElement("span");
+    span.textContent = milestone;
+    yAxis.appendChild(span);
+  });
+  chart.appendChild(yAxis);
+
+  // Tạo cột
+  product.yearlyPrices.forEach(({ year, price }) => {
+    const bar = document.createElement("div");
+    bar.className = "bar";
+
+    const barInner = document.createElement("div");
+    const height = ((price - milestones[0]) / (milestones[milestones.length - 1] - milestones[0])) * 100;
+    barInner.style.height = `${height}%`;
+
+    if (price === Math.max(...prices)) {
+      bar.classList.add("red");
+    }
+
+    const label = document.createElement("span");
+    label.textContent = `${year}`;
+
+    bar.appendChild(barInner);
+    bar.appendChild(label);
+    chart.appendChild(bar);
+  });
+};
+
+// Gọi hàm renderChart
+renderChart(data[0]);
