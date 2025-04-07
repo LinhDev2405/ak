@@ -1,0 +1,67 @@
+.list-content1 {
+	margin: 45px auto 50px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.list-content1 .p {
+	margin-bottom: 40px;
+	display: flex;
+	align-items: center;
+}
+
+  <div class="container-AA">
+    <?php
+
+    $items = [
+      'icon-cri1::このアイテムは売れる？',
+      'icon-cri2::買取が初めてでよくわからない',
+      'icon-cri3::アイテムの売り時が知りたい',
+      'icon-cri4::Tシャツ1枚だけでも平気？'
+    ];
+
+    $groupedItems = array_chunk($items, 2);
+    ?>
+    <ul class="list-content1">
+      <?php foreach ($groupedItems as $group): ?>
+        <li class="li">
+          <?php foreach ($group as $item):
+            [$icon, $text] = explode('::', $item);
+          ?>
+            <p class="p">
+              <span class="<?= $icon ?> sprite-top"></span>
+              <span class="span"><?= $text ?></span>
+            </p>
+          <?php endforeach ?>
+        </li>
+      <?php endforeach ?>
+    </ul>
+  </div>
+---
+.sprite-top {
+	background: url(https://img.kaitorisatei.info/bring/img/sprite/01/pc_sprite_top01.svg) no-repeat;
+	width: 71px;
+	height: 71px;
+}
+
+.list-content1 .p > .sprite-top.icon-cri1 {
+	background-position: -1085px -5px;
+}
+.list-content1 .p > .sprite-top.icon-cri2 {
+	background-position: -1175px -5px;
+}
+.list-content1 .p > .sprite-top.icon-cri3 {
+	background-position: -1355px -5px;
+}
+.list-content1 .p > .sprite-top.icon-cri4 {
+	background-position: -1265px -5px;
+}
+
+.list-content1 .p .span {
+	font-size: 22px;
+	letter-spacing: 0.04em;
+	color: #323232;
+	margin-left: 30px;
+	font-weight: 700;
+}
