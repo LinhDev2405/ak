@@ -1,0 +1,79 @@
+cach 1
+
+    <?php
+    $items = [
+      "このアイテムは売れる？::買取が初めてでよくわからない",
+      "アイテムの売り時が知りたい::Tシャツ1枚だけでも平気？"
+    ];
+    ?>
+
+    <ul class="list-content1">
+      <?php foreach ($items as $index => $group) : ?>
+        <li class="li">
+          <?php foreach (explode('::', $group) as $i => $text) : ?>
+            <p class='p'>
+              <span class='sprite-top icon-cri<?= ($index * 2) + $i + 1 ?>'></span>
+              <span class='span'><?= $text ?></span>
+            </p>
+          <?php endforeach; ?>
+        </li>
+      <?php endforeach; ?>
+    </ul>
+---
+.list-content1 {
+	margin: 45px auto 50px;
+	display: flex;
+	display: -ms-flexbox;
+	flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	justify-content: center;
+	-webkit-justify-content: center;
+	-webkit-box-pack: center;
+	-moz-box-pack: center;
+	-ms-flex-pack: center;
+}
+
+.list-content1 .p {
+	margin-bottom: 40px;
+	display: flex;
+	display: -ms-flexbox;
+	align-items: center;
+	-webkit-align-items: center;
+	-webkit-box-align: center;
+	-moz-box-align: center;
+	-ms-flex-align: center;
+}
+
+.sprite-top {
+	background: url(https://img.kaitorisatei.info/bring/img/sprite/01/pc_sprite_top01.svg) no-repeat;
+}
+
+.list-content1 .p > .sprite-top {
+	width: 71px;
+	height: 71px;
+}
+
+.list-content1 .p > .sprite-top.icon-cri1 {
+	background-position: -1085px -5px;
+}
+
+.list-content1 .p > .sprite-top.icon-cri2 {
+	background-position: -1175px -5px;
+}
+
+.list-content1 .p > .sprite-top.icon-cri3 {
+	background-position: -1355px -5px;
+} */
+
+/* .list-content1 .p > .sprite-top.icon-cri4 {
+	background-position: -1265px -5px;
+}
+
+.list-content1 .p .span {
+	font-size: 22px;
+	letter-spacing: 0.04em;
+	color: #323232;
+	margin-left: 30px;
+	font-weight: 700;
+}
