@@ -1,0 +1,101 @@
+// if ($(".swiper-js").length) {
+	// 	var swiper = new Swiper(".swiper-js", {
+	// 		direction: "vertical",
+	// 		slidesPerView: 1,
+	// 		mousewheel: true,
+	// 		speed: 800,
+	// 		autoHeight: true, // vẫn bật autoHeight để Swiper giữ logic nội bộ
+	// 		on: {
+	// 			init: function () {
+	// 				adjustHeight(this);
+	// 			},
+	// 			slideChangeTransitionEnd: function () {
+	// 				adjustHeight(this);
+	// 			},
+	// 		},
+	// 	});
+
+	// 	function adjustHeight(swiper) {
+	// 		$(swiper.slides).css("height", "auto");
+
+	// 		var $active = $(swiper.slides).eq(swiper.activeIndex);
+
+	// 		var newH = $active.outerHeight();
+
+	// 		$(swiper.wrapperEl).height(newH);
+	// 		$(swiper.el).height(newH);
+
+	// 		swiper.update();
+	// 	}
+	// }
+
+	if ($(".swiper-js").length) {
+		var slideHeights = []; // Mảng lưu chiều cao của các slide, khai báo trước khi khởi tạo Swiper
+
+		// Lưu chiều cao của các slide vào mảng
+		function storeSlideHeights() {
+			$(".swiper-js .swiper-slide").each(function () {
+				var height = $(this).outerHeight();
+				console.log("Slide height:", height);
+				slideHeights.push(height);
+			});
+		}
+
+		storeSlideHeights(); // Lưu chiều cao các slide ngay khi khởi tạo Swiper
+		var swiper = new Swiper(".swiper-js", {
+			direction: "vertical",
+			slidesPerView: 1,
+			mousewheel: true,
+			speed: 800,
+			autoHeight: true, // Vẫn bật autoHeight để Swiper giữ logic nội bộ
+			on: {
+				init: function () {
+					adjustHeight(this); // Điều chỉnh chiều cao ngay khi khởi tạo
+				},
+				slideChangeTransitionEnd: function () {
+					adjustHeight(this); // Điều chỉnh chiều cao khi thay đổi slide
+				},
+			},
+		});
+
+		// 	// Điều chỉnh chiều cao của wrapper và swiper dựa trên mảng chiều cao đã lưu
+		// function adjustHeight(swiper) {
+		// 	$(".swiper-slide").css("height", "auto");
+
+		// 	var $active = $(swiper.slides).eq(swiper.activeIndex); // Slide hiện tại dựa trên activeIndex
+
+		// 	// Sử dụng chiều cao từ mảng slideHeights cho slide hiện tại
+		// 	var newH = slideHeights[swiper.activeIndex] || $active.outerHeight(); // Nếu không có trong mảng, dùng chiều cao thực tế
+
+		// 	$(swiper.wrapperEl).height(newH); // Cập nhật chiều cao cho wrapper
+		// 	$(swiper.el).height(newH); // Cập nhật chiều cao cho swiper container
+
+		// 	swiper.update(); // Cập nhật Swiper để áp dụng thay đổi
+		// }
+		function adjustHeight(swiper) {
+			$(".swiper-slide").css("height", "auto");
+
+			var indexActive = swiper.activeIndex;
+			var activeHeight = $(swiper.slides).eq(indexActive).outerHeight();
+
+			console.log(activeHeight);
+			// ✅ Duyệt các slide phía sau indexActive
+			for (let i = indexActive; i < swiper.slides.length; i++) {
+				let currentHeight = slideHeights[i];
+
+				// Nếu activeHeight >= currentHeight thì cập nhật chiều cao cho slide đó
+				if (activeHeight >= currentHeight) {
+					console.log(1);
+
+					$(swiper.slides[i]).css("height", activeHeight);
+					slideHeights[i] = activeHeight;
+				}
+			}
+			$(swiper.wrapperEl).height(activeHeight);
+			$(swiper.el).height(activeHeight);
+
+			// ✅ Cập nhật chiều cao cho wrapper + container chính
+
+			swiper.update();
+		}
+	}
