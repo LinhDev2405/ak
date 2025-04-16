@@ -1,0 +1,54 @@
+<div class="services-box">
+
+		<div class="steps-content" style="
+    background-color: #444;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+">
+			<p class="steps-item-note">
+				発送先
+				<span class="span1">〒150-0011</span>
+				東京都渋谷区東
+				<span class="font-new">3-11-10&nbsp;2F</span>
+				<br>
+				<span class="os">OS</span>
+				発送先発送
+			</p>
+
+		</div>
+	</div>
+
+---
+/* .services-box .steps-content .steps-item-note span {
+	white-space: nowrap;
+}
+
+.services-box .steps-content .steps-item-note .os::before {
+	content: none;
+}
+
+@media (max-width: 600px) {
+	.services-box .steps-content .steps-item-note .os {
+		white-space: pre;
+	}
+	.services-box .steps-content .steps-item-note .os::before {
+		content: "\A";
+	}
+}
+
+ */
+.steps-item-note {
+	background-color: #444;
+	padding-left: 10px;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	line-height: 1.5;
+	color: #fff;
+	font-size: 16px;
+}
+
+.steps-item-note span {
+	white-space: normal;
+}
