@@ -1,0 +1,61 @@
+.p-shuccho01-content-footer {
+	position: relative;
+	height: 40px;
+	overflow: hidden;
+}
+.p-shuccho01-content-text {
+	position: absolute;
+	left: 0;
+	right: 0;
+	width: 100%;
+	opacity: 0;
+	transform: translateY(0);
+	transition: none;
+	will-change: opacity, transform;
+	pointer-events: none;
+}
+.p-shuccho01-content-text.visible {
+	opacity: 1;
+	transform: translateY(0);
+	transition: none;
+}
+.p-shuccho01-content-text.fade-in-up {
+	opacity: 1;
+	transform: translateY(0);
+	animation: fadeInUp 0.8s forwards;
+}
+.p-shuccho01-content-text.fade-in-down {
+	opacity: 1;
+	transform: translateY(0);
+	animation: fadeInDown 0.8s forwards;
+}
+.p-shuccho01-content-text.fade-out-up {
+	opacity: 0;
+	transform: translateY(-20px);
+	transition: opacity 0.8s, transform 0.8s;
+}
+.p-shuccho01-content-text.fade-out-down {
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.8s, transform 0.8s;
+}
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+@keyframes fadeInDown {
+	from {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
