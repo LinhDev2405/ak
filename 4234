@@ -1,0 +1,42 @@
+<?php
+$result = get_condition_data();
+if (empty($result)) return;
+?>
+
+<section class="content3-lp-sec">
+  <div class="container">
+    <?php if ($result['title']) : ?>
+      <h2><?php echo $result['title'] ?></h2>
+    <?php endif; ?>
+
+    <ul class="content3-list fl fl-wrap jus-center center">
+      <?php foreach ($result['list_product'] as $items) :
+        $caption   = str_replace('$spbr', get_spbr(), $items['caption'] ?? '');
+        $alt_img   = str_replace('<br>', '', $caption);
+        $image_url = $items['image_url'] ?? '';
+        if (!$caption || !$image_url) continue;
+      ?>
+        <li class="jyoutai relative">
+          <img
+            class="jyoutai-img"
+            loading="lazy"
+            src="<?php echo get_s3_follow_device() . '/' . $image_url; ?>"
+            <?php device_width_height(240, 180, 222, 174); ?>
+            alt="<?php echo $alt_img; ?>">
+
+          <p class="jyoutai-name"><?php echo $caption ?></p>
+        </li>
+      <?php endforeach; ?>
+    </ul>
+
+    <?php if ($result['text2']) : ?>
+      <p class="content3-des-tt center serif">
+        <span class="tt relative"><?php echo $result['text2'] ?></span>
+      </p>
+    <?php endif; ?>
+
+    <?php if ($result['text1']) : ?>
+      <p><?php echo ($result['text1']) ?></p>
+    <?php endif; ?>
+  </div>
+</section>
