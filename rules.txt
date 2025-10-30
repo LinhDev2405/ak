@@ -1,0 +1,427 @@
+GitHub Workflow
+
+Our team follows a structured GitHub workflow to keep code organized and collaboration smooth. We use GitHub Flow, a lightweight branch-based workflow where the main branch is always stable and all work happens in feature branches
+docs.github.com
+. Each feature or bug-fix is developed in its own branch. After review, branches are merged back into the main branch via pull requests. The sections below describe our conventions and process in detail.
+
+Branching Strategy
+
+One branch per task: For every new feature, bug fix, or change, create a separate branch. This isolates work and makes reviews easier
+docs.github.com
+. For example, if you’re working on a login feature, you might create a branch off main specifically for that work.
+
+Always branch off main: Do not commit directly to main (or master). Always start from the up-to-date main branch to keep it clean and deployable.
+
+Short-lived branches: Keep branches focused and short-lived. Do one thing at a time. If a branch addresses multiple unrelated issues, split it into multiple branches. GitHub recommends “make a separate branch for each set of unrelated changes”
+docs.github.com
+.
+
+Branch Naming Convention
+
+We use descriptive, consistent names for branches. The general format is:
+
+<TEAMCODE>-<ISSUE_NUMBER>-<short-description>
+
+
+For example: RT-199-add-login-form for a feature in the RT team, or BT-122-fix-settings-page for a fix in the BT team. The rules are:
+
+Include a task key: Start the branch name with a ticket or issue key (usually from our issue tracker), which often includes a team or project code and a number
+deepsource.com
+support.atlassian.com
+. For instance, if the RT team has task 199, start with RT-199.
+
+Add a short description: After the key, add a concise hyphen-separated phrase describing the work
+deepsource.com
+. Keep it brief but clear (e.g. add-login-form, fix-crash-on-startup).
+
+Use hyphens: Use - to separate words in the branch name. Hyphens improve readability and are recommended for consistency
+deepsource.com
+.
+
+Lowercase and no spaces: Use only lowercase letters, numbers, and hyphens. Avoid spaces or special characters.
+
+For example, valid branch names are: RT-199-login-feature, BT-122-update-settings, etc. When creating the branch, you might run:
+
+git checkout -b RT-199-add-login-form
+
+
+This follows both our convention and Jira’s recommendation to include the issue key in the branch name
+support.atlassian.com
+.
+
+Commit Message Convention
+
+Each commit message should be clear and formatted consistently. We include the task key in commit messages and use an imperative summary. The guidelines are:
+
+Prefix with the issue key: Begin the commit message with the same task key as the branch, followed by a colon or space. For example:
+
+RT-199: Add login form
+
+
+This links the commit to the issue and makes it easy to trace changes
+support.atlassian.com
+.
+
+Short summary: Keep the first line (the subject) to about 50 characters or less
+stackoverflow.com
+. It should describe what the change is (not why). For example: RT-199: Add login endpoint to API.
+
+Imperative mood: Write the summary in imperative form (e.g. “Add feature” not “Added feature” or “Fix bug” not “Fixed bug”)
+freecodecamp.org
+. This matches Git’s auto-generated commit messages and common conventions.
+
+Blank line and body: If more detail is needed, leave a blank line after the summary and then add a body paragraph wrapped at ~72 characters
+stackoverflow.com
+. Explain why the change was made or any other context. For example:
+
+RT-199: Add login endpoint to API
+
+This adds a new POST /api/login route. The user credentials are
+validated and a JWT token is returned on success. This change
+supports the new login feature requested in the design spec.
+
+
+Closes issues (optional): In the body, you can reference related issues (e.g. Closes RT-199) to automatically close them when merged. This helps keep track of completed work.
+
+Following this format makes the history easier to read and links commits to our issue tracker. Be sure to give each commit a descriptive message, as GitHub advises, so future reviewers understand the changes
+docs.github.com
+.
+
+Development Workflow
+
+Our typical GitHub workflow has these steps:
+
+Create a new branch: From the up-to-date main branch, create your feature/fix branch using the naming convention above. This isolates your work from others. (You can do this via CLI or GitHub’s interface.)
+
+Develop and commit: Work on your branch and make small, focused commits. Write each commit message as described above. Push your branch to GitHub frequently. Each push triggers our CI pipeline (GitHub Actions) to build and test the code
+docs.github.com
+docs.github.com
+. This ensures errors are caught early.
+
+Continuous Integration: GitHub Actions automatically runs tests and checks on every push or pull request. The results appear on the PR page. We require all checks to pass before merging. (GitHub confirms that once all CI tests pass, changes are ready to review or merge
+docs.github.com
+.)
+
+Open a Pull Request: When your feature is ready, create a PR from your branch into main. Give it a clear title (including the issue key) and fill in the description. In the PR description, summarize what was changed and why. Link any related issue (e.g. by using phrases like “Closes #issue” or the issue key
+docs.github.com
+).
+
+Code Review: Request reviews from team members. GitHub can auto-request reviewers or you can @mention people. Team members will review the PR (see details below).
+
+Merge after approval: Once at least one reviewer approves and all checks are green, merge the PR into main. You can choose Squash and Merge (to keep a clean history) or Merge Commit, per our team preference. GitHub will tell you if there are merge conflicts or unmet requirements. By policy, an approving review is required before merging
+docs.github.com
+, and branch protection may enforce this
+docs.github.com
+.
+
+Delete the branch: After merging, delete the branch on GitHub. This keeps the repository tidy. (You can do this from the PR page.) GitHub won’t delete any history or the PR itself; it’s just removing the old branch reference
+docs.github.com
+.
+
+By following these steps, we maintain a clean history and ensure each change is reviewed and tested. The use of GitHub Actions CI helps catch errors early, since “GitHub runs your CI tests and provides the results ... in the pull request”
+docs.github.com
+.
+
+Pull Request (PR) Rules
+
+When creating and merging PRs, we follow these rules:
+
+One or more approvals: Every PR must be reviewed and approved by at least one other team member before merging
+docs.github.com
+. The author should generally not merge their own PR. (Branch protection settings may require a set number of approving reviews
+docs.github.com
+.)
+
+All checks passing: Ensure all automated status checks (tests, linters, etc.) pass before requesting merge. GitHub shows the status of each check on the PR page. We merge only when the checks are green
+docs.github.com
+.
+
+Clear title: Include the issue or task key in the PR title. For example: RT-199: Implement user login page
+support.atlassian.com
+. This immediately shows which task the PR corresponds to.
+
+Descriptive description: In the PR description/body, explain what the PR does and why. Summarize the changes and link related issues or documentation
+docs.github.com
+. A good format is to state the purpose, list key changes, and reference the issue (using keywords like “Closes RT-199” if applicable). This keeps everyone informed.
+
+Small, focused PRs: Try to keep pull requests small and focused on a single purpose. Smaller PRs are faster to review and less likely to introduce bugs
+docs.github.com
+. If you must make large changes, consider breaking them into multiple PRs.
+
+No direct merges: Do not merge your own PR or bypass the review process. Only merge when all conditions are met. If using GitHub, the branch protection rules will block merging until reviews and checks are satisfied
+docs.github.com
+.
+
+Following these rules ensures that code is reviewed and tested before it enters the main codebase.
+
+Pull Request Review Process
+
+When reviewing a teammate’s PR or responding to reviews:
+
+Request and assign reviewers: The PR author should assign (or request) appropriate reviewers – usually someone familiar with the code area. GitHub can auto-assign based on CODEOWNERS or you can @mention specific people.
+
+Review the code: Reviewers should examine the changes carefully. Add comments or suggestions using GitHub’s review tools. You can comment on specific lines or give an overall approval or request changes. Be constructive and clear in your feedback.
+
+Respond to comments: The author should address each comment. This often involves pushing new commits that fix issues or clarify code. Each push will automatically update the PR (GitHub notes that “you can continue to commit and push changes in response to the reviews. Your pull request will update automatically”
+docs.github.com
+). Once changes are made, notify the reviewers (GitHub will re-check the updated code).
+
+Iterate until approved: Reviewers and the author may go through several rounds. Discuss any concerns and repeat until all reviewers give approval. Remember to re-run and pass tests after every change.
+
+Merge the PR: After final approval, the PR can be merged by the author or a maintainer. Follow the merge rules: ensure checks passed and the branch name/key is correct. Once merged, GitHub will automatically close the PR and (if configured) the linked issue
+docs.github.com
+.
+
+Delete the branch: Once merged, delete the feature branch on GitHub
+docs.github.com
+. This signals the work is done and prevents confusion with old branches.
+
+By following this review process, we ensure high code quality and share knowledge. Every PR, discussion, and commit remains in the history for future reference (GitHub retains all comments and commits when merging
+docs.github.com
+).
+
+Examples:
+
+Branch name: RT-199-add-login-form (team RT, issue 199, add login form).
+
+Commit message: RT-199: Add login endpoint
+
+PR title: RT-199: Implement user login
+
+PR description: “This PR adds a new /login API endpoint. It handles user authentication and returns a JWT. Closes RT-199.”
+
+These follow our conventions for traceability and clarity.
+
+By adhering to this workflow, branching strategy, and review process, anyone on the team – including newcomers – can understand and contribute to the project with confidence. Consistency in naming and messages, along with enforced reviews and CI checks, keeps our codebase clean and reliable.
+
+                        -------------------------------                                                                                                                                                                                                          ------------
+
+master (stable, prod) 
+   ↑
+   |  (merge after QA + approvals → deploy to prod)
+develop (integration / staging)
+   ↑
+   |  (merge feature branches here for testing)
+feature branches (RT-199-add-login-form, BT-122-fix-report, ...)
+
+
+Branching Strategy (updated)
+
+Main branches
+
+master — production-ready code only. Deploys to production when code is merged here.
+
+develop — integration and staging branch. Feature branches are merged here first for testing/QA.
+
+Feature / task branches
+
+Create a short-lived branch for each task from master (per your request). Work there, then open a PR to develop for testing.
+
+Why this flow?
+
+Creating from master ensures each task starts from the latest production baseline.
+
+Merging into develop allows multiple features/bugfixes to be tested together before promoting to master.
+
+Only after QA and approvals on develop do we merge to master and deploy to production.
+
+Branch Naming Convention
+
+Use the same convention as before:
+
+<TEAMCODE>-<ISSUE_NUMBER>-<short-description>
+
+
+Examples:
+
+RT-199-add-login-form
+
+BT-122-fix-report-export
+
+Keep names lowercase, hyphen-separated, and short.
+
+Commit Message Convention
+
+Continue the KEY: message format:
+
+RT-199: Add login endpoint
+BT-122: Fix null pointer in report export
+
+
+Subject (first line) ~50 chars, imperative mood. Optional detailed body after a blank line.
+
+End-to-end Workflow (with develop staging)
+
+Sync master locally
+
+git checkout master
+git pull origin master
+
+
+Create feature branch from master
+
+git checkout -b RT-199-add-login-form
+
+
+Develop & commit frequently
+
+git add .
+git commit -m "RT-199: Implement login form validation"
+git push -u origin RT-199-add-login-form
+
+
+Each push triggers GitHub Actions CI on the branch.
+
+Open a Pull Request targeting develop
+
+On GitHub: create PR RT-199: Add login form — base branch: develop, compare: your feature branch.
+
+Fill PR description (what, why, how to test). Link the ticket (e.g., Closes RT-199).
+
+Review & test on develop
+
+Reviewers approve, comments are addressed.
+
+After merge into develop, CI runs full integration tests and staging deploys (if configured).
+
+QA / testing happens against develop (staging environment). Fixes are made in new commits on the feature branch or in follow-up branches, then merged into develop again.
+
+Promote develop to master when ready
+
+Once develop has been tested and approved for release, open a PR from develop → master.
+
+Title example: Release: promote develop to master — includes RT-199, BT-122
+
+Describe what release contains and reference release notes / change log.
+
+Requirements before merging:
+
+All CI checks green.
+
+Required approvals (e.g., at least 1 or 2 reviewers, per protection rules).
+
+Any manual release checklist items completed (changelogs, migration scripts reviewed).
+
+Merge to master and deploy
+
+Merge the develop → master PR (use chosen merge strategy).
+
+GitHub Actions / deployment pipeline triggers deployment to production.
+
+Tag the release (optional but recommended): v1.2.3 or release-2025-10-30.
+
+git tag -a v1.2.3 -m "Release v1.2.3"
+git push origin v1.2.3
+
+
+Post-deploy
+
+Monitor production, verify release.
+
+If hotfix is needed, create a branch from master (e.g., RT-200-hotfix-logging), fix, PR to develop and master (or directly to master if urgent following hotfix rules), and follow CI and approvals.
+
+Cleanup
+
+Delete merged feature branches on GitHub to keep repo tidy.
+
+Pull Request Rules (applied to both develop and master merges)
+
+Feature PRs: target develop.
+
+Release PRs: target master (PR from develop → master).
+
+Approvals required: PRs must have at least one approving reviewer (or a number defined by branch protection).
+
+CI passing: All required checks (unit tests, linters, integration tests) must pass before merging.
+
+Descriptive PR titles & bodies: Include the issue key and steps to test.
+
+No force merges: Do not bypass CI or approvals.
+
+Review & Testing Guidance
+
+When reviewing and testing on develop:
+
+Check code logic, naming, and that tests cover new behavior.
+
+Ensure no breaking changes unless documented and coordinated.
+
+Run the feature manually in the staging environment and follow PR testing steps.
+
+For the develop → master promotion PR, verify release notes, migrations, and deployment readiness.
+
+Examples (full cycle)
+
+Create branch:
+
+git checkout master
+git pull origin master
+git checkout -b RT-199-add-login-form
+
+
+Work & commit:
+
+git commit -m "RT-199: Add login endpoint"
+git push -u origin RT-199-add-login-form
+
+
+PR to develop: RT-199: Add login endpoint — base: develop.
+
+After tests & approvals, merge into develop. Deploy to staging for QA.
+
+When ready to release: open PR develop -> master: Release: promote develop to master — includes RT-199
+
+Merge after approvals and green CI → GitHub Actions deploys to prod.
+
+Recommendations & Notes
+
+Branch protections: Enforce via GitHub settings — require PR reviews and passing CI for both develop and master.
+
+Deploy triggers: Prefer master merge to automatically trigger production deploys. For develop, trigger staging deploys.
+
+Hotfix process: For critical fixes, create branch from master, fix, and open PRs per hotfix rules (often a direct PR to master with a follow-up merge into develop to keep branches in sync).
+
+Release tagging: Tag releases in master for traceability.
+
+If you want, I can:
+
+Add a short Notion-ready copy (clean, sectioned) so you can paste directly.
+
+Create a small checklist template for PRs and release promotions.
+
+Add a sample GitHub Actions snippet for staging and production deploy triggers.
+
+Bạn muốn mình chuẩn bị bản Notion-ready để bạn copy & paste liền không? (I can prepare it right away.)
+
+--------
+                                                                                                                                                                                                                                  Nice — here are three concise opening paragraph options (Notion-ready). Pick the one you like — my recommendation is Option B.
+
+Option A — Short
+Our team uses a simple GitHub workflow: work in feature branches, merge into develop for testing, then promote tested changes to master for production. Every change goes through a pull request and CI checks.
+
+Option B — Recommended (clear & balanced)
+We follow a lightweight GitHub Flow adapted with a staging step: create feature branches from master, open pull requests into develop for testing and QA, and promote approved, tested changes from develop into master for production releases. All changes require PR reviews and GitHub Actions validation before deployment.
+
+Option C — Friendly for newcomers
+This repo uses a clear, beginner-friendly GitHub workflow so everyone can contribute safely: start work in a feature branch (from master), open a PR into develop for staging and QA, and only merge into master once tests and reviews pass for production deployment. Please use PRs, reviews, and GitHub Actions checks on every change.
+
+Tell me which one you want at the top of the Notion doc and I’ll insert it into the full document for you.
+
+  -------------------++++================
+  We follow a lightweight GitHub Flow adapted with a staging step: create feature branches from master, open pull requests into develop for testing and QA, and promote approved, tested changes from develop into master for production releases. All changes require PR reviews and GitHub Actions validation before deployment
+
+--
+
+Our team follows a structured GitHub workflow to keep code organized and collaboration smooth. We use GitHub Flow, a lightweight branch-based workflow where the main branch is always stable and all work happens in feature branchesdocs.github.com. Each feature or bug-fix is developed in its own branch. After review, branches are merged back into the main branch via pull requests. The sections below describe our conventions and process in detail.
+
+Branching strategy
+
+•	One branch per task: For every new feature, bug fix, or change, create a separate branch. This isolates work and makes reviews easier. 
+o	For example, if you’re working on a login feature, you might create a branch off main specifically for that work.
+•	Always branch off main: Do not commit directly to main (or master). Always start from the up-to-date main branch to keep it clean and deployable.
+
+Branch naming convention
+Commit message convention
+Work flow
+Pr rules
+Review pr processing
