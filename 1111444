@@ -1,0 +1,49 @@
+@keyframes tooltip-slide-out {
+    0% {
+        opacity: 1;
+        z-index: 3;
+        transform: rotateX(0deg) translateY(0vw);
+    }
+    90% {
+        opacity: 1;
+        transform: rotateX(90deg) translateY(-4vw);
+    }
+    100% {
+        opacity: 1; /* không ẩn text */
+        z-index: 2; /* vẫn nằm dưới */
+        transform: rotateX(90deg) translateY(4vw);
+    }
+}
+
+@keyframes tooltip-slide-in {
+    0% {
+        opacity: 1;
+        z-index: 2;
+        transform: rotateX(90deg) translateY(4vw);
+    }
+    100% {
+        opacity: 1;
+        z-index: 3;
+        transform: rotateX(0deg) translateY(0vw);
+    }
+}
+--
+$(function () {
+    const $tooltip = $(".js-footer-bottom-tooltip");
+
+    if (!$tooltip.length) return;
+
+    if ($tooltip.data("auto-slide")) {
+        let isAdd2 = false;
+
+        setInterval(() => {
+            $tooltip
+                .toggleClass("c-footer-bottom__tooltip--add2", isAdd2)
+                .toggleClass("c-footer-bottom__tooltip--add1", !isAdd2);
+
+            isAdd2 = !isAdd2;
+        }, 4000);
+    } else {
+        $tooltip.find(".c-footer-bottom__tooltip__text2").hide();
+    }
+});
