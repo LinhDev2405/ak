@@ -1,0 +1,19 @@
+$segments = explode('/', trim($current_path, '/'));
+$level    = count($segments);
+
+$list_brand = null;
+$matched_url = null;
+
+for ($i = $level; $i >= 3; $i--) {
+    $path = implode('/', $segments);
+
+    $value = config("category_map.$path.list_brand");
+
+    if (!empty($value)) {
+        $list_brand  = $value;
+        $matched_url = $path;
+        break;
+    }
+
+    array_pop($segments);
+}
