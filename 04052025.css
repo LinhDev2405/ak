@@ -1,61 +1,172 @@
-.p-shuccho01-content-footer {
-	position: relative;
-	height: 40px;
-	overflow: hidden;
+<?php
+function get_related_tag(?string $custom_path = null): array
+{
+    $current_path = get_path($custom_path)
+        ->without_query()
+        ->without_page()
+        ->without_lp()
+        ->get();
+
+    $mappings = config('related-tag_map') ?? [];
+    $rows     = read_csv('purchase_item_list');
+
+    if (empty($mappings) || empty($rows)) {
+        return [];
+    }
+
+    $data = array_filter(
+        $rows,
+        fn($r) => ($r['target_url'] ?? null) === $current_path
+    );
+    $data = $data ? reset($data) : null;
+
+    if (empty($data)) {
+        return [];
+    }
+
+    $replace_map = [];
+    foreach ($data as $k => $v) {
+        if (is_scalar($v)) {
+            $replace_map["{{$k}}"] = $v;
+        }
+    }
+
+    $result = [];
+    foreach ($mappings as $map) {
+        if (!empty($map['condition']) && !match_conditions($data, $map['condition'])) {
+            continue;
+        }
+
+        foreach ($map['result_items'] ?? [] as $item) {
+            $boxes       = [];
+            $box_results = [];
+
+            foreach ($item['boxes'] ?? [] as $box_key => $box) {
+                $filter = $box['filter'] ?? [];
+
+                foreach ($filter as $field => &$val) {
+                    if (!is_string($val)) {
+                        continue;
+                    }
+                    $val = strtr($val, $replace_map);
+
+                    if (str_starts_with($val, 'not_in:')) {
+                        $ref     = substr($val, 7);
+                        $exclude = array_unique(
+                            array_filter(
+                                array_column($box_results[$ref] ?? [], $field)
+                            )
+                        );
+
+                        if (empty($exclude)) {
+                            unset($filter[$field]);
+                            continue;
+                        }
+
+                        $val = ['not_in' => $exclude];
+                    }
+                }
+
+                $list = get_items_for_display(
+                    $filter,
+                    $box['fields'] ?? ['text_for_page_list'],
+                    $current_path,
+                    $rows
+                );
+
+                if (is_string($box_key)) {
+                    $box_results[$box_key] = $list;
+                }
+
+                $sub = $box['sub_heading'] ?? '';
+                $sub = is_array($sub)
+                    ? (empty($boxes) ? $sub['default'] ?? '' : $sub['is_first'] ?? '')
+                    : $sub;
+
+                $boxes[] = [
+                    'sub_heading' => strtr($sub, $replace_map),
+                    'list'        => $list,
+                ];
+            }
+
+            if ($boxes) {
+                $result[] = [
+                    'heading' => strtr(
+                        trim($item['heading'] ?? '他の条件で買取実績を探す'),
+                        $replace_map
+                    ),
+                    'box' => $boxes,
+                ];
+            }
+        }
+    }
+
+    return $result;
 }
-.p-shuccho01-content-text {
-	position: absolute;
-	left: 0;
-	right: 0;
-	width: 100%;
-	opacity: 0;
-	transform: translateY(0);
-	transition: none;
-	will-change: opacity, transform;
-	pointer-events: none;
+
+function get_items_for_display(
+    array $conditions,
+    array $display_fields,
+    string $current_path,
+    array $rows
+): array {
+    $results = [];
+
+    foreach ($rows as $row) {
+        if (!match_conditions($row, $conditions)) {
+            continue;
+        }
+
+        if ($current_path && ($row['target_url'] ?? '') === $current_path) {
+            continue;
+        }
+
+        $display_text = '';
+        foreach ($display_fields as $field) {
+            if (!empty($row[$field])) {
+                $display_text = $row[$field];
+                break;
+            }
+        }
+
+        $row['display_text'] = $display_text ?: ($row['text_for_page_list'] ?? '');
+        $results[]           = $row;
+    }
+
+    return $results;
 }
-.p-shuccho01-content-text.visible {
-	opacity: 1;
-	transform: translateY(0);
-	transition: none;
-}
-.p-shuccho01-content-text.fade-in-up {
-	opacity: 1;
-	transform: translateY(0);
-	animation: fadeInUp 0.8s forwards;
-}
-.p-shuccho01-content-text.fade-in-down {
-	opacity: 1;
-	transform: translateY(0);
-	animation: fadeInDown 0.8s forwards;
-}
-.p-shuccho01-content-text.fade-out-up {
-	opacity: 0;
-	transform: translateY(-20px);
-	transition: opacity 0.8s, transform 0.8s;
-}
-.p-shuccho01-content-text.fade-out-down {
-	opacity: 0;
-	transform: translateY(20px);
-	transition: opacity 0.8s, transform 0.8s;
-}
-@keyframes fadeInUp {
-	from {
-		opacity: 0;
-		transform: translateY(20px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-@keyframes fadeInDown {
-	from {
-		opacity: 0;
-		transform: translateY(-20px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
+
+function match_conditions(array $row, array $conditions): bool
+{
+    foreach ($conditions as $key => $expected) {
+        if (!array_key_exists($key, $row)) {
+            return false;
+        }
+
+        $value   = $row[$key];
+        $matched = match (true) {
+            is_bool($expected) => $expected xor (
+                empty(trim((string)$value)) ||
+                in_array(strtolower(trim((string)$value)), ['false', '0'], true)
+            ),
+            is_array($expected) && !empty($expected['in']) => in_array(
+                $value,
+                $expected['in'],
+                true
+            ),
+            is_array($expected) && !empty($expected['not_in']) => !in_array(
+                $value,
+                $expected['not_in'],
+                true
+            ),
+            is_array($expected) => false,
+            default => $value === $expected,
+        };
+
+        if (!$matched) {
+            return false;
+        }
+    }
+
+    return true;
 }
