@@ -1,0 +1,114 @@
+<?php
+
+// --- Factory helpers ---
+
+$brand_or_cat = fn($b, $c) => fn($path) => (($i = get_data('item-info', $path))['brand_key'] ?? null) === $b
+    && (($i['page_type'] ?? null) === Page_Type::brand->name || ($i['category_key'] ?? null) === $c)
+    ? 'upper' : null;
+
+$brand_line = fn($b, $l, $r) => fn($path) => (($i = get_data('item-info', $path))['brand_key'] ?? null) === $b
+    && ($i['line_group_key'] ?? null) === $l ? $r : null;
+
+$brand_cat = fn($b, $c, $r) => fn($path) => (($i = get_data('item-info', $path))['brand_key'] ?? null) === $b
+    && ($i['category_key'] ?? null) === $c ? $r : null;
+
+$brand = fn($b) => fn($path) => (get_data('item-info', $path)['brand_key'] ?? null) === $b ? 'upper' : null;
+
+$cat_pos = fn($c) => fn($path) => (($i = get_data('item-info', $path))['category_key'] ?? null) === $c
+    ? (($i['page_type'] ?? null) === Page_Type::category_top->name ? 'upper' : 'lower')
+    : null;
+
+// --- Rules ---
+
+return [
+    'items-vancleefarpels-jewelry' => $brand_or_cat('vancleefarpels', 'jewelry'),
+    'items-hermes-bag'             => $brand_or_cat('hermes',         'bag'),
+    'items-hermes-wallet'          => $brand_or_cat('hermes',         'wallet'),
+    'items-cartier-jewelry'        => $brand_or_cat('cartier',        'jewelry'),
+    'items-cartier-bag'            => $brand_or_cat('cartier',        'bag'),
+    'items-cartier-watch'          => $brand_or_cat('cartier',        'watch'),
+    'items-gucci-bag'              => $brand_or_cat('gucci',          'bag'),
+    'items-chanel-bag'             => $brand_or_cat('chanel',         'bag'),
+    'items-chanel-watch'           => $brand_or_cat('chanel',         'watch'),
+    'items-dior-bag'               => $brand_or_cat('dior',           'bag'),
+    'items-dior-watch'             => $brand_or_cat('dior',           'watch'),
+    'items-tiffany-jewelry'        => $brand_or_cat('tiffany',        'jewelry'),
+    'items-harrywinston-jewelry'   => $brand_or_cat('harrywinston',   'jewelry'),
+    'items-harrywinston-watch'     => $brand_or_cat('harrywinston',   'watch'),
+    'items-piaget-jewelry'         => $brand_or_cat('piaget',         'jewelry'),
+    'items-piaget-watch'           => $brand_or_cat('piaget',         'watch'),
+    'items-fendi-bag'              => $brand_or_cat('fendi',          'bag'),
+    'items-bvlgari-jewelry'        => $brand_or_cat('bvlgari',        'jewelry'),
+    'items-bvlgari-watch'          => $brand_or_cat('bvlgari',        'watch'),
+    'items-loewe-bag'              => $brand_or_cat('loewe',          'bag'),
+
+    'items-damier-louisvuitton'    => $brand_line('louisvuitton', 'damier',   'upper'),
+    'items-monogram-louisvuitton'  => $brand_line('louisvuitton', 'monogram', 'lower'),
+
+    'items-bag-louisvuitton'       => $brand_cat('louisvuitton', 'bag', 'lower'),
+
+    'items-iwc'                    => $brand('iwc'),
+    'items-alainsilberstein'       => $brand('alain-silberstein'),
+    'items-vacheronconstantin'     => $brand('vacheron_constantin'),
+    'items-hublot'                 => $brand('hublot'),
+    'items-edox'                   => $brand('edox'),
+    'items-audemarspiguet'         => $brand('audemarspiguet'),
+    'items-omega'                  => $brand('omega'),
+    'items-gagamilano'             => $brand('gagamilano'),
+    'items-graham'                 => $brand('graham'),
+    'items-chronoswiss'            => $brand('chronoswiss'),
+    'items-jacobandco'             => $brand('jacobandco'),
+    'items-geraldgenta'            => $brand('geraldgenta'),
+    'items-jaegerlecoultre'        => $brand('jaeger-lecoultre'),
+    'items-jaquetdroz'             => $brand('jaquet-droz'),
+    'items-girardperregaux'        => $brand('girard-perregaux'),
+    'items-seiko'                  => $brand('seiko'),
+    'items-zenith'                 => $brand('zenith'),
+    'items-tagheuer'               => $brand('tagheuer'),
+    'items-tudor'                  => $brand('tudor'),
+    'items-patekphilippe'          => $brand('patek-philippe'),
+    'items-panerai'                => $brand('panerai'),
+    'items-hamilton'               => $brand('hamilton'),
+    'items-breitling'              => $brand('breitling'),
+    'items-franckmuller'           => $brand('franckmuller'),
+    'items-blancpain'              => $brand('blancpain'),
+    'items-breguet'                => $brand('breguet'),
+    'items-frederiqueconstant'     => $brand('frederique_constant'),
+    'items-bellandross'            => $brand('bellandross'),
+    'items-bovet'                  => $brand('bovet'),
+    'items-baumemercier'           => $brand('baume-mercier'),
+    'items-ulyssenardin'           => $brand('ulysse-nardin'),
+    'items-alangesoehne'           => $brand('alange-soehne'),
+    'items-richardmille'           => $brand('richardmille'),
+    'items-model-louisvuitton'     => $brand('louisvuitton'),
+    'items-line-louisvuitton'      => $brand('louisvuitton'),
+    'items-rogerdubuis'            => $brand('rogerdubuis'),
+    'items-rolex'                  => $brand('rolex'),
+    'categories-vancleefarpels'    => $brand('vancleefarpels'),
+    'categories-hermes'            => $brand('hermes'),
+    'categories-cartier'           => $brand('cartier'),
+    'categories-gucci'             => $brand('gucci'),
+    'categories-chanel'            => $brand('chanel'),
+    'categories-chaumet'           => $brand('chaumet'),
+    'categories-chopard'           => $brand('chopard'),
+    'categories-celine'            => $brand('celine'),
+    'categories-dior'              => $brand('dior'),
+    'categories-tiffany'           => $brand('tiffany'),
+    'categories-debeers'           => $brand('debeers'),
+    'categories-burberry'          => $brand('burberry'),
+    'categories-harrywinston'      => $brand('harrywinston'),
+    'categories-piaget'            => $brand('piaget'),
+    'categories-fendi'             => $brand('fendi'),
+    'categories-prada'             => $brand('prada'),
+    'categories-bvlgari'           => $brand('bvlgari'),
+    'categories-louisvuitton'      => $brand('louisvuitton'),
+    'categories-loewe'             => $brand('loewe'),
+
+    'brands-bag'                   => $cat_pos('bag'),
+    'brands-brandjewelry'          => $cat_pos('brandjewelry'),
+    'brands-wallet'                => $cat_pos('wallet'),
+    'brands-apparel'               => $cat_pos('apparel'),
+    'brands-gold'                  => $cat_pos('gold'),
+    'brands-watch'                 => $cat_pos('watch'),
+    'brands-gem'                   => $cat_pos('gem'),
+];
