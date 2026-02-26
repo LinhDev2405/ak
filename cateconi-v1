@@ -1,0 +1,88 @@
+<?php
+function get_link_components(string|null $current_path = null)
+{
+    $rules  = config('category_condition');
+    $info   = get_data('item-info', $current_path);
+    $brand  = $info['brand_key'] ?? null;
+    $cat    = $info['category_key'] ?? null;
+    $page   = $info['page_type'] ?? null;
+    $line   = $info['line_group_key'] ?? null;
+    $result = ['upper' => [], 'lower' => []];
+
+    // brand_key match → 'upper'
+    foreach ($rules['brand'] ?? [] as $key => $b) {
+        if ($brand === $b) $result['upper'][] = $key;
+    }
+
+    // brand_key + (brand page OR category_key) → 'upper'
+    foreach ($rules['brand_or_cat'] ?? [] as $key => [$b, $c]) {
+        if ($brand === $b && ($page === Page_Type::brand->name || $cat === $c)) {
+            $result['upper'][] = $key;
+        }
+    }
+
+    // brand_key + line_group_key → result
+    foreach ($rules['brand_line'] ?? [] as $key => [$b, $l, $r]) {
+        if ($brand === $b && $line === $l) $result[$r][] = $key;
+    }
+
+    // brand_key + category_key → result
+    foreach ($rules['brand_cat'] ?? [] as $key => [$b, $c, $r]) {
+        if ($brand === $b && $cat === $c) $result[$r][] = $key;
+    }
+
+    // category_key → 'upper' if category_top, else 'lower'
+    foreach ($rules['cat_pos'] ?? [] as $key => $c) {
+        if ($cat === $c) {
+            $result[$page === Page_Type::category_top->name ? 'upper' : 'lower'][] = $key;
+        }
+    }
+
+    return $result;
+}
+
+function get_category_data(?string $key = null)
+{
+    if (empty($key)) {
+        return [];
+    }
+
+    $group = [];
+    read_csv('category_data', null, function (array $row) use ($key, &$group) {
+        $group_name = $row['group_name'] ?? '';
+
+        if (!empty($group) && $group_name !== '' && $group_name !== $key) {
+            return true;
+        }
+
+        if (empty($group)) {
+            if ($group_name !== $key) {
+                return;
+            }
+
+            $group = [
+                'heading'         => $row['heading'] ?? '',
+                'type'            => config('list_brand_type.' . ($row['type'] ?? '')) ?? '',
+                'top_button_text' => $row['top_button_text'] ?? '',
+                'top_button_link' => $row['top_button_link'] ?? '',
+                'list_brand'      => [],
+            ];
+        }
+
+        $item = array_map(
+            'trim',
+            array_intersect_key($row, array_flip([
+                'brand_text',
+                'brand_link',
+                'brand_img',
+                'brand_alt',
+            ]))
+        );
+
+        if (implode('', $item) !== '') {
+            $group['list_brand'][] = $item;
+        }
+    });
+
+    return $group;
+}
