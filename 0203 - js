@@ -1,0 +1,39 @@
+$(function () {
+    const BLOCK_SEL = "[data-block-id]";
+    const DROPDOWN_SEL = ".js-jisseki-dropdown";
+    const TOGGLE_SEL = ".js-jisseki-toggle";
+    const OPTION_SEL = ".js-jisseki-option";
+
+    $(".js-jisseki-select").each(function () {
+        const $section = $(this);
+        const $dropdown = $section.find(DROPDOWN_SEL);
+        const $toggle = $section.find(TOGGLE_SEL);
+        const $blocks = $section.find(BLOCK_SEL);
+
+        if (!$toggle.length) return;
+        $toggle.on("click", function () {
+            $dropdown.toggleClass("is-open");
+        });
+
+        $section.on("click", OPTION_SEL, function () {
+            const $item = $(this);
+            const id = +$item.data("value");
+
+            $toggle.text($item.data("name"));
+            $dropdown.removeClass("is-open");
+
+            $blocks.each(function () {
+                this.hidden = +this.dataset.blockId !== id;
+            });
+        });
+    });
+
+    // --- Close dropdown on outside click ---
+    $(document).on("click", function (e) {
+        $(DROPDOWN_SEL + ".is-open").each(function () {
+            if (!this.contains(e.target)) {
+                $(this).removeClass("is-open");
+            }
+        });
+    });
+});
