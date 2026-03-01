@@ -38,7 +38,7 @@ $render_list = function () use ($data, $rank_fields, $default_img) { ?>
                 <li class="<?= clsx(
                                 'c-jisseki-item-condition__item',
                                 [
-                                    'js-showmore-item' => $index >= 6,
+                                    'js-showmore4-item' => $index >= 6,
                                     'c-jisseki-item-condition__item--no-img' => empty($item[$img_key]),
                                 ]
                             ) ?>">
@@ -81,8 +81,9 @@ $render_list = function () use ($data, $rank_fields, $default_img) { ?>
     </button>
 
     <?php if ($has_showmore):
-        get_component('common/showmore', [
+        get_component('common/showmore4', [
             'btn_show_text' => '続きを読む',
+            'step'          => 6,
         ], $render_list);
     else:
         $render_list();
