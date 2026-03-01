@@ -6,9 +6,8 @@ $is_model  = $args['is_model'] ?? 0;
 if (empty($data)) return;
 
 $model_name = $args['model_name'] ?? rolex_resolve_model_name($is_model);
-$title = 'ロレックス<span>'
-    . ($model_name ? ' ' . $model_name : '')
-    . '</span>'
+$title = 'ロレックス '
+    . $model_name
     . the_spbr()
     . ' 買取実績（中古状態別）';
 
@@ -74,7 +73,7 @@ $render_list = function () use ($data, $rank_fields, $default_img) { ?>
 
 <div class="c-jisseki-item-condition">
     <h2 class="c-jisseki-item-condition__title">
-        <?= wp_kses_post($title) ?>
+        <?= ($title) ?>
     </h2>
 
     <button class="c-jisseki-item-condition__modal js-modal-open">
