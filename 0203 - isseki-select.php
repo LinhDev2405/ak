@@ -47,7 +47,7 @@ $render_block = function (int $id, array $block = []) use ($is_model) {
     }
 
     if (!empty($accordion_data)) {
-        get_component('jisseki/jisseki-accordion', [
+        get_component('jisseki/jisseki-item-accordion', [
             'data'    => $accordion_data,
             'id'      => $id,
             'hide_id' => $hide_id,
@@ -67,7 +67,7 @@ $render_block = function (int $id, array $block = []) use ($is_model) {
 };
 ?>
 
-<section class="c-jisseki-select">
+<section class="c-jisseki-select js-jisseki-select">
     <?php if (!empty($title)) : ?>
         <?php get_component('titles/title3', [], function () use ($title) { ?>
             <?= wp_kses_post($title); ?>
@@ -76,8 +76,8 @@ $render_block = function (int $id, array $block = []) use ($is_model) {
 
     <div class="c-jisseki-select__form" id="purchase_search_form">
         <?php if ($component_type !== 3 && !empty($rolex_models)) : ?>
-            <div class="c-jisseki-select__form-search">
-                <p class="c-jisseki-select__form-default">
+            <div class="c-jisseki-select__form-search js-jisseki-dropdown">
+                <p class="c-jisseki-select__form-default js-jisseki-toggle">
                     モデル名から選ぶ
                 </p>
 
@@ -86,7 +86,7 @@ $render_block = function (int $id, array $block = []) use ($is_model) {
                         $model_jp = $item['model_jp'] ?? '';
                         if (!$model_jp) continue; ?>
                         <li
-                            class="c-jisseki-select__form-item"
+                            class="c-jisseki-select__form-item js-jisseki-option"
                             data-position="ロレックスモデル：<?= esc_attr($model_jp); ?>"
                             data-value="<?= $index + 1; ?>"
                             data-name="<?= esc_attr($model_jp); ?>">
@@ -112,10 +112,6 @@ $render_block = function (int $id, array $block = []) use ($is_model) {
 
         foreach ($processed_models as $index => $m) :
             $accordion_data = $m['accordion_items'] ?? [];
-
-            if ($component_type === 2) {
-                $accordion_data = $type2 ? $accordion_data : ($m['new_item_arr1'] ?? []);
-            }
 
             $render_block($index + 1, [
                 'select_data'    => $m['new_item_arr'] ?? [],
