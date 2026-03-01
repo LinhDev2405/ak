@@ -24,6 +24,7 @@ $render_list = function () use ($data) { ?>
 
             $tag  = $has_href ? 'a' : 'p';
             $href = $has_href ? ' href="' . esc_url(home_url($item_href)) . '"' : '';
+            $class_atr = 'c-jisseki-select__name' . ($has_href ? ' is-link' : '');
 
             $prices = [
                 ['value' => $price_a, 'label' => '未使用品'],
@@ -34,6 +35,7 @@ $render_list = function () use ($data) { ?>
         ?>
             <li class="<?= clsx('c-jisseki-select__item', [
                             'js-showmore-item' => $index >= 8,
+                            'c-jisseki-select__item--no-link' => !$has_href,
                         ]) ?>">
                 <figure class="c-jisseki-select__img">
                     <img
@@ -58,8 +60,7 @@ $render_list = function () use ($data) { ?>
                                     <?= esc_html($price['label']); ?>
                                 </span>
                                 <p class="c-jisseki-select__num">
-                                    <?= number_format($price['value']); ?>
-                                    <span class="c-jisseki-select__unit">円</span>
+                                    <?= number_format($price['value']); ?><span class="c-jisseki-select__unit">円</span>
                                 </p>
                             </div>
                         <?php endforeach; ?>
