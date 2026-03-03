@@ -1,0 +1,306 @@
+<?php
+
+class Related_Tag_Service
+{
+    private static array $instance = [];
+    private array $mappings = [];
+    private array $rows = [];
+    private string $current_path = '';
+    private array $data = [];
+    private array $replace_map = [];
+    private array $result = [];
+
+    private function __construct()
+    {
+        $this->mappings = config('related-tag_map') ?? [];
+        $this->rows     = read_csv('purchase_item_list') ?? [];
+    }
+
+    public static function get_instance(?string $url = null): self
+    {
+        if (empty(self::$instance[$url])) {
+            self::$instance[$url] = new self();
+        }
+
+        return self::$instance[$url];
+    }
+
+    private function prepare_data(?string $custom_path = null, array $related_tag_option = []): bool
+    {
+        $this->current_path = '';
+        $this->data         = [];
+        $this->replace_map  = [];
+        $this->result       = [];
+
+        if (!empty($related_tag_option)) {
+            $this->data = $related_tag_option;
+            $this->replace_map = $this->build_replace_map($this->data);
+
+            return !empty($this->mappings)
+                && !empty($this->rows);
+        }
+
+        $this->current_path = get_path($custom_path)
+            ->without_query()
+            ->without_page()
+            ->without_lp()
+            ->get();
+
+        $this->data = get_item_in_csv(
+            'purchase_item_list',
+            $this->current_path,
+            'target_url'
+        ) ?? [];
+
+        if (!empty($this->data)) {
+            $this->replace_map = $this->build_replace_map($this->data);
+        }
+
+        return !empty($this->mappings)
+            && !empty($this->rows)
+            && !empty($this->data);
+    }
+
+    public function handle(?string $custom_path = null, array $related_tag_option = []): array
+    {
+        if (!$this->prepare_data($custom_path, $related_tag_option)) {
+            return [];
+        }
+
+        $is_option_mode = !empty($related_tag_option);
+        foreach ($this->mappings as $map) {
+            if (
+                isset($map['source']) &&
+                $map['source'] === 'option' &&
+                !$is_option_mode
+            ) {
+                continue;
+            }
+
+            if (
+                !empty($map['condition']) &&
+                !$this->match_conditions($this->data, $map['condition'])
+            ) {
+                continue;
+            }
+
+            foreach ($map['result_items'] ?? [] as $item) {
+                $this->result[] = [
+                    'heading' => strtr(
+                        trim($item['heading'] ?? '他の条件で買取実績を探す'),
+                        $this->replace_map
+                    ),
+                    'box' => [],
+                ];
+
+                $group_index = array_key_last($this->result);
+                foreach ($item['boxes'] ?? [] as $i => $box) {
+                    $list = $this->resolve_filter($box);
+
+                    if (empty($list)) {
+                        continue;
+                    }
+
+                    $this->result[$group_index]['box'][] = [
+                        'box_key'     => $box['key'] ?? $i,
+                        'sub_heading' => $this->resolve_sub_heading(
+                            $box['sub_heading'] ?? '',
+                            $this->result[$group_index]['box']
+                        ),
+                        'list'        => $list,
+                    ];
+                }
+
+                if (empty($this->result[$group_index]['box'])) {
+                    unset($this->result[$group_index]);
+                }
+            }
+        }
+
+        return array_values($this->result);
+    }
+
+    private function build_replace_map(array $data): array
+    {
+        $map = [];
+        foreach ($data as $key => $value) {
+            if (is_scalar($value)) {
+                $map["{{$key}}"] = $value;
+            } elseif (is_array($value)) {
+                foreach ($value as $sub_key => $sub_value) {
+                    if (is_scalar($sub_value)) {
+                        $map["{{$key}[{$sub_key}]}"] = $sub_value;
+                    }
+                }
+            }
+        }
+
+        return $map;
+    }
+
+    private function resolve_filter(array $box): array
+    {
+        $filter         = $this->resolve_placeholders($box['filter'] ?? []);
+        $display_fields = $box['display_text_fields'] ?? [];
+        $results        = [];
+
+        foreach ($filter as $field => $value) {
+            if (!is_string($value) || !str_starts_with($value, 'not_in:')) {
+                continue;
+            }
+
+            $exclude = $this->collect_not_in_values(substr($value, 7), $field);
+
+            if (!empty($exclude)) {
+                $filter[$field] = ['not_in' => array_flip($exclude)];
+            } else {
+                unset($filter[$field]);
+            }
+        }
+
+        foreach ($this->rows as $row) {
+            if (!$this->match_conditions($row, $filter, true)) {
+                continue;
+            }
+
+            if (
+                $this->current_path
+                && ($row['target_url'] ?? '') === $this->current_path
+            ) {
+                continue;
+            }
+
+            $display_text = '';
+            foreach ($display_fields as $f) {
+                if (!empty($row[$f])) {
+                    $display_text = $row[$f];
+                    break;
+                }
+            }
+
+            $row['display_text'] = $display_text
+                ?: ($row['text_for_page_list'] ?? '');
+
+            $results[] = $row;
+        }
+
+        return $results;
+    }
+
+    private function collect_not_in_values(string $ref_key, string $field): array
+    {
+        foreach ($this->result as $group) {
+            foreach ($group['box'] ?? [] as $box) {
+                if (($box['box_key'] ?? null) !== $ref_key) {
+                    continue;
+                }
+                return array_values(array_unique(array_filter(
+                    array_column($box['list'], $field)
+                )));
+            }
+        }
+        return [];
+    }
+
+    private function resolve_sub_heading(string|array $sub, array $boxes): string
+    {
+        if (is_array($sub)) {
+            $sub = empty($boxes)
+                ? ($sub['is_first'] ?? '')
+                : ($sub['default'] ?? '');
+        }
+        return strtr((string)$sub, $this->replace_map);
+    }
+
+    private function match_conditions(array $row, array $conditions, bool $resolved = false): bool
+    {
+        $or_groups = $conditions['OR'] ?? null;
+        unset($conditions['OR']);
+
+        foreach ($conditions as $key => $expected) {
+            if (is_string($expected)) {
+                if (!$resolved) {
+                    $expected = strtr($expected, $this->replace_map);
+                }
+
+                if ($expected === '') {
+                    continue;
+                }
+            }
+
+            if (!array_key_exists($key, $row)) {
+                return false;
+            }
+
+            $value = $row[$key] ?? null;
+            if ($value === null) {
+                return false;
+            }
+
+            if (is_bool($expected)) {
+                $trimmed = trim((string)$value);
+                $truthy  = $trimmed !== '' &&
+                    !in_array(strtolower($trimmed), ['false', '0'], true);
+
+                if ($expected !== $truthy) {
+                    return false;
+                }
+                continue;
+            }
+
+            if (is_array($expected) && isset($expected['not_in'])) {
+                $not_in_match = $resolved
+                    ? isset($expected['not_in'][(string)$value])
+                    : in_array((string)$value, $expected['not_in'], true);
+
+                if ($not_in_match) {
+                    return false;
+                }
+                continue;
+            }
+
+            if ((string)$value !== (string)$expected) {
+                return false;
+            }
+        }
+
+        if (!$or_groups) {
+            return true;
+        }
+
+        foreach ($or_groups as $group) {
+            if ($this->match_conditions($row, $group, $resolved)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function resolve_placeholders(array $conditions): array
+    {
+        foreach ($conditions as $key => &$value) {
+            if ($key === 'OR' && is_array($value)) {
+                foreach ($value as &$group) {
+                    $group = $this->resolve_placeholders($group);
+                }
+                continue;
+            }
+
+            if (is_string($value)) {
+                $value = strtr($value, $this->replace_map);
+                if ($value === '') {
+                    unset($conditions[$key]);
+                }
+            }
+        }
+
+        return $conditions;
+    }
+}
+
+function get_related_tag(?string $custom_path = null, array $related_tag_option = []): array
+{
+    return Related_Tag_Service::get_instance($custom_path)
+        ->handle($custom_path, $related_tag_option);
+}
