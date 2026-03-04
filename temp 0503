@@ -1,0 +1,47 @@
+<?php
+/**
+ * Mobile Line Section Component
+ *
+ * LINE査定ページのメインセクション
+ */
+?>
+
+<section class="c-mobile-line">
+    <div class="c-mobile-line__mv">
+        <div class="c-mobile-line__titles">
+            <h1 class="c-mobile-line__title">
+                <span class="c-mobile-line__icon-left"></span>
+                写真一枚<small class="c-mobile-line__title-small">からでも</small>査定可能<small class="c-mobile-line__title-small">です</small>
+                <span class="c-mobile-line__icon-right"></span>
+            </h1>
+        </div>
+        <div class="c-mobile-line__flex">
+            <div class="c-mobile-line__content">
+                <h2 class="c-mobile-line__green">
+                    <span class="c-mobile-line__green-big">かんたん!!</span><br>
+                    <span class="c-mobile-line__green-bigger">LINE</span>で<span class="c-mobile-line__green-big">査定</span>
+                </h2>
+                <div class="c-mobile-line__ribbon">
+                    <span>撮って</span>
+                    <span class="c-mobile-line__ribbon-white">送って</span>
+                    <span>すぐ査定</span>
+                </div>
+                <p class="c-mobile-line__txts">お送りいただいた画像をもとに、<br>24時間以内に査定金額をお伝えします。</p>
+            </div>
+            <figure class="c-mobile-line__figure">
+                <img loading="lazy" src="<?php echo get_s3_template_directory_uri() ?>/img/sp/mobile_line/phone.png" alt="" width="263" height="437">
+            </figure>
+        </div>
+        <p class="c-mobile-line__txts-center">よりスムーズな査定をご希望の方は<br>右の【<span class="c-mobile-line__yellow">撮影のポイント</span>】をご確認ください。</p>
+    </div>
+
+    <?php for ($i = 1; $i < 5; $i++): ?>
+        <figure class="c-mobile-line__image c-mobile-line__image--<?php echo $i; ?>">
+            <img src="<?php echo get_s3_template_directory_uri() ?>/img/sp/mobile_line/lineimg_sateiex0<?php echo $i; ?>.jpg" alt="" fetchpriority="high" width="833" height="750">
+        </figure>
+    <?php endfor; ?>
+
+    <footer class="c-mobile-line__footer">
+        <img loading="lazy" class="c-mobile-line__logo" src="<?php echo get_s3_template_directory_uri() ?>/img/sp/mobile_line/logo-brandrevalue.jpg" alt="BRAND REVALUE" width="438" height="98">
+    </footer>
+</section>
