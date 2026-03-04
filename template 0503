@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * Template Name: Mobile Line Campaign Page
+ *
+ * LINE査定モバイルキャンペーンページ
+ *
+ * @package BRING
+ */
+
+?>
+
+<?php extend_layout('main', [], function () { ?>
+
+    <?php slot('head', function ($_, $super) { ?>
+        <?php $super(); ?>
+        <link
+            rel="stylesheet preload"
+            as="style"
+            href="<?php echo get_asset('dist/css/mobile-line-' . get_device() . '.css') ?>"
+        >
+    <?php }); ?>
+
+    <main class="p-mobile-line">
+        <?php get_component('sections/mobile-line'); ?>
+    </main>
+
+<?php }); ?>
