@@ -1,0 +1,394 @@
+@use "../_abstracts" as *;
+
+.c-mobile-line {
+  width: 750px;
+  max-width: 100%;
+  margin: 0 auto;
+  font-family: $mainFont;
+
+  // ===== Main Visual =====
+  &__mv {
+    background-color: #87ee87;
+    font-weight: 700;
+  }
+
+  // ===== Title area =====
+  &__titles {
+    background-color: #00b900;
+    text-align: center;
+
+    @if pc() {
+      padding: 30px 1%;
+    }
+
+    @if sp() {
+      padding: 4vw 1%;
+    }
+  }
+
+  &__title {
+    color: #fff;
+    letter-spacing: 0.05em;
+    position: relative;
+    display: inline-block;
+    padding: 0 1.9%;
+
+    @if pc() {
+      font-size: 46px;
+    }
+
+    @if sp() {
+      font-size: 6.133vw;
+    }
+  }
+
+  &__title-small {
+    @if pc() {
+      font-size: 36px;
+    }
+
+    @if sp() {
+      font-size: 4.8vw;
+    }
+  }
+
+  // ===== Arrow icons (left & right) =====
+  &__icon-left,
+  &__icon-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  &__icon-left,
+  &__icon-right {
+    @if sp() {
+      border-top: 0.533vw solid transparent;
+      border-bottom: 0.533vw solid transparent;
+    }
+
+    @if pc() {
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+    }
+
+    &::before {
+      @if sp() {
+        margin-top: -1.867vw;
+        border-top: 0.933vw solid #f6ff02;
+      }
+
+      @if pc() {
+        margin-top: -14px;
+        border-top: 7px solid #f6ff02;
+      }
+    }
+
+    &::after {
+      @if sp() {
+        margin-top: 0.933vw;
+        border-bottom: 0.933vw solid #f6ff02;
+      }
+
+      @if pc() {
+        margin-top: 7px;
+        border-bottom: 7px solid #f6ff02;
+      }
+    }
+  }
+
+  &__icon-left {
+    right: 100%;
+
+    @if sp() {
+      border-left: 2.267vw solid #f6ff02;
+    }
+
+    @if pc() {
+      border-left: 17px solid #f6ff02;
+    }
+
+    &::before,
+    &::after {
+      right: 0;
+
+      @if sp() {
+        border-left: 0.533vw solid transparent;
+        border-right: 2vw solid transparent;
+      }
+
+      @if pc() {
+        border-left: 4px solid transparent;
+        border-right: 15px solid transparent;
+      }
+    }
+
+    &::before {
+      transform: rotate(35deg);
+    }
+
+    &::after {
+      transform: rotate(-35deg);
+    }
+  }
+
+  &__icon-left,
+  &__icon-left::before,
+  &__icon-left::after {
+    right: 100%;
+  }
+
+  &__icon-right {
+    left: 100%;
+
+    @if sp() {
+      border-right: 2.267vw solid #f6ff02;
+    }
+
+    @if pc() {
+      border-right: 17px solid #f6ff02;
+    }
+
+    &::before,
+    &::after {
+      left: 0;
+
+      @if sp() {
+        border-right: 0.533vw solid transparent;
+        border-left: 2vw solid transparent;
+      }
+
+      @if pc() {
+        border-right: 4px solid transparent;
+        border-left: 15px solid transparent;
+      }
+    }
+
+    &::before {
+      transform: rotate(-35deg);
+    }
+
+    &::after {
+      transform: rotate(35deg);
+    }
+  }
+
+  &__icon-right,
+  &__icon-right::before,
+  &__icon-right::after {
+    left: 100%;
+  }
+
+  // ===== max-width:414px overrides for icons =====
+  @media screen and (max-width: 414px) {
+    &__icon-left,
+    &__icon-right {
+      border-top-width: 2px;
+      border-bottom-width: 2px;
+
+      &::before {
+        margin-top: -6px;
+        border-top-width: 3px;
+      }
+
+      &::after {
+        margin-top: 3px;
+        border-bottom-width: 3px;
+      }
+    }
+
+    &__icon-left {
+      border-left-width: 8px;
+
+      &::before,
+      &::after {
+        border-left-width: 2px;
+        border-right-width: 7px;
+      }
+    }
+
+    &__icon-right {
+      border-right-width: 8px;
+
+      &::before,
+      &::after {
+        border-right-width: 2px;
+        border-left-width: 7px;
+      }
+    }
+  }
+
+  // ===== Flex container =====
+  &__flex {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4% 4% 7%;
+    width: 100%;
+  }
+
+  &__content {
+    width: 61%;
+  }
+
+  &__figure {
+    width: 35%;
+    margin-top: -2.2%;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  // ===== Green heading =====
+  &__green {
+    color: #006700;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    margin-top: 12%;
+
+    @if pc() {
+      font-size: 55px;
+    }
+
+    @if sp() {
+      font-size: 7.333vw;
+    }
+  }
+
+  &__green-big {
+    @if pc() {
+      font-size: 64px;
+    }
+
+    @if sp() {
+      font-size: 8.533vw;
+    }
+  }
+
+  &__green-bigger {
+    line-height: 1;
+    position: relative;
+
+    @if pc() {
+      font-size: 80px;
+      top: 6px;
+    }
+
+    @if sp() {
+      font-size: 10.667vw;
+      top: 0.8vw;
+    }
+  }
+
+  // ===== Ribbon =====
+  &__ribbon {
+    background-color: #00b900;
+    color: #fff;
+    clip-path: polygon(0% 0%, 95% 0%, 100% 50%, 95% 100%, 0% 100%);
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    padding-left: 6%;
+    margin-top: 7%;
+
+    @if pc() {
+      min-height: 55px;
+      font-size: 28px;
+    }
+
+    @if sp() {
+      min-height: 7.333vw;
+      font-size: 3.733vw;
+    }
+  }
+
+  &__ribbon-white {
+    width: 36%;
+    height: 100%;
+    display: block;
+    overflow: hidden;
+    margin: 0 1% 0 4%;
+    padding: 1% 0 1% 8%;
+    color: #00b900;
+    background-color: #fff;
+    clip-path: polygon(85% 0%, 100% 50%, 85% 100%, 0% 100%, 15% 50%, 0% 0%);
+    display: flex;
+    align-items: center;
+
+    @if pc() {
+      min-height: 55px;
+    }
+
+    @if sp() {
+      min-height: 7.333vw;
+    }
+  }
+
+  // ===== Text blocks =====
+  &__txts {
+    color: #006700;
+    line-height: 1.4;
+    letter-spacing: 0.05em;
+    margin-top: 6%;
+    white-space: nowrap;
+
+    @if pc() {
+      font-size: 21.5px;
+    }
+
+    @if sp() {
+      font-size: 2.867vw;
+    }
+  }
+
+  &__txts-center {
+    background-color: #00b900;
+    color: #fff;
+    letter-spacing: 0.05em;
+    line-height: 1.5;
+    padding: 3.5% 1%;
+    text-align: center;
+
+    @if pc() {
+      font-size: 30px;
+    }
+
+    @if sp() {
+      font-size: 4vw;
+    }
+  }
+
+  &__yellow {
+    color: #f6ff02;
+  }
+
+  // ===== Images =====
+  &__image {
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+
+  // ===== Footer =====
+  &__footer {
+    text-align: center;
+    padding: 2.5% 0 4%;
+  }
+
+  &__logo {
+    width: 50.7%;
+    height: auto;
+  }
+}
