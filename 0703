@@ -1,0 +1,11 @@
+@function vw-sa($size, $max-vw: 750) {
+    $min: $size * 1px; // floor = giá trị design (tại 375px)
+    $vw: calc($size / 375 * 100vw); // scale theo viewport
+    $max: calc($size / 375 * $max-vw) * 1px; // cap tại 750px
+
+    @if $size >= 0 {
+        @return clamp($min, $vw, $max); // clamp(15px, 4vw, 30px)
+    } @else {
+        @return clamp($max, $vw, $min); // clamp(-40px, -5.33vw, -20px)
+    }
+}
