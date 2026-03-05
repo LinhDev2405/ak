@@ -1,0 +1,79 @@
+<?php
+$services = [
+    [
+        'class' => 'trip',
+        'title' => '<span class="c-shop-banner1__item-subtitle">全国47都道府県対応</span><br>出張買取',
+        'img' => '/page_visit-form/other-parchace/shuccho.jpg',
+        'features' => [
+            '<span class="c-shop-banner1__para-txt--red">最短で当日</span>の<br>出張が可能！',
+            '<span class="c-shop-banner1__para-txt--red">部屋に上がらず</span><br>玄関先での査定OK！',
+            '査定額をご確認後<br><span class="c-shop-banner1__para-txt--red">その場でお振込</span>！',
+        ],
+        'link' => home_url('purchase/shuccho'),
+        'gtm' => 'gtm-Purchase-shuccho-page-01',
+        'btn' => '<span class="c-shop-banner1__btn-txt--big">出張買取</span>',
+    ],
+    [
+        'class' => 'home',
+        'title' => '<span class="c-shop-banner1__item-subtitle">送って待つだけ!</span><br>宅配買取',
+        'img' => '/page_visit-form/other-parchace/takuhai.jpg',
+        'features' => [
+            '梱包できたら<br><span class="c-shop-banner1__para-txt--red">連絡なし</span>で配送OK！',
+            '<span class="c-shop-banner1__para-txt--red">保険付き宅配キット</span>は<br>最短で翌日お届け！',
+            '結果のご連絡は<br><span class="c-shop-banner1__para-txt--red">3日以内</span>！',
+        ],
+        'link' => home_url('purchase/takuhai'),
+        'gtm' => 'gtm-Purchase-takuhai-page-01',
+        'btn' => '<span class="c-shop-banner1__btn-txt--big">宅配買取</span>宅配買取',
+    ],
+];
+?>
+
+<section class="c-shop-banner1">
+    <p class="c-shop-banner1__label">申し訳ございません、現在出店準備中です</p>
+    <h2 class="c-shop-banner1__title">来店不要の買取サービス!</h2>
+
+    <ul class="c-shop-banner1__services">
+        <?php foreach ($services as $service):
+            $service_class = $service['class'];
+            $img_url = get_s3_follow_device() . $service['img'];
+            $classes = clsx(
+                "c-shop-banner1__item--$service_class",
+            );
+        ?>
+            <div class="c-shop-banner1__item <?= $classes ?>">
+                <h3 class="c-shop-banner1__txt">
+                    <?= $service['title']; ?>
+                </h3>
+
+                <figure class="c-shop-banner1__img">
+                    <img
+                        class="lazyload img"
+                        loading="lazy"
+                        src="<?= $img_url ?>"
+                        alt=""
+                        width="130"
+                        height="130">
+                </figure>
+
+                <div class="c-shop-banner1__para">
+                    <span class="c-shop-banner1__para-line"></span>
+                    <?php foreach ($service['features'] as $index => $feature): ?>
+                        <p class="c-shop-banner1__para-txt">
+                            <?= $feature; ?>
+                        </p>
+                    <?php endforeach; ?>
+                </div>
+
+                <a href="<?= $service['link']; ?>" class="c-shop-banner1__btn">
+                    <p class="c-shop-banner1__btn-txt">
+                        <?= $service['btn'] ?><br>
+                        専用フォーム
+                    </p>
+
+                    <span class="c-shop-banner1__btn-arrow"></span>
+                </a>
+            </div>
+        <?php endforeach; ?>
+    </ul>
+</section>
