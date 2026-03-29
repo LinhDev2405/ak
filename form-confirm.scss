@@ -1,0 +1,131 @@
+@use "../../_abstracts" as *;
+
+.c-form-confirm {
+    background-color: #ebf1fd;
+
+    @if pc() {
+        padding: 40px 0 90px;
+    }
+
+    &__title {
+        background-color: #153987;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        color: #ffffff;
+        font-family: $secondFont;
+        text-align: center;
+
+        @if sp() {
+            font-size: 8.533vw;
+            padding: 1.867vw;
+            margin-bottom: 6.667vw;
+        }
+
+        @if pc() {
+            font-size: 54px;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+    }
+
+    &__txt {
+        color: #081a43;
+        text-align: center;
+
+        @if sp() {
+            margin-top: 6.667vw;
+            font-weight: 500;
+            font-size: 3.733vw;
+        }
+
+        @if pc() {
+            letter-spacing: 0.03em;
+            font-size: 20px;
+            margin-top: 25px;
+            font-weight: 700;
+        }
+    }
+
+    &__container {
+        @if sp() {
+            padding: 8vw 5.333vw 44vw;
+        }
+    }
+
+    &__content {
+    }
+
+    &__row {
+        @if sp() {
+            border-bottom: vw-sp(3) dotted #9db6ea;
+            padding: 5.333vw 0;
+        }
+
+        @if pc() {
+            display: flex;
+            border-bottom: 3px dotted #9db6ea;
+            padding: 20px 30px 20px 20px;
+        }
+    }
+
+    &__label {
+        color: #081a43;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        @if sp() {
+            width: 100%;
+            font-size: 4.267vw;
+            margin-bottom: vw-sp(8);
+        }
+
+        @if pc() {
+            font-size: 18px;
+            width: 297px;
+            padding-right: 30px;
+        }
+    }
+
+    &__value {
+        color: #3f4040;
+        letter-spacing: 0.05em;
+        font-weight: 700;
+        @if sp() {
+            font-size: 5.333vw;
+        }
+
+        @if pc() {
+            width: 600px;
+            font-size: 24px;
+        }
+    }
+
+    &__info {
+        text-align: center;
+        font-family: $mainFont;
+        font-weight: bold;
+        margin-top: if-sp(17.3vw, 60px);
+
+        &-text {
+            letter-spacing: 0.04em;
+            color: #081a43;
+
+            @if sp() {
+                margin-top: vw-sp(12);
+                font-size: 3.73vw;
+            }
+
+            @if pc() {
+                margin-top: 15px;
+                font-size: 18px;
+            }
+
+            &--red {
+                color: #ef4d4c;
+            }
+        }
+    }
+}
