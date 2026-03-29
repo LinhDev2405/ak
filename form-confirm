@@ -1,0 +1,130 @@
+<?php
+$root_img = get_s3_follow_device() . '/categories/kimono-lp/form/';
+$tel_number = config('contact.tel.affiliate_auto_send');
+?>
+
+<section class="c-form-confirm">
+    <h1 class="c-form-confirm__title">お申込み内容の確認</h1>
+
+    <div class="c-form-confirm__container">
+        <?php get_component(
+            'sections/lp/form/form-step',
+            [
+                'root_img'     => $root_img,
+                'current_step' => 2,
+            ]
+        ); ?>
+
+        <p class="c-form-confirm__txt">
+            ご入力いただいた内容をご確認後、<?= the_spbr() ?>「送信する」ボタンを押してください。
+        </p>
+
+        <p class="c-form__label">出張買取お申込者様情報</p>
+
+        <!-- Error summary -->
+        <div id="errorSummary" class="error-summary error-summary__single_form">
+            <p class="error-summary-title"></p>
+            <ul class="error-summary-list"></ul>
+        </div>
+
+        <div class="c-form-confirm__content">
+            <div class="c-form-confirm__row">
+                <label class="c-form-confirm__label"><span>お名前<span class="c-form-confirm__required">必須</span></span></label>
+                <div class="c-form-confirm__value center-row">
+                    <span id="sei"><?= $_POST['sei'] ?></span>
+                    <span id="mei"><?= $_POST['mei'] ?></span>
+                </div>
+            </div>
+
+            <div class="c-form-confirm__row">
+                <label class="c-form-confirm__label"><span>フリガナ<span class="c-form-confirm__required">必須</span></span></label>
+                <div class="c-form-confirm__value center-row">
+                    <span id="kana_sei"><?= $_POST['kana_sei'] ?></span>
+                    <span id="kana_mei"><?= $_POST['kana_mei'] ?></span>
+                </div>
+            </div>
+
+            <div class="c-form-confirm__row">
+                <label class="c-form-confirm__label"><span>電話番号<span class="c-form-confirm__required">必須</span></span></label>
+                <div class="c-form-confirm__value center-row">
+                    <span id="tel"><?= $_POST['tel'] ?></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="form-row-label"><span>ご住所<span class="form-required">必須</span></span></label>
+                <div class="form-row-content">
+                    <div id="zip"><?php echo $_POST['zip01'] ?></div>
+                    <div>
+                        <span class="span" id="pref01"><?php echo $_POST['pref01'] ?></span>
+                        <span class="span" id="addr01"><?php echo $_POST['addr01'] ?></span>
+                    </div>
+                    <div>
+                        <span class="span" id="blocknum"><?php echo $_POST['blocknum'] ?></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="form-row-label"><span>メールアドレス<span class="form-required">必須</span></span></label>
+                <div class="form-row-content center-row">
+                    <span class="span" id="email"><?php echo $_POST['email'] ?></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="form-row-label">出張買取のご希望日時<span class="form-required">必須</span></label>
+                <div class="form-row-content">
+                    <div id="delivery_date"><?php echo $_POST['delivery_date'] ?></div>
+                    <div id="request_kit"><?php echo $_POST['request_kit'] ?></div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="form-row-label">備考<span class="form-not-required">任意</span></label>
+                <div class="form-row-content center-row">
+                    <span class="span" id="bikou"><?php echo $_POST['bikou'] ?></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="form-row-label">画像をアップロード<span class="form-not-required">任意</span></label>
+                <div class="form-row-content">
+                    <p class="field-file file-1"><?php echo htmlspecialchars($_POST['file_name_1'] ?? ''); ?></p>
+                    <input type="hidden" name="temp_file_path_real_file1" value="<?php echo htmlspecialchars($_POST['temp_file_path_real_file1'] ?? ''); ?>">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="form-row-label">個人情報の取り扱いについて<span class="form-required">必須</span></label>
+                <div class="form-row-content center-row">
+                    <span class="span" id="acceptanceData"><?php echo $_POST['acceptanceData'] ?></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="c-form-confirm__info">
+            <p class="c-form__label">予約日時について</p>
+            <div class="c-form-confirm__info-text">
+                お申し込み時点ではご予約は完了しておりません。<br>
+                後程、査定士からご連絡を差し上げますので、
+                <span class="c-form-confirm__info-text--red">改めて訪問日時をご確認いただいた時点で予約確定</span>となります。
+            </div>
+        </div>
+
+        <?php get_component('sections/lp/form/button', [
+            'href' => home_url($back),
+            'text' => '送信する',
+            'button_type' => 'submit',
+        ]); ?>
+
+        <?php get_component('sections/lp/form/button', [
+            'href' => home_url($back),
+            'text' => '入力内容を修正する',
+            'button_type' => 'submit',
+        ]); ?>
+
+        <!-- Time Contact -->
+        <?php get_component('sections/lp/form/time-contact') ?>
+    </div>
+</section>
