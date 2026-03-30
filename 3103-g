@@ -1,0 +1,182 @@
+(function ($) {
+    const SELECTORS = {
+        form: "#contact_form",
+        resetButton: "#form_reset",
+        acceptance: "#acceptanceData",
+        note: "#note",
+        deliveryDate: "#delivery_date",
+        insurance: 'input[name="request_insurance"]',
+        required: "input.field-required",
+        file: "#real_file1",
+    };
+
+    const CLASSES = {
+        error: "error",
+        inputError: "txt-err",
+        borderError: "br-red",
+        checkmark: "checkmark",
+        visible: "display-inline-block",
+    };
+
+    const MESSAGES = {
+        required: "・必須項目です。",
+        email: "・メールアドレスの形式ではありません。",
+        phone: "・電話番号の形式ではありません。",
+        zip: "・郵便番号の形式ではありません。",
+        date: "日付を入力してください。",
+    };
+
+    const VALIDATORS = {
+        email: { pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, msg: "email" },
+        phone: { pattern: /^\d{10,11}$/, msg: "phone", normalize: (v) => v.replace(/\D/g, "") },
+        zip: { pattern: /^(?:\d{3}-\d{4}|\d{7})$/, msg: "zip" },
+    };
+
+    let isFileValid = true;
+
+    $(function () {
+        bindEvents();
+        initDatepicker();
+        restoreSession();
+        validateExisting();
+    });
+
+    function validateElement($el) {
+        const value = $el.val();
+        const classList = $el.attr("class") || "";
+        const errors = [];
+
+        if (classList.includes("field-required") && !value) {
+            errors.push(MESSAGES.required);
+        }
+
+        if (value) {
+            Object.entries(VALIDATORS).forEach(([type, { pattern, msg, normalize }]) => {
+                if (classList.includes(`field-${type}`)) {
+                    const testValue = normalize ? normalize(value) : value;
+                    if (!pattern.test(testValue)) errors.push(MESSAGES[msg]);
+                }
+            });
+        }
+
+        render($el, errors);
+    }
+
+    function render($el, errors) {
+        $el.parent().find(`.${CLASSES.error}`).remove();
+
+        if (!errors.length) {
+            $el.removeClass(CLASSES.inputError);
+            toggleCheckmark($el, !!$el.val());
+            return;
+        }
+
+        $el.addClass(CLASSES.inputError);
+        toggleCheckmark($el, false);
+
+        errors.forEach((msg) => {
+            $("<span>", { class: CLASSES.error, text: msg }).insertAfter($el);
+        });
+    }
+
+    function toggleCheckmark($el, show) {
+        $el.next(`.${CLASSES.checkmark}`).toggleClass(CLASSES.visible, show);
+    }
+
+    function bindEvents() {
+        $(SELECTORS.resetButton).on("click", () => history.back());
+
+        $(document).on("input change", "input, select, textarea", function () {
+            validateElement($(this));
+        });
+
+        $(SELECTORS.acceptance).on("change", function () {
+            const $el = $(this);
+            const $container = $el.closest(".checkbox-contact");
+            const isChecked = this.checked;
+
+            $container.find(".error").remove();
+            if (!isChecked) {
+                $("<span>", { class: CLASSES.error, text: MESSAGES.required }).appendTo($container);
+            }
+            $el.toggleClass(CLASSES.borderError, !isChecked);
+        });
+
+        $(SELECTORS.insurance).on("change", function () {
+            const isOther = $(`${SELECTORS.insurance}:checked`).val() === "上記以外の場所";
+            $(".box-note").toggle(isOther);
+            if (!isOther) {
+                $(SELECTORS.note).val("");
+                toggleCheckmark($(SELECTORS.note), false);
+            }
+        });
+
+        $(SELECTORS.deliveryDate).on("input", function () {
+            const $el = $(this);
+            const hasValue = !!$el.val();
+            $el.closest(".form-field")
+                .find(".error-date")
+                .text(hasValue ? "" : MESSAGES.date);
+            toggleCheckmark($el, hasValue);
+        });
+
+        $(SELECTORS.file).on("change", function () {
+            isFileValid = !$(".file-inline").hasClass(CLASSES.inputError);
+        });
+    }
+
+    function initDatepicker() {
+        $("input[name='delivery_date']").datepicker({
+            minDate: 0,
+            dateFormat: "yy年mm月dd日",
+        });
+        $(".form-input-datepicker input").attr("readonly", true);
+    }
+
+    function restoreSession() {
+        const value = sessionStorage.getItem("delivery_date");
+        if (value) {
+            $(SELECTORS.deliveryDate).val(value);
+            sessionStorage.removeItem("delivery_date");
+        }
+    }
+
+    function validateExisting() {
+        $(SELECTORS.required).each(function () {
+            if ($(this).val()) validateElement($(this));
+        });
+    }
+
+    window.FormHandler = {
+        validateBeforeSubmit() {
+            let isValid = true;
+
+            $(SELECTORS.required).each(function () {
+                if (!$(this).val()) {
+                    validateElement($(this));
+                    isValid = false;
+                }
+            });
+
+            if (!$(SELECTORS.acceptance).is(":checked")) {
+                $(SELECTORS.acceptance).trigger("change");
+                isValid = false;
+            }
+
+            if (!$(SELECTORS.deliveryDate).val()) {
+                $(SELECTORS.deliveryDate).trigger("input");
+                isValid = false;
+            }
+
+            if (!isFileValid) isValid = false;
+
+            if (!isValid) {
+                $(SELECTORS.form)[0]?.scrollIntoView({ behavior: "smooth" });
+            } else {
+                sessionStorage.setItem("delivery_date", $(SELECTORS.deliveryDate).val());
+            }
+
+            return isValid;
+        },
+    };
+})(jQuery);
