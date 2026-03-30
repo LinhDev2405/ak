@@ -1,0 +1,209 @@
+(function ($) {
+    const selectors = {
+        form: "#contact_form",
+        resetButton: "#form_reset",
+        acceptance: "#acceptanceData",
+        note: "#note",
+        deliveryDate: "#delivery_date",
+        insurance: 'input[name="request_insurance"]',
+        required: "input.field-required",
+        file: "#real_file1",
+    };
+
+    const classNames = {
+        error: "error",
+        inputError: "txt-err",
+        borderError: "br-red",
+        checkmark: "checkmark",
+        visible: "display-inline-block",
+    };
+
+    const messages = {
+        required: "・必須項目です。",
+        email: "・メールアドレスの形式ではありません。",
+        phone: "・電話番号の形式ではありません。",
+        zip: "・郵便番号の形式ではありません。",
+        date: "日付を入力してください。",
+    };
+
+    const patterns = {
+        email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        phone: /^\d{10,11}$/,
+        zip: /^(?:\d{3}-\d{4}|\d{7})$/,
+    };
+
+    let isFileValid = true;
+
+    $(function () {
+        bindEvents();
+        initDatepicker();
+        restoreSession();
+        validateExisting();
+    });
+
+    /* ========= CORE ========= */
+    function validateElement($element) {
+        const value = $element.val();
+        const className = $element.attr("class") || "";
+        let errors = [];
+
+        if (className.includes("field-required") && !value) {
+            errors.push(messages.required);
+        }
+
+        if (className.includes("field-email") && value && !patterns.email.test(value)) {
+            errors.push(messages.email);
+        }
+
+        if (className.includes("field-phone") && value && !patterns.phone.test(value.replace(/\D/g, ""))) {
+            errors.push(messages.phone);
+        }
+
+        if (className.includes("field-zip") && value && !patterns.zip.test(value)) {
+            errors.push(messages.zip);
+        }
+
+        render($element, errors);
+    }
+
+    function render($element, errors) {
+        const parent = $element.parent();
+
+        parent.find("." + classNames.error).remove();
+
+        if (!errors.length) {
+            $element.removeClass(classNames.inputError);
+            toggleCheckmark($element, !!$element.val());
+            return;
+        }
+
+        $element.addClass(classNames.inputError);
+        toggleCheckmark($element, false);
+
+        $.each(errors, function (_, msg) {
+            $("<span>", {
+                class: classNames.error,
+                text: msg,
+            }).insertAfter($element);
+        });
+    }
+
+    function toggleCheckmark($element, show) {
+        $element.next("." + classNames.checkmark).toggleClass(classNames.visible, show);
+    }
+
+    /* ========= EVENTS ========= */
+    function bindEvents() {
+        $(selectors.resetButton).on("click", function () {
+            history.back();
+        });
+
+        $(document).on("input change", "input, select, textarea", function () {
+            validateElement($(this));
+        });
+
+        $(selectors.acceptance).on("change", function () {
+            const $el = $(this);
+            const isValid = this.checked;
+
+            $el.closest(".checkbox-contact").find(".error").remove();
+
+            if (!isValid) {
+                $("<span>", {
+                    class: classNames.error,
+                    text: messages.required,
+                }).appendTo($el.closest(".checkbox-contact"));
+            }
+
+            $el.toggleClass(classNames.borderError, !isValid);
+        });
+
+        $(selectors.insurance).on("change", function () {
+            const isOther = $(selectors.insurance + ":checked").val() === "上記以外の場所";
+
+            $(".box-note").toggle(isOther);
+
+            if (!isOther) {
+                $(selectors.note).val("");
+                toggleCheckmark($(selectors.note), false);
+            }
+        });
+
+        $(selectors.deliveryDate).on("input", function () {
+            const $el = $(this);
+            const hasValue = !!$el.val();
+
+            $el.closest(".form-field")
+                .find(".error-date")
+                .text(hasValue ? "" : messages.date);
+
+            toggleCheckmark($el, hasValue);
+        });
+
+        $(selectors.file).on("change", function () {
+            isFileValid = !$(".file-inline").hasClass(classNames.inputError);
+        });
+    }
+
+    /* ========= DATE ========= */
+    function initDatepicker() {
+        $("input[name='delivery_date']").datepicker({
+            minDate: 0,
+            dateFormat: "yy年mm月dd日",
+        });
+
+        $(".form-input-datepicker input").attr("readonly", true);
+    }
+
+    /* ========= SESSION ========= */
+    function restoreSession() {
+        const value = sessionStorage.getItem("delivery_date");
+
+        if (value) {
+            $(selectors.deliveryDate).val(value);
+            sessionStorage.removeItem("delivery_date");
+        }
+    }
+
+    function validateExisting() {
+        $(selectors.required).each(function () {
+            if ($(this).val()) validateElement($(this));
+        });
+    }
+
+    /* ========= SUBMIT ========= */
+    window.FormHandler = {
+        validateBeforeSubmit: function () {
+            let isValid = true;
+
+            $(selectors.required).each(function () {
+                if (!$(this).val()) {
+                    validateElement($(this));
+                    isValid = false;
+                }
+            });
+
+            if (!$(selectors.acceptance).is(":checked")) {
+                $(selectors.acceptance).trigger("change");
+                isValid = false;
+            }
+
+            if (!$(selectors.deliveryDate).val()) {
+                $(selectors.deliveryDate).trigger("input");
+                isValid = false;
+            }
+
+            if (!isValidFile) {
+                isValid = false;
+            }
+
+            if (!isValid) {
+                $(selectors.form)[0]?.scrollIntoView({ behavior: "smooth" });
+            } else {
+                sessionStorage.setItem("delivery_date", $(selectors.deliveryDate).val());
+            }
+
+            return isValid;
+        },
+    };
+})(jQuery);
