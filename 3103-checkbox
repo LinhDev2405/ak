@@ -1,0 +1,37 @@
+<?php
+$required = $args['required'] ?? false;
+$text     = $args['text'] ?? '';
+$name     = $args['name'] ?? '';
+$label    = $required ? '必須' : '任意';
+
+$classes = clsx(
+    "c-form-field c-form-field--checkbox js-checkbox",
+    [
+        'is-required' => $required
+    ]
+);
+?>
+
+<div class="<?= $classes ?>">
+    <div class="c-form-field__checkbox">
+        <label for="<?= esc_attr($name); ?>" class="c-form-field__checkbox-label js-input-checkbox-wrapper js-error-wrapper">
+            <input
+                type="checkbox"
+                id="<?= esc_attr($name); ?>"
+                name="<?= esc_attr($name); ?>"
+                class="js-input-checkbox"
+                hidden
+            >
+            <span class="c-form-field__title">
+                <span class="c-form-field__title-text">
+                    <?= esc_html($text); ?>
+                </span>
+                <span class="c-form-field__title-label">
+                    <?= esc_html($label); ?>
+                </span>
+            </span>
+            <span class="checkmark"></span>
+        </label>
+    </div>
+    <div class="c-form-field__error-message js-error"></div>
+</div>
