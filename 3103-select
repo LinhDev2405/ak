@@ -1,0 +1,21 @@
+<?php
+$name = $args['name'] ?? '';
+$options = $args['options'] ?? [];
+$class_wrapper = $args['class_wrapper'] ?? '';
+$classes = clsx(
+    "c-form-field__wrap js-error-wrapper",
+    $class_wrapper,
+);
+?>
+
+<div class="<?= $classes; ?>">
+    <select class="c-form-field__select" id="<?= esc_attr($name); ?>" name="<?= esc_attr($name); ?>">
+        <?php foreach ($options as $value => $text): ?>
+            <option value="<?= esc_attr($value); ?>" <?= $value === '' ? 'selected disabled' : ''; ?>>
+                <?= esc_html($text); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+    <span class="checkmark"></span>
+    <div class="c-form-field__error-message js-error"></div>
+</div>
