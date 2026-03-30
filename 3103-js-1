@@ -1,0 +1,291 @@
+(function () {
+    "use strict";
+
+    var SELECTORS = {
+        form: "#form",
+        requiredField: ".c-form-field.is-required",
+        errorWrapper: ".js-error-wrapper",
+        errorNode: ".js-error",
+        checkmark: ".checkmark",
+        checkboxRow: ".js-checkbox",
+        checkboxInput: ".js-input-checkbox",
+        submitButton: "button[type='submit']",
+    };
+
+    var CLASS_NAMES = {
+        inputError: "txt-err",
+        checkboxError: "br-red",
+        wrapperError: "is-error",
+        checkmarkVisible: "display-inline-block",
+    };
+
+    var MESSAGES = {
+        required: "・必須項目です。",
+        email: "・メールアドレスの形式ではありません。",
+        phone: "・電話番号の形式ではありません。",
+        zip: "・郵便番号の形式ではありません。",
+        katakana: "・カタカナで入力してください。",
+    };
+
+    var PATTERNS = {
+        email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        phone: /^\d{10,11}$/,
+        zip: /^(?:\d{3}-\d{4}|\d{7})$/,
+        katakana: /^[\u30A0-\u30FFー\s]+$/,
+    };
+
+    function trimValue(el) {
+        return (el.value || "").trim();
+    }
+
+    function getFieldRow(el) {
+        return el.closest(".c-form-field");
+    }
+
+    function isVisible(el) {
+        if (!el) {
+            return false;
+        }
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    function isRequired(el) {
+        var row = getFieldRow(el);
+        return !!(row && row.classList.contains("is-required"));
+    }
+
+    function getErrorNode(el) {
+        var wrapper = el.closest(SELECTORS.errorWrapper);
+        if (wrapper) {
+            var localNode = wrapper.querySelector(SELECTORS.errorNode);
+            if (localNode) {
+                return localNode;
+            }
+        }
+
+        var row = getFieldRow(el);
+        return row ? row.querySelector(SELECTORS.errorNode) : null;
+    }
+
+    function getCheckmarkNode(el) {
+        var wrapper = el.closest(SELECTORS.errorWrapper);
+        if (wrapper) {
+            var localNode = wrapper.querySelector(SELECTORS.checkmark);
+            if (localNode) {
+                return localNode;
+            }
+        }
+
+        var row = getFieldRow(el);
+        return row ? row.querySelector(SELECTORS.checkmark) : null;
+    }
+
+    function toggleCheckmark(el, show) {
+        var checkmark = getCheckmarkNode(el);
+        if (!checkmark) {
+            return;
+        }
+        checkmark.classList.toggle(CLASS_NAMES.checkmarkVisible, !!show);
+    }
+
+    function setError(el, message) {
+        var wrapper = el.closest(SELECTORS.errorWrapper);
+        var errorNode = getErrorNode(el);
+
+        if (wrapper) {
+            wrapper.classList.add(CLASS_NAMES.wrapperError);
+        }
+
+        if (el.type === "checkbox") {
+            var label = el.closest(".js-input-checkbox-wrapper");
+            if (label) {
+                label.classList.add(CLASS_NAMES.checkboxError);
+            }
+        } else {
+            el.classList.add(CLASS_NAMES.inputError);
+        }
+
+        if (errorNode) {
+            errorNode.textContent = message;
+        }
+
+        toggleCheckmark(el, false);
+    }
+
+    function clearError(el) {
+        var wrapper = el.closest(SELECTORS.errorWrapper);
+        var errorNode = getErrorNode(el);
+
+        if (wrapper) {
+            wrapper.classList.remove(CLASS_NAMES.wrapperError);
+        }
+
+        if (el.type === "checkbox") {
+            var label = el.closest(".js-input-checkbox-wrapper");
+            if (label) {
+                label.classList.remove(CLASS_NAMES.checkboxError);
+            }
+        } else {
+            el.classList.remove(CLASS_NAMES.inputError);
+        }
+
+        if (errorNode) {
+            errorNode.textContent = "";
+        }
+    }
+
+    function validateInput(el) {
+        if (!el || el.disabled) {
+            return true;
+        }
+
+        if (el.type === "hidden" && el.type !== "checkbox") {
+            return true;
+        }
+
+        var value = trimValue(el);
+        var required = isRequired(el);
+
+        if (el.type === "checkbox") {
+            if (required && !el.checked) {
+                setError(el, MESSAGES.required);
+                return false;
+            }
+            clearError(el);
+            toggleCheckmark(el, el.checked);
+            return true;
+        }
+
+        if (required && !value) {
+            setError(el, MESSAGES.required);
+            return false;
+        }
+
+        if (!value) {
+            clearError(el);
+            toggleCheckmark(el, false);
+            return true;
+        }
+
+        if (el.classList.contains("js-field-phone") && !PATTERNS.phone.test(value.replace(/\D/g, ""))) {
+            setError(el, MESSAGES.phone);
+            return false;
+        }
+
+        if (el.classList.contains("js-field-zip") && !PATTERNS.zip.test(value)) {
+            setError(el, MESSAGES.zip);
+            return false;
+        }
+
+        if ((el.type === "email" || el.name === "email") && !PATTERNS.email.test(value)) {
+            setError(el, MESSAGES.email);
+            return false;
+        }
+
+        if (el.name === "furiLastName" || el.name === "furiFirstName") {
+            if (!PATTERNS.katakana.test(value)) {
+                setError(el, MESSAGES.katakana);
+                return false;
+            }
+        }
+
+        clearError(el);
+        toggleCheckmark(el, true);
+        return true;
+    }
+
+    function firstInvalidElement(form) {
+        return form.querySelector("." + CLASS_NAMES.inputError + ", ." + CLASS_NAMES.checkboxError + ", ." + CLASS_NAMES.wrapperError);
+    }
+
+    function validateForm(form) {
+        var targets = form.querySelectorAll("input, select, textarea");
+        var allValid = true;
+
+        for (var i = 0; i < targets.length; i += 1) {
+            var el = targets[i];
+            var row = getFieldRow(el);
+
+            if (!row || !isVisible(row)) {
+                continue;
+            }
+
+            if (!validateInput(el)) {
+                allValid = false;
+            }
+        }
+
+        return allValid;
+    }
+
+    function bindFieldEvents(form) {
+        form.addEventListener("input", function (event) {
+            var target = event.target;
+            if (target.matches("input, textarea")) {
+                validateInput(target);
+            }
+        });
+
+        form.addEventListener("change", function (event) {
+            var target = event.target;
+            if (target.matches("input, select, textarea")) {
+                validateInput(target);
+            }
+        });
+
+        form.addEventListener("focusout", function (event) {
+            var target = event.target;
+            if (target.matches("input, select, textarea")) {
+                validateInput(target);
+            }
+        });
+
+        form.addEventListener("submit", function (event) {
+            if (validateForm(form)) {
+                return;
+            }
+
+            event.preventDefault();
+
+            var invalid = firstInvalidElement(form);
+            if (invalid && invalid.scrollIntoView) {
+                invalid.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+        });
+    }
+
+    function init() {
+        var form = document.querySelector(SELECTORS.form);
+        if (!form) {
+            return;
+        }
+
+        bindFieldEvents(form);
+
+        var targets = form.querySelectorAll("input, select, textarea");
+        for (var i = 0; i < targets.length; i += 1) {
+            var el = targets[i];
+
+            if (el.disabled || el.type === "hidden") {
+                continue;
+            }
+
+            if (el.type === "checkbox") {
+                toggleCheckmark(el, !!el.checked);
+                continue;
+            }
+
+            if (trimValue(el)) {
+                validateInput(el);
+            } else {
+                toggleCheckmark(el, false);
+            }
+        }
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+    } else {
+        init();
+    }
+})();
