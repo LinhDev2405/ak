@@ -1,0 +1,485 @@
+(function (global, $) {
+    if (!$) {
+        return;
+    }
+
+    var SELECTORS = {
+        formSelector: "#contact_form",
+        requiredInputSelector: "input.field-required",
+        validationInputSelector:
+            "input.field-required, input[type=radio], input[type=email], input[type=tel], select, .field-acceptance",
+        acceptanceSelector: "#acceptanceData",
+        checkboxContactSelector: ".checkbox-contact",
+        insuranceSelector: 'input[name="request_insurance"]',
+        noteBoxSelector: ".box-note",
+        noteInputSelector: "#note",
+        requestKitSelector: "#request_kit",
+        deliveryDateSelector: "#delivery_date",
+        deliveryDateInputName: 'input[name="delivery_date"]',
+        dateErrorSelector: ".error-date",
+        dateInputWrapperSelector: ".form-input-datepicker input",
+        textareaSelector: "textarea",
+        resetButtonSelector: "#form_reset",
+        fileInputSelector: "#real_file1",
+        fileInlineSelector: ".file-inline",
+        formRowSelector: ".form-row",
+        formRowContentSelector: ".form-row-content",
+        checkmarkSelector: ".checkmark",
+        requiredMarkSelector: ".form-row-label .form-required",
+        rowLabelCheckmarkSelector: ".form-row-label .checkmark",
+        radioErrorSelector: ".radio-error",
+    };
+
+    var STYLE_CLASSES = {
+        textErrorClass: "txt-err",
+        borderErrorClass: "br-red",
+        checkmarkVisibleClass: "display-inline-block",
+        dateErrorEmptyClass: "mt0",
+    };
+
+    var BEHAVIOR = {
+        insuranceNoteTriggerValue: "上記以外の場所",
+        storageKeyDeliveryDate: "delivery_date",
+        autoScrollOnLoadWithValue: true,
+    };
+
+    var MESSAGES = {
+        required: "・必須項目です。",
+        katakana: "・カタカナで入力してください。",
+        phone: "・電話番号の形式ではありません。",
+        email: "・メールアドレスの形式ではありません。",
+        zip: "・郵便番号の形式ではありません。",
+        acceptance: "・必須項目です。",
+        dateRequired: "日付を入力してください。",
+    };
+
+    var REGEX = {
+        email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        phone: /^\d{10,11}$/,
+        zip: /^(?:\d{3}-\d{4}|\d{7})$/,
+        katakana: /^[\u30A0-\u30FF]+$/,
+    };
+
+    var DATEPICKER_OPTIONS = {
+        minDate: 0,
+        yearSuffix: "年",
+        dateFormat: "yy年mm月dd日",
+        dayNames: ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"],
+        dayNamesMin: ["日", "月", "火", "水", "木", "金", "土"],
+        dayNamesShort: ["日曜", "月曜", "火曜", "水曜", "木曜", "金曜", "土曜"],
+        monthNames: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+        monthNamesShort: [
+            "1月",
+            "2月",
+            "3月",
+            "4月",
+            "5月",
+            "6月",
+            "7月",
+            "8月",
+            "9月",
+            "10月",
+            "11月",
+            "12月",
+        ],
+        showMonthAfterYear: true,
+        changeYear: true,
+        changeMonth: true,
+    };
+
+    function createFormValidationModule(options) {
+        var cfg = $.extend(
+            true,
+            {},
+            SELECTORS,
+            STYLE_CLASSES,
+            BEHAVIOR,
+            {
+                messages: MESSAGES,
+                regex: REGEX,
+                datepickerOptions: DATEPICKER_OPTIONS,
+            },
+            options || {},
+        );
+        var EVENT_NS = ".formValidationModule";
+        var initialized = false;
+        var $form = null;
+
+        function v($el) {
+            return $.trim($el.val() || "");
+        }
+
+        function showMark($el, show) {
+            $el.toggleClass(cfg.checkmarkVisibleClass, !!show);
+        }
+
+        function removeSiblingErrors($input) {
+            $input.parent().find(".error").remove();
+        }
+
+        function appendErrorAfter($input, msg) {
+            $input.next(".error").remove();
+            $input.after($('<span class="error"></span>').text(msg));
+        }
+
+        function acceptanceError(show) {
+            var $acceptance = $form.find(cfg.acceptanceSelector);
+            var $box = $acceptance.closest(cfg.checkboxContactSelector);
+            $box.find(".error").remove();
+            $acceptance.toggleClass(cfg.borderErrorClass, !!show);
+            if (show) {
+                $box.append($('<span class="error"></span>').text(cfg.messages.acceptance));
+            }
+        }
+
+        function updateRowCheckmark($input) {
+            var $row = $input.closest(cfg.formRowSelector);
+            var $content = $input.closest(cfg.formRowContentSelector);
+            if (!$row.length || !$content.length) {
+                return;
+            }
+
+            var total = $content.find(cfg.checkmarkSelector).length;
+            var shown = $content.find(cfg.checkmarkSelector + "." + cfg.checkmarkVisibleClass).length;
+            var requiredCount = $row.find(cfg.requiredMarkSelector).length;
+            var shouldShow = shown > 0 && ((total === shown && requiredCount > 0) || requiredCount < 1);
+            $row.find(cfg.rowLabelCheckmarkSelector).toggleClass(cfg.checkmarkVisibleClass, shouldShow);
+        }
+
+        function validateSingleInput(inputElement) {
+            var $input = $(inputElement);
+            var value = v($input);
+            var errors = [];
+            var isAcceptance = $input.hasClass("field-acceptance");
+
+            if ($input.hasClass("field-required") && !value) {
+                errors.push(cfg.messages.required);
+            }
+
+            if ($input.hasClass("field-katakana-full-width") && value && !cfg.regex.katakana.test(value)) {
+                errors.push(cfg.messages.katakana);
+            }
+
+            if ($input.hasClass("field-phone") && value) {
+                var normalized = value.replace(/[^a-zA-Z0-9 ]/g, "");
+                if (!cfg.regex.phone.test(normalized)) {
+                    errors.push(cfg.messages.phone);
+                }
+            }
+
+            if ($input.hasClass("field-email") && value && !cfg.regex.email.test(value)) {
+                errors.push(cfg.messages.email);
+            }
+
+            if ($input.hasClass("field-zip") && value && !cfg.regex.zip.test(value)) {
+                errors.push(cfg.messages.zip);
+            }
+
+            if (isAcceptance && !$input.is(":checked")) {
+                errors.push(cfg.messages.acceptance);
+            }
+
+            removeSiblingErrors($input);
+            if (!value) {
+                showMark($input.next(cfg.checkmarkSelector), false);
+            }
+
+            if (errors.length) {
+                $input.addClass(cfg.textErrorClass);
+                showMark($input.next(cfg.checkmarkSelector), false);
+                $.each(errors, function (_, msg) {
+                    $input.next(cfg.checkmarkSelector).before($('<span class="error"></span>').text(msg));
+                });
+                if (isAcceptance) {
+                    acceptanceError(true);
+                }
+            } else {
+                $input.removeClass(cfg.textErrorClass);
+                if (value) {
+                    showMark($input.parent().find(cfg.checkmarkSelector), true);
+                }
+                if ($input.attr("type") === "radio") {
+                    $input.closest(".list-radio").siblings(cfg.radioErrorSelector).remove();
+                    showMark($input.closest(".list-radio").find(cfg.checkmarkSelector), true);
+                }
+                if (isAcceptance) {
+                    acceptanceError(false);
+                }
+            }
+
+            updateRowCheckmark($input);
+            return !errors.length;
+        }
+
+        function syncInsuranceNoteVisibility() {
+            var $selected = $form.find(cfg.insuranceSelector + ":checked");
+            var shouldShow = $selected.val() === cfg.insuranceNoteTriggerValue;
+            var $noteBox = $form.find(cfg.noteBoxSelector);
+            var $note = $form.find(cfg.noteInputSelector);
+
+            if (shouldShow) {
+                $noteBox.show();
+                if (v($note)) {
+                    showMark($note.next(cfg.checkmarkSelector), true);
+                }
+                return;
+            }
+
+            $noteBox.hide();
+            $note.val("");
+            showMark($note.next(cfg.checkmarkSelector), false);
+        }
+
+        function setDeliveryDateError(hasValue) {
+            var $date = $form.find(cfg.deliveryDateSelector);
+            var $field = $date.closest(".form-field");
+            var $row = $date.closest(cfg.formRowSelector);
+
+            if (hasValue) {
+                $field.find(cfg.dateErrorSelector).text("").addClass(cfg.dateErrorEmptyClass);
+                $field.find(cfg.checkmarkSelector).addClass(cfg.checkmarkVisibleClass).css("display", "none");
+                if (v($form.find(cfg.requestKitSelector))) {
+                    $row.find(cfg.rowLabelCheckmarkSelector).addClass(cfg.checkmarkVisibleClass);
+                }
+            } else {
+                $field
+                    .find(cfg.dateErrorSelector)
+                    .text(cfg.messages.dateRequired)
+                    .removeClass(cfg.dateErrorEmptyClass);
+                $field
+                    .find(cfg.checkmarkSelector)
+                    .removeClass(cfg.checkmarkVisibleClass)
+                    .css("display", "none");
+                $row.find(cfg.rowLabelCheckmarkSelector).removeClass(cfg.checkmarkVisibleClass);
+            }
+        }
+
+        function scrollToForm() {
+            var formElement = $form && $form.get(0);
+            if (formElement) {
+                formElement.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        }
+
+        function scrollToFormIfWithValue() {
+            var hasValue = false;
+            $form.find(cfg.requiredInputSelector).each(function () {
+                if (v($(this))) {
+                    hasValue = true;
+                    return false;
+                }
+            });
+            if (hasValue) {
+                scrollToForm();
+                return false;
+            }
+            return true;
+        }
+
+        function validateRequiredInputs() {
+            var ok = 0;
+            var $required = $form.find(cfg.requiredInputSelector);
+
+            $required.each(function () {
+                var $input = $(this);
+                if (v($input)) {
+                    if ($input.parent().find(".error").length === 0) {
+                        ok += 1;
+                    }
+                } else {
+                    $input.addClass(cfg.textErrorClass);
+                    appendErrorAfter($input, cfg.messages.required);
+                }
+            });
+
+            return ok === $required.length;
+        }
+
+        function validateRequestKit() {
+            var $kit = $form.find(cfg.requestKitSelector);
+            if (v($kit)) {
+                return true;
+            }
+            $kit.addClass(cfg.textErrorClass);
+            appendErrorAfter($kit, cfg.messages.required);
+            return false;
+        }
+
+        function validateDeliveryDate() {
+            var hasValue = !!v($form.find(cfg.deliveryDateSelector));
+            setDeliveryDateError(hasValue);
+            return hasValue;
+        }
+
+        function validateAcceptance() {
+            var accepted = $form.find(cfg.acceptanceSelector).is(":checked");
+            acceptanceError(!accepted);
+            return accepted;
+        }
+
+        function validateFileState() {
+            return !$form.find(cfg.fileInlineSelector).hasClass(cfg.textErrorClass);
+        }
+
+        function validateBeforeSubmit() {
+            var valid =
+                validateRequiredInputs() &&
+                validateRequestKit() &&
+                validateAcceptance() &&
+                validateDeliveryDate() &&
+                validateFileState();
+
+            if (valid) {
+                sessionStorage.setItem(cfg.storageKeyDeliveryDate, v($form.find(cfg.deliveryDateSelector)));
+                return true;
+            }
+
+            scrollToForm();
+            return false;
+        }
+
+        function bindEvents() {
+            var inputEvents =
+                "change" + EVENT_NS + " paste" + EVENT_NS + " keyup" + EVENT_NS + " input" + EVENT_NS;
+
+            $form
+                .find(cfg.resetButtonSelector)
+                .off("click" + EVENT_NS)
+                .on("click" + EVENT_NS, function () {
+                    window.history.back();
+                });
+
+            $form
+                .find(cfg.acceptanceSelector)
+                .off("change" + EVENT_NS)
+                .on("change" + EVENT_NS, function () {
+                    acceptanceError(!$(this).is(":checked"));
+                });
+
+            $form
+                .find(cfg.insuranceSelector)
+                .off("click" + EVENT_NS)
+                .on("click" + EVENT_NS, function () {
+                    var $all = $form.find(cfg.insuranceSelector);
+                    $all.closest(".list-radio").siblings(cfg.radioErrorSelector).remove();
+                    $all.removeClass(cfg.borderErrorClass);
+                    syncInsuranceNoteVisibility();
+                });
+
+            $form
+                .find(cfg.noteInputSelector)
+                .off(inputEvents)
+                .on(inputEvents, function () {
+                    var $note = $(this);
+                    if (v($note)) {
+                        showMark($note.next(cfg.checkmarkSelector), true);
+                        $note.removeClass(cfg.textErrorClass);
+                        removeSiblingErrors($note);
+                    } else {
+                        showMark($note.next(cfg.checkmarkSelector), false);
+                        $note.addClass(cfg.textErrorClass);
+                        appendErrorAfter($note, cfg.messages.required);
+                    }
+                });
+
+            $form
+                .find(cfg.deliveryDateSelector)
+                .off(inputEvents)
+                .on(inputEvents, function () {
+                    setDeliveryDateError(!!v($(this)));
+                });
+
+            $form
+                .find(cfg.textareaSelector)
+                .off(inputEvents)
+                .on(inputEvents, function () {
+                    var $textarea = $(this);
+                    var hasValue = !!v($textarea);
+                    showMark($textarea.next(cfg.checkmarkSelector), hasValue);
+                    showMark(
+                        $textarea.closest(cfg.formRowSelector).find(cfg.rowLabelCheckmarkSelector),
+                        hasValue,
+                    );
+                });
+
+            $form
+                .find(cfg.validationInputSelector)
+                .off(inputEvents)
+                .on(inputEvents, function (event) {
+                    validateSingleInput(event.target);
+                })
+                .each(function () {
+                    var $input = $(this);
+                    if (
+                        !$input.hasClass("field-acceptance") &&
+                        v($input) &&
+                        $input.attr("type") !== "radio"
+                    ) {
+                        $input.trigger("change");
+                        return;
+                    }
+                    if ($input.attr("type") === "radio" && $input.is(":checked")) {
+                        $input.trigger("change");
+                        return;
+                    }
+                    if ($input.hasClass("field-acceptance") && $form.find("span.error").length > 0) {
+                        $input.trigger("change");
+                    }
+                });
+        }
+
+        function setupDatepicker() {
+            var $dateInputs = $form.find(cfg.deliveryDateInputName);
+            if ($.fn.datepicker && $dateInputs.length) {
+                $dateInputs.datepicker(cfg.datepickerOptions);
+            }
+            $form.find(cfg.dateInputWrapperSelector).attr("readonly", true);
+        }
+
+        function restoreDeliveryDate() {
+            var stored = sessionStorage.getItem(cfg.storageKeyDeliveryDate);
+            if (stored !== null) {
+                $form.find(cfg.deliveryDateSelector).val(stored);
+                sessionStorage.removeItem(cfg.storageKeyDeliveryDate);
+            }
+        }
+
+        function init() {
+            $form = $(cfg.formSelector);
+            if (!$form.length || initialized) {
+                return;
+            }
+
+            restoreDeliveryDate();
+            syncInsuranceNoteVisibility();
+            setupDatepicker();
+            bindEvents();
+
+            if (cfg.autoScrollOnLoadWithValue) {
+                scrollToFormIfWithValue();
+            }
+
+            initialized = true;
+        }
+
+        function destroy() {
+            if (!$form || !$form.length) {
+                return;
+            }
+            $form.find("*").off(EVENT_NS);
+            initialized = false;
+        }
+
+        return {
+            init: init,
+            destroy: destroy,
+            validateBeforeSubmit: validateBeforeSubmit,
+            scrollToForm: scrollToForm,
+            scrollToFormIfWithValue: scrollToFormIfWithValue,
+        };
+    }
+
+    global.FormValidationModule = {
+        create: createFormValidationModule,
+    };
+})(window, window.jQuery);
