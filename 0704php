@@ -1,0 +1,31 @@
+<?php
+$items = $args['items'] ?? [];
+if (empty($items) || !is_array($items)) {
+    return;
+}
+
+$max_count = 0;
+foreach ($items as $item) {
+    $max_count = max($max_count, (int) ($item['count'] ?? 0));
+}
+?>
+<div class="purchase-top5-chart js-purchase-top5-chart">
+    <div class="purchase-top5-chart-rows">
+        <?php foreach ($items as $index => $item) : ?>
+            <?php
+            $item_count = (int) ($item['count'] ?? 0);
+            $bar_ratio = $max_count > 0 ? round(($item_count / $max_count) * 100, 2) : 0;
+            ?>
+            <div class="purchase-top5-chart-row">
+                <div class="purchase-top5-chart-label">
+                    <span class="purchase-top5-chart-rank">TOP<?php echo esc_html((string) ($index + 1)); ?></span>
+                    <a class="purchase-top5-chart-name" href="<?php echo esc_url(home_url($item['url'] ?? '#')); ?>"><?php echo esc_html($item['name'] ?? ''); ?></a>
+                </div>
+                <div class="purchase-top5-chart-track">
+                    <div class="purchase-top5-chart-fill js-purchase-top5-fill" data-width="<?php echo esc_attr((string) $bar_ratio); ?>"></div>
+                    <span class="purchase-top5-chart-meta"><?php echo number_format($item_count); ?>件 / <?php echo esc_html(number_format((float) ($item['share'] ?? 0), 2)); ?>%</span>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
