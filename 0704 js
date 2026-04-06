@@ -1,0 +1,37 @@
+(function () {
+  var charts = document.querySelectorAll('.js-purchase-top5-chart');
+  if (!charts.length) {
+    return;
+  }
+
+  var animateChart = function (chart) {
+    var bars = chart.querySelectorAll('.js-purchase-top5-fill');
+    bars.forEach(function (bar) {
+      var width = Number(bar.getAttribute('data-width') || 0);
+      bar.style.width = width + '%';
+    });
+  };
+
+  if (!('IntersectionObserver' in window)) {
+    charts.forEach(animateChart);
+    return;
+  }
+
+  var observer = new IntersectionObserver(
+    function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        animateChart(entry.target);
+        obs.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.25 }
+  );
+
+  charts.forEach(function (chart) {
+    observer.observe(chart);
+  });
+})();
