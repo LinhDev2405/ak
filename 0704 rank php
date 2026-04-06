@@ -1,0 +1,132 @@
+<?php
+
+function purchase_item_parse_count(mixed $value): int
+{
+    $normalized = str_replace(',', '', trim((string) ($value ?? '')));
+    return ($normalized !== '' && is_numeric($normalized)) ? (int) $normalized : 0;
+}
+
+function get_purchase_item_ranking_data(?string $shop = null): array
+{
+    $empty = [
+        'total_count' => 0,
+        'top_categories' => [],
+        'top_brands_by_category' => [],
+        'missing_brand_categories' => [],
+    ];
+
+    $shop_key = trim((string) $shop);
+    $is_shop_mode = $shop_key !== '';
+    $all_rows = read_csv('purchase_item_list');
+    if (empty($all_rows)) return $empty;
+
+    $count_by_url = [];
+    foreach ($all_rows as $row) {
+        $url = trim((string) ($row['target_url'] ?? ''));
+        if ($url === '') continue;
+        $count = purchase_item_parse_count($row['number_of_item'] ?? 0);
+        if ($count <= 0) continue;
+        if (!isset($count_by_url[$url]) || $count > $count_by_url[$url]) {
+            $count_by_url[$url] = $count;
+        }
+    }
+
+    $rows = array_values(array_filter($all_rows, function (array $row) use ($is_shop_mode, $shop_key): bool {
+        return !$is_shop_mode || trim((string) ($row['shop'] ?? '')) === $shop_key;
+    }));
+
+    if (empty($rows)) return $empty;
+
+    $total_count = 0;
+    $categories = [];
+    $brand_groups = [];
+
+    foreach ($rows as $idx => $row) {
+        $url = trim((string) ($row['target_url'] ?? ''));
+        $base_url = preg_replace('#^/[^/]+(?=/purchase-items(?:/|$))#', '', $url);
+        $raw_count = purchase_item_parse_count($row['number_of_item'] ?? 0);
+        $rows[$idx]['_resolved_count'] = $raw_count > 0
+            ? $raw_count
+            : ($count_by_url[$url] ?? $count_by_url[$base_url] ?? 0);
+
+        $resolved_count = (int) $rows[$idx]['_resolved_count'];
+        $page_type = $row['page_type'] ?? '';
+        $category_name = trim((string) ($row['page_category'] ?? ''));
+        $brand_name = trim((string) ($row['page_brand'] ?? ''));
+        $model_name = trim((string) ($row['page_model'] ?? ''));
+
+        $is_total_row = $is_shop_mode
+            ? (bool) preg_match('#/purchase-items$#', (string) ($row['target_url'] ?? ''))
+            : (($url === '/purchase-items') || $page_type === '実績トップ');
+        if ($is_total_row && $total_count === 0) {
+            $total_count = $resolved_count;
+        }
+
+        $is_category_row = $is_shop_mode
+            ? ($page_type === '店舗' && $category_name !== '' && $brand_name === '')
+            : ($page_type === 'カテゴリトップ');
+        if ($is_category_row && $category_name !== '' && $resolved_count > 0) {
+            $current_max = $categories[$category_name]['count'] ?? -1;
+            if ($resolved_count > $current_max) {
+            $categories[$category_name] = [
+                'name' => $category_name,
+                'count' => $resolved_count,
+                'url' => $url ?: '#',
+            ];
+            }
+        }
+
+        $is_brand_row = $is_shop_mode
+            ? ($page_type === '店舗')
+            : in_array($page_type, ['ブランドトップ', 'ブランド×カテゴリ'], true);
+        if ($is_brand_row && $category_name !== '' && $brand_name !== '' && $model_name === '' && $resolved_count > 0) {
+            if (!isset($brand_groups[$category_name])) {
+                $brand_groups[$category_name] = [];
+            }
+            $existing = $brand_groups[$category_name][$brand_name]['count'] ?? -1;
+            if ($resolved_count > $existing) {
+            $brand_groups[$category_name][$brand_name] = [
+                'name' => $brand_name,
+                'count' => $resolved_count,
+                'url' => $url ?: '#',
+            ];
+            }
+        }
+    }
+
+    $top_categories = array_values($categories);
+    usort($top_categories, fn(array $a, array $b): int => $b['count'] <=> $a['count']);
+    $top_categories = array_slice($top_categories, 0, 5);
+    foreach ($top_categories as $idx => $item) {
+        $top_categories[$idx]['share'] = $total_count > 0 ? round(($item['count'] / $total_count) * 100, 2) : 0;
+    }
+
+    $top_brands_by_category = [];
+    foreach ($brand_groups as $category_name => $brands) {
+        $items = array_values($brands);
+        usort($items, fn(array $a, array $b): int => $b['count'] <=> $a['count']);
+
+        $items = array_slice($items, 0, 3);
+        if (empty($items) || $items[0]['count'] <= 0) continue;
+
+        $top_brands_by_category[] = [
+            'category_name' => $category_name,
+            'items' => $items,
+        ];
+    }
+
+    usort($top_brands_by_category, fn(array $a, array $b): int => strcmp($a['category_name'], $b['category_name']));
+
+    $brand_categories = array_column($top_brands_by_category, 'category_name');
+    $missing_brand_categories = array_values(array_filter(
+        array_column($top_categories, 'name'),
+        fn(string $category_name): bool => !in_array($category_name, $brand_categories, true)
+    ));
+
+    return [
+        'total_count' => $total_count,
+        'top_categories' => $top_categories,
+        'top_brands_by_category' => $top_brands_by_category,
+        'missing_brand_categories' => $missing_brand_categories,
+    ];
+}
