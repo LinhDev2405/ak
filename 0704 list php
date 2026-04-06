@@ -1,0 +1,47 @@
+  <?php
+                $current_purchase_path = get_path()->without_query()->without_page()->get();
+                $matched_shop_slug = '';
+                $is_purchase_top = !$search_active && (
+                    $current_purchase_path === '/purchase-items'
+                    || preg_match('#^/([^/]+)/purchase-items$#', $current_purchase_path, $matched_shop_slug)
+                );
+
+                $ranking_shop = null;
+                if ($is_purchase_top && !empty($matched_shop_slug[1])) {
+                    $shop_top_row = get_item_in_csv('purchase_item_list', '/' . $matched_shop_slug[1] . '/purchase-items', 'target_url');
+                    $ranking_shop = trim((string) ($shop_top_row['shop'] ?? '')) ?: null;
+                }
+
+                $ranking_data = $is_purchase_top ? get_purchase_item_ranking_data($ranking_shop) : [];
+                ?>
+
+                <?php if (!empty($ranking_data['top_categories']) || !empty($ranking_data['top_brands_by_category'])) : ?>
+                    <section class="archive-purchase" style="margin-bottom: 24px;">
+                        <?php if (!empty($ranking_data['top_categories'])) : ?>
+                            <h2 class="purchase-about-title" style="margin-bottom: 12px;">カテゴリ別 TOP5（全<?php echo number_format((int) ($ranking_data['total_count'] ?? 0)); ?>件に対する構成比）</h2>
+                            <?php get_template_part('components/common-parts/purchase-top5-chart', null, ['items' => ($ranking_data['top_categories'] ?? [])]); ?>
+                        <?php endif; ?>
+
+                        <?php if (!empty($ranking_data['top_brands_by_category'])) : ?>
+                            <h2 class="purchase-about-title" style="margin-bottom: 12px;">カテゴリ別 ブランド TOP3（ブランド行があるカテゴリのみ）</h2>
+                            <?php foreach (($ranking_data['top_brands_by_category'] ?? []) as $brand_group) : ?>
+                                <h3 class="purchase-about-subtitle" style="margin: 16px 0 8px;"><?php echo esc_html($brand_group['category_name'] ?? ''); ?></h3>
+                                <ol style="margin: 0 0 12px 20px;">
+                                    <?php foreach (($brand_group['items'] ?? []) as $brand_item) : ?>
+                                        <li style="margin-bottom: 6px;">
+                                            <a href="<?php echo esc_url(home_url($brand_item['url'] ?? '#')); ?>"><?php echo esc_html($brand_item['name'] ?? ''); ?></a>
+                                            （<?php echo number_format((int) ($brand_item['count'] ?? 0)); ?>件）
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ol>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+
+                        <?php if (!empty($ranking_data['missing_brand_categories'])) : ?>
+                            <p style="margin: 8px 0 0; color: #666;">
+                                ※以下のカテゴリは purchase-item-list.csv にブランド別行がないため、TOP3を表示していません：
+                                <?php echo esc_html(implode('、', $ranking_data['missing_brand_categories'])); ?>
+                            </p>
+                        <?php endif; ?>
+                    </section>
+                <?php endif; ?>
