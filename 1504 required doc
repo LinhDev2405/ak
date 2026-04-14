@@ -1,0 +1,19 @@
+<?php
+return [
+    'title'       => 'Components/Sections/Require Doc',
+    'description' => 'Require Doc section',
+    'parameters'  => [
+        'data_type' => [
+            'type'        => 'string',
+            'default'     => 'kottou',
+            'description' => 'Data type for about section. It will fetch data from config(require-doc.{data_type})',
+        ],
+    ],
+    'render' => function (array $args) {
+?>
+    <div style="margin: 50px auto;">
+        <?php get_component('sections/require-doc', $args); ?>
+    </div>
+<?php
+    },
+];
