@@ -1,0 +1,12 @@
+<?php
+return [
+    'title'       => 'Components/Sections/Banner',
+    'description' => 'Banner section',
+    'render' => function (array $args) {
+?>
+    <div style="margin: 50px auto;">
+        <?php get_component('sections/banner', $args); ?>
+    </div>
+<?php
+    },
+];
