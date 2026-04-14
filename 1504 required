@@ -1,0 +1,38 @@
+<?php
+$data_type = $args['data_type'] ?? 'kottou';
+$data      = config('require-doc.' . $data_type);
+
+if (empty($data)) {
+    return;
+}
+?>
+
+<section class="c-required-doc">
+    <?php get_component('titles/title1', [], function () {
+        echo '買取に必要なもの';
+    }); ?>
+
+    <div class="c-required-doc__wrap">
+        <div class="c-required-doc__content">
+            <p class="c-required-doc__ttl">
+                買取に必要なものは<span class="c-required-doc__ttl-big">本人確認書類だけ<span class="c-required-doc__ttl-sign">！</span></span>
+            </p>
+
+            <p class="c-required-doc__text">
+                古物営業法により、中古品の買取を行う際には、「住所・氏名・生年月日」が確認できる証明書を提示することが義務付けられています。査定の際は下記の本人確認書類をどれかお一つご用意ください。
+            </p>
+
+            <ul class="c-required-doc__list">
+                <?php foreach ($data as $doc) { ?>
+                    <li class="c-required-doc__item">
+                        <?= wp_kses_post($doc) ?>
+                    </li>
+                <?php } ?>
+            </ul>
+
+            <p class="c-required-doc__note">
+                注意事項<br>※お買取を申し込んだご本人様の現住所、生年月日が記載された有効期限内の原本に限ります。<br>※住民票・写真なしの住民基本台帳カード・個人番号の通知カード・住所記入のない保険証・学生証・年金手帳はご利用いただけません。
+            </p>
+        </div>
+    </div>
+</section>
