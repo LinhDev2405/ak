@@ -1,0 +1,26 @@
+<?php
+return [
+    'kottou' => [
+        [
+            'img' => '1.png',
+            'title' => '付属品が揃っている',
+            'desc' => '箱や鑑定書などが揃っていると、査定
+                    <span class="c-point__item__desc__txt2">額アップにつながります。付属品がなく</span>
+                    <span class="c-point__item__desc__txt3">ても買取可能です。</span>'
+        ],
+        [
+            'img' => '2.png',
+            'title' => 'そのままの状態で',
+            'desc' => '状態が良いほど評価されますが、ご自
+                    <span class="c-point__item__desc__txt2">身で修復はしないでください。ホコリ</span>
+                    <span class="c-point__item__desc__txt3">を払う程度で問題ありません。</span>'
+        ],
+        [
+            'img' => '3.png',
+            'title' => 'なるべく早く売却する',
+            'desc' => '長期保管は劣化の原因になります。見
+                    <span class="c-point__item__desc__txt2">つけたタイミングでの査定が、高価買</span>
+                    <span class="c-point__item__desc__txt3">取につながります。</span>'
+        ],
+    ],
+];
