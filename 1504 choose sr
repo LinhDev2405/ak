@@ -1,0 +1,19 @@
+<?php
+return [
+    'title'       => 'Components/Sections/Choose',
+    'description' => 'Choose section',
+    'parameters'  => [
+        'data_type' => [
+            'type'        => 'string',
+            'default'     => 'kottou',
+            'description' => 'Data type for about section. It will fetch data from config(choose.{data_type})',
+        ],
+    ],
+    'render' => function (array $args) {
+?>
+    <div style="margin: 50px auto;">
+        <?php get_component('sections/choose', $args); ?>
+    </div>
+<?php
+    },
+];
