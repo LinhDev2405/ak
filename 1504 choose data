@@ -1,0 +1,10 @@
+<?php
+return [
+    'kottou' => [
+        '経験豊富<span class="c-choose__text-redsmll">な</span>査定士<span class="c-choose__text-black">が訪問</span>',
+        '豊富<span class="c-choose__text-redsmll">な</span>販路<span class="c-choose__text-black">を活かした価格のご提案</span>',
+        '<span class="c-choose__text-black">最短当日！</span>現金払<span class="c-choose__text-redsmll">いにも</span>対応',
+        '<span class="c-choose__text-black">各種手数料はすべて</span>無料',
+        '遺品整理<span class="c-choose__text-redsmll">など</span><span class="c-choose__text-black">にもご利用が可能</span>'
+    ],
+];
