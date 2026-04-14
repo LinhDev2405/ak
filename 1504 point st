@@ -1,0 +1,19 @@
+<?php
+return [
+    'title'       => 'Components/Sections/Point',
+    'description' => 'Point section',
+    'parameters'  => [
+        'data_type' => [
+            'type'        => 'string',
+            'default'     => 'kottou',
+            'description' => 'Data type for about section. It will fetch data from config(point.{data_type})',
+        ],
+    ],
+    'render' => function (array $args) {
+?>
+    <div style="margin: 50px auto;">
+        <?php get_component('sections/point', $args); ?>
+    </div>
+<?php
+    },
+];
