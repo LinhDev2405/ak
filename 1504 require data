@@ -1,0 +1,12 @@
+<?php
+return [
+    'kottou' => [
+        '運転免許証',
+        '<span class="u-letter-spacing-0">運転経歴証明書<span class="c-required-doc__des">(H24年4月1日以降のもの)</span></span>',
+        '身体障がい者手帳',
+        '顔写真付き住民基本台帳カード',
+        '特別永住者証明書',
+        '<span class="u-letter-spacing-0">顔写真付き個人番号カード<span class="c-required-doc__des">(マイナンバーカード)</span></span>',
+        '在留カード',
+    ],
+];
