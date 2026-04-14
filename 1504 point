@@ -1,0 +1,41 @@
+<?php
+$data_type = $args['data_type'] ?? 'kottou';
+$data      = config('point.' . $data_type);
+$root_img  = get_s3_template_directory_uri() . '/img/' . $data_type . '/' . get_device() . '/point/';
+
+if (empty($data)) {
+    return;
+}
+?>
+
+<section class="c-point">
+    <div class="l-container">
+        <?php get_component('titles/title1', [], function () {
+            slot('text_top', function () {
+                echo '査定額を上げるポイント！';
+            });
+            echo 'より高値で売るなら';
+        }); ?>
+
+        <div class="c-point__list">
+            <?php foreach ($data as $point): ?>
+                <div class="c-point__item">
+                    <figure>
+                        <img
+                            src="<?= esc_url($root_img . $point['img']) ?>"
+                            alt=""
+                            loading="lazy"
+                            <?php device_width_height(606, 304, 339, 169); ?>>
+                    </figure>
+
+                    <p class="c-point__item__title">
+                        <?= wp_kses_post($point['title']); ?>
+                    </p>
+                    <p class="c-point__item__desc">
+                        <?= wp_kses_post($point['desc']); ?>
+                    </p>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
