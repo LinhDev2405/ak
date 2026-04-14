@@ -1,0 +1,14 @@
+<div class="c-banner-kottou">
+    <div class="l-container">
+        <?php $slot('image', [], function () { ?>
+            <figure>
+                <img
+                    loading="lazy"
+                    class="u-img c-banner-kottou__img"
+                    src="<?= esc_url(get_s3_template_directory_uri() . '/img/kottou/' . get_device() . '/banner/banner.jpg'); ?>"
+                    alt="中国骨董高価買取強化中！"
+                    <?= device_width_height(690, 690, 1170, 309); ?>>
+            </figure>
+        <?php }); ?>
+    </div>
+</div>
