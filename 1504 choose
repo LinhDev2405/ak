@@ -1,0 +1,28 @@
+<?php
+$data_type = $args['data_type'] ?? 'kottou';
+$data      = config('choose.' . $data_type);
+
+if (empty($data)) {
+    return;
+}
+?>
+
+<section class="c-choose">
+    <?php get_component('titles/title1', [], function () {
+        slot('text_top', function () {
+            echo 'ハッピープライスが利用者様に';
+        });
+        echo '選ばれている理由';
+    }); ?>
+
+    <div class="c-choose__content">
+        <?php foreach ($data as $item) { ?>
+            <span class="c-choose__text"><?= wp_kses_post($item); ?></span>
+        <?php } ?>
+    </div>
+
+    <p class="c-choose__bottom">
+        大切にされてきた想いも含め<br>
+        <span class="c-choose__bottom-spec">ー点ずつ価値<span>をお伝えいたします!</span></span>
+    </p>
+</section>
