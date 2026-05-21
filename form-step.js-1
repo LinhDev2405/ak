@@ -1,0 +1,523 @@
+import { scrollToId } from "../form/form.js";
+import {
+    clearStepFormErrors,
+    createPanelValidator,
+    updateButtonState,
+    validateSelectorFields,
+} from "./validates.js";
+
+import { initStepFileUpload } from "./file-upload.js";
+import { phoneRegex } from "./variables.js";
+
+const SELECTORS = {
+    stepItem: ".c-step-bar__item, .c-step-bar-item",
+    fieldError: ".js-form-error",
+    summaryError: ".js-form-field-error",
+    tabInput: ".c-form-tab__item-btn",
+    dateSelect: ".js-form-select-date select",
+};
+
+const storage = {
+    get(key, fallback = null) {
+        try {
+            return JSON.parse(sessionStorage.getItem(key)) ?? fallback;
+        } catch {
+            return fallback;
+        }
+    },
+
+    set(key, value) {
+        try {
+            sessionStorage.setItem(key, JSON.stringify(value));
+        } catch {}
+    },
+};
+
+const setState = ($el, active, hidden = true) => {
+    $el.toggleClass("is-active", active);
+
+    if (hidden) {
+        $el.attr("hidden", !active);
+    }
+};
+
+const setStep = ($items, index) => {
+    $items
+        .removeClass("is-active is-complete")
+        .attr("aria-hidden", true)
+        .each(function (i) {
+            $(this).toggleClass("is-complete", i < index);
+            $(this).toggleClass("is-active", i === index);
+        })
+        .eq(index)
+        .removeAttr("aria-hidden");
+};
+
+const populateDateOptions = ($root) => {
+    const now = new Date();
+
+    const format = (date) => {
+        const days = ["日", "月", "火", "水", "木", "金", "土"];
+
+        return `${date.getFullYear()}年${String(date.getMonth() + 1).padStart(2, "0")}月${String(date.getDate()).padStart(2, "0")}日(${days[date.getDay()]})`;
+    };
+
+    const parse = (value) => {
+        const match = String(value || "")
+            .trim()
+            .match(/^(\d{4})年(\d{1,2})月(\d{1,2})日/);
+
+        if (!match) {
+            return null;
+        }
+
+        const date = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+        date.setHours(0, 0, 0, 0);
+
+        return Number.isNaN(date.getTime()) ? null : date;
+    };
+
+    let nextMinDate = null;
+
+    $root
+        .find(
+            `
+    ${SELECTORS.dateSelect},
+    select[name="delivery_date"],
+    select[name="pickup_date"],
+    select[name="date_shuccho"]
+  `,
+        )
+        .each(function () {
+            const $select = $(this);
+
+            const name = String($select.attr("name") || "");
+            const selectedValue = String($select.val() || "").trim();
+            const selectedDate = parse(selectedValue);
+
+            const start = new Date(now);
+            start.setHours(0, 0, 0, 0);
+
+            if (["delivery_date", "pickup_date"].includes(name)) {
+                start.setDate(start.getDate() + (now.getHours() < 12 ? 1 : 2));
+            }
+
+            if (nextMinDate && start < nextMinDate) {
+                start.setTime(nextMinDate.getTime());
+            }
+
+            $select.find("option").not('[value=""]').remove();
+
+            for (let i = 0; i < 14; i += 1) {
+                const date = new Date(start);
+                date.setDate(date.getDate() + i);
+
+                const value = format(date);
+                $select.append(`<option value="${value}">${value}</option>`);
+            }
+
+            if (selectedDate && selectedDate >= start) {
+                const value = format(selectedDate);
+                $select.val(value);
+
+                nextMinDate = new Date(selectedDate);
+                nextMinDate.setDate(nextMinDate.getDate() + 1);
+
+                return;
+            }
+
+            $select.val("");
+            nextMinDate = null;
+        });
+};
+
+const syncTabs = ($scope) => {
+    $scope.find(".c-form-tab").each(function () {
+        $(this).toggleClass("is-selected", $(this).find(`${SELECTORS.tabInput}:checked`).length > 0);
+    });
+};
+
+const createStepForm = ($root, options = {}) => {
+    const { rules = {}, onNext, onBack, onSubmit, onSelect } = options;
+
+    const state = {
+        step: 0,
+    };
+
+    const dirtyInputs = new WeakSet();
+
+    const elements = {
+        selector: $root.find(".js-step-form-selector").first(),
+        panelBlock: $root.find(".js-step-form-panels").first(),
+        panels: $root.find(".js-step-form-panel"),
+        radios: $root.find(".js-form-radio"),
+        bg: $root.find(".js-step-form-panels-bg").first(),
+        initButtons: $root.find(".js-step-form-btn-init").first(),
+        selectedButtons: $root.find(".js-step-form-btn-selected").first(),
+        stepBar: $root.find(".js-rcm-step-bar").first(),
+    };
+
+    elements.next = elements.selectedButtons.find(".js-step-form-button-next").first();
+    elements.back = elements.selectedButtons.find(".js-step-form-button-back").first();
+    elements.selectorButton = elements.initButtons.find(".js-step-form-button");
+    elements.stepItems = elements.stepBar.find(SELECTORS.stepItem);
+
+    const validator = createPanelValidator({
+        rules,
+        fieldErrorSelector: SELECTORS.fieldError,
+        summaryErrorSelector: SELECTORS.summaryError,
+    });
+
+    const defaultNextText = elements.next.find(".c-form-button__text").text().trim();
+    const storageKey = `recommend-step-form:${$root.attr("id") || Date.now()}`;
+    const fieldKey = `${storageKey}:fields`;
+
+    const getActivePanel = () => elements.panels.filter(".is-active").first();
+    const getSteps = ($panel) => $panel.find(".js-panel-step");
+
+    const persistFields = () => {
+        const values = {};
+        const checks = {};
+
+        $root
+            .find("input, textarea, select")
+            .not('[type="hidden"], [type="file"]')
+            .each(function () {
+                const $input = $(this);
+                const name = String($input.attr("name") || "");
+
+                if (!name) {
+                    return;
+                }
+
+                const type = String($input.attr("type") || "").toLowerCase();
+                if (["checkbox", "radio"].includes(type)) {
+                    checks[name] ||= [];
+
+                    if ($input.is(":checked")) {
+                        checks[name].push(String($input.val() || "on"));
+                    }
+
+                    return;
+                }
+
+                values[name] = $input.val();
+            });
+
+        storage.set(fieldKey, {
+            values,
+            checks,
+        });
+    };
+
+    const restoreFields = () => {
+        const saved = storage.get(fieldKey);
+
+        if (!saved) {
+            return;
+        }
+
+        Object.entries(saved.values || {}).forEach(([name, value]) => {
+            $root.find(`[name="${name}"]`).val(value);
+        });
+
+        Object.entries(saved.checks || {}).forEach(([name, values]) => {
+            $root.find(`[name="${name}"]`).each(function () {
+                $(this).prop("checked", values.includes(String($(this).val() || "on")));
+            });
+        });
+    };
+
+    const syncButtons = () => {
+        updateButtonState({
+            $selector: elements.selector,
+            $button: elements.selectorButton,
+            $radios: elements.radios,
+        });
+    };
+
+    const syncNextButton = (showErrors = false) => {
+        const $panel = getActivePanel();
+
+        if (!$panel.length) {
+            return;
+        }
+
+        const $steps = getSteps($panel);
+        const $current = $steps.length ? $steps.eq(state.step) : $panel;
+        const hasErrors = validator.validateContainer($current, { showErrors });
+
+        elements.next.toggleClass("is-active", !hasErrors);
+        const isLast = !$steps.length || state.step >= $steps.length - 1;
+
+        elements.next.find(".c-form-button__text").text(isLast ? "入力確認画面へ！" : defaultNextText);
+
+        elements.next.toggleClass("is-right-arrow", !isLast);
+    };
+
+    const persist = (panelMode = false) => {
+        const $checked = elements.radios.filter(":checked").first();
+
+        storage.set(storageKey, {
+            panelId: String($checked.data("form") || ""),
+            step: state.step,
+            panelMode,
+        });
+
+        persistFields();
+    };
+
+    const sync = (panelMode = true) => {
+        syncNextButton();
+        persist(panelMode);
+    };
+
+    const activatePanel = ($radio) => {
+        const panelId = String($radio.data("form") || "");
+
+        $root.find(".c-form-radio").removeClass("is-active");
+        $radio.closest(".c-form-radio").addClass("is-active");
+
+        setState(elements.panels, false);
+        const $panel = elements.panels.filter(`#${panelId}`).first();
+
+        setState($panel, true);
+        return $panel;
+    };
+
+    const syncStepUi = () => {
+        const $panel = getActivePanel();
+        const $steps = getSteps($panel);
+
+        if ($steps.length) {
+            setStep($steps, state.step);
+        }
+
+        setStep(elements.stepItems, state.step);
+        sync();
+    };
+
+    const enterPanelMode = ($panel) => {
+        setState(elements.selectedButtons, true);
+        elements.initButtons.attr("hidden", true);
+
+        syncStepUi();
+        onNext?.($panel);
+    };
+
+    const showSelector = () => {
+        setState(elements.selectedButtons, false);
+        elements.initButtons.removeAttr("hidden");
+
+        setState(elements.panels, false);
+        elements.stepItems.removeClass("is-active is-complete");
+
+        persist(false);
+        syncButtons();
+    };
+
+    const pulseBackground = () => {
+        setState(elements.bg, true);
+
+        clearTimeout(elements.bg.data("timer"));
+        elements.bg.data(
+            "timer",
+            setTimeout(() => {
+                setState(elements.bg, false);
+            }, 220),
+        );
+    };
+
+    const moveStep = (direction) => {
+        state.step += direction;
+        pulseBackground();
+        syncStepUi();
+        scrollToId(".js-step-form-wrap");
+    };
+
+    const formatPhone = ($input) => {
+        if (!validator.getInputRules($input).includes("phone")) {
+            return;
+        }
+
+        const value = String($input.val() || "").trim();
+        if (!value || !phoneRegex.test(value)) {
+            return;
+        }
+
+        const formatter = typeof getFormatPhone === "function" ? getFormatPhone : window.getFormatPhone;
+
+        if (!formatter) {
+            return;
+        }
+
+        const formatted = formatter(value);
+        if (formatted && formatted !== value) {
+            $input.val(formatted);
+        }
+    };
+
+    const restoreState = () => {
+        restoreFields();
+
+        const saved = storage.get(storageKey);
+        if (!saved?.panelId) {
+            return;
+        }
+
+        const $radio = elements.radios
+            .filter(function () {
+                return String($(this).data("form")) === saved.panelId;
+            })
+            .first();
+
+        if (!$radio.length) {
+            return;
+        }
+
+        $radio.prop("checked", true);
+
+        const $panel = activatePanel($radio);
+        syncButtons();
+
+        if (!saved.panelMode) {
+            return;
+        }
+
+        state.step = Number(saved.step) || 0;
+        enterPanelMode($panel);
+    };
+
+    const init = () => {
+        initStepFileUpload($root);
+        populateDateOptions($root);
+        syncTabs($root);
+        restoreState();
+        syncButtons();
+        clearStepFormErrors(elements.selector, SELECTORS.fieldError, SELECTORS.summaryError);
+
+        elements.radios.on("change click", function () {
+            const $radio = $(this);
+
+            if (!$radio.is(":checked")) {
+                return;
+            }
+
+            activatePanel($radio);
+            clearStepFormErrors(elements.selector, SELECTORS.fieldError, SELECTORS.summaryError);
+            persist(false);
+            syncButtons();
+            onSelect?.($radio);
+        });
+
+        elements.selectorButton.on("click", function (event) {
+            event.preventDefault();
+
+            const valid = validateSelectorFields({
+                $selector: elements.selector,
+                $radios: elements.radios,
+                fieldErrorSelector: SELECTORS.fieldError,
+                summaryErrorSelector: SELECTORS.summaryError,
+            });
+
+            if (!valid) {
+                scrollToId(".js-step-form-wrap");
+
+                return;
+            }
+
+            const $radio = elements.radios.filter(":checked").first();
+            if (!$radio.length) {
+                return;
+            }
+
+            state.step = 0;
+            const $panel = activatePanel($radio);
+            enterPanelMode($panel);
+        });
+
+        elements.next.on("click", function (event) {
+            event.preventDefault();
+
+            const $panel = getActivePanel();
+            const $steps = getSteps($panel);
+            const $current = $steps.eq(state.step);
+            const hasErrors = validator.validateContainer($current, { showErrors: true });
+
+            syncNextButton(true);
+
+            if (hasErrors) {
+                scrollToId(".js-step-form-wrap");
+                return;
+            }
+
+            if (state.step < $steps.length - 1) {
+                moveStep(1);
+                onNext?.($panel);
+                return;
+            }
+
+            const form = $panel[0];
+            onSubmit?.(form);
+
+            if (typeof form.submit === "function") {
+                form.submit();
+            }
+        });
+
+        elements.back.on("click", function (event) {
+            event.preventDefault();
+
+            if (state.step > 0) {
+                moveStep(-1);
+                onBack?.();
+                return;
+            }
+
+            showSelector();
+        });
+
+        elements.panelBlock.on("input change", "input, textarea, select", function (event) {
+            const $input = $(this);
+
+            if (event.type === "change" && this.matches(SELECTORS.dateSelect)) {
+                populateDateOptions($root);
+            }
+
+            if (event.type === "change" && this.matches(SELECTORS.tabInput)) {
+                syncTabs($root);
+            }
+
+            if (event.type === "change") {
+                formatPhone($input);
+            }
+
+            const type = String($input.attr("type") || "").toLowerCase();
+            const hasValue = !!String($input.val() || "").trim();
+
+            if (hasValue || ["checkbox", "radio"].includes(type)) {
+                dirtyInputs.add(this);
+            }
+
+            if (dirtyInputs.has(this) || $input.hasClass("is-error")) {
+                validator.validateInput($input, {
+                    showErrors: true,
+                });
+
+                validator.syncRowSummary($input.closest(".c-form-field"));
+            }
+
+            sync();
+        });
+    };
+
+    return {
+        init,
+    };
+};
+
+export const initStepForm = (options = {}) => {
+    $(".js-step-form-wrap").each(function () {
+        createStepForm($(this), options).init();
+    });
+};
