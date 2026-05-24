@@ -1,0 +1,31 @@
+<?php
+return [
+    'default' => [
+        'visit' => [
+            'gtm' => 'gtm_TentouForm_purchase',
+            'value' => '店頭買取',
+            'description' => 'その場ですぐに査定<br>現金払い可能',
+            'steps' => 4,
+        ],
+        'takuhai' => [
+            'gtm' => 'gtm_TakuhaiForm_purchase',
+            'text' => '宅配買取',
+            'value' => '宅配での買取',
+            'description' => '全国どこからでも<br>詰めて送るだけ',
+            'steps' => 6,
+        ],
+        'shuccho' => [
+            'gtm' => 'gtm_ShucchoForm_purchase',
+            'text' => '出張買取',
+            'value' => '出張での買取',
+            'description' => 'お客様負担ゼロ！<br>ご自宅でカンタン買取',
+            'steps' => 5,
+        ],
+        'contact' => [
+            'gtm' => 'gtm_SateiForm',
+            'value' => 'お問い合わせ',
+            'description' => '査定のご質問や<br>事前査定など',
+            'steps' => 3,
+        ],
+    ],
+];
