@@ -1,61 +1,70 @@
 <?php
 return [
     'form-step' => [
-        'contact' => [
-            'display' => 'ブラリバへのお問い合わせ',
+        'visit' => [
+            'display' => 'visit',
             'fields' => [
-                'form_type_contact'   => 'text',
-                'sei-contact'         => 'text',
-                'mei-contact'         => 'text',
-                'kana_sei-contact'    => 'text',
-                'kana_mei-contact'    => 'text',
-                'tel-contact'         => 'text',
-                'email-contact'       => 'email',
-                'description-contact' => 'text',
-                'file1'              => 'file',
-                'file1_name'         => 'text',
+                'form_type_visit' => 'text',
+                'visit_area'           => 'text',
+                'visit_area2'          => 'text',
+                'visit_time_1'         => 'text',
+                'visit_date_2'         => 'text',
+                'visit_time_2'         => 'text',
+                'visit_date_3'         => 'text',
+                'visit_time_3'         => 'text',
+                'sei-visit'            => 'text',
+                'mei-visit'            => 'text',
+                'kana_sei-visit'       => 'text',
+                'kana_mei-visit'       => 'text',
+                'tel-visit'            => 'text',
+                'email-visit'          => 'email',
             ],
             'rows' => [
                 [
                     'label'       => 'お申し込みの内容',
                     'is_required' => true,
-                    'keys'        => ['form_type_contact'],
+                    'keys'        => ['form_type_visit'],
+                ],
+                [
+                    'label'       => '来店予定店舗',
+                    'is_required' => true,
+                    'modifier'    => 'is-column',
+                    'keys'        => ['visit_area', 'visit_area2'],
+                ],
+                [
+                    'label'       => '来店希望日時<br>第2希望',
+                    'is_required' => true,
+                    'keys'        => ['visit_time_2', 'visit_date_2'],
+                ],
+                [
+                    'label'       => '来店希望日時<br>第3希望',
+                    'keys'        => ['visit_time_3', 'visit_date_3'],
                 ],
                 [
                     'label'       => 'お名前',
                     'is_required' => true,
-                    'keys'        => ['sei-contact', 'mei-contact'],
+                    'keys'        => ['sei-visit', 'mei-visit'],
                 ],
                 [
                     'label'       => 'フリガナ',
                     'is_required' => true,
-                    'keys'        => ['kana_sei-contact', 'kana_mei-contact'],
+                    'keys'        => ['kana_sei-visit', 'kana_mei-visit'],
                 ],
                 [
                     'label'       => '電話番号',
                     'is_required' => true,
-                    'keys'        => ['tel-contact'],
+                    'keys'        => ['tel-visit'],
                 ],
                 [
                     'label'       => 'メールアドレス',
                     'is_required' => true,
-                    'keys'        => ['email-contact'],
-                ],
-                [
-                    'label'       => 'お問い合わせ',
-                    'is_required' => true,
-                    'keys'        => ['description-contact'],
-                ],
-                [
-                    'label'       => '添付画像',
-                    'keys'        => ['file1'],
-                    'type'        => 'image',
+                    'keys'        => ['email-visit'],
                 ],
             ],
         ],
 
         'takuhai' => [
-            'display' => 'takuhai',
+            'display' => '宅配買取のお申し込み',
             'fields' => [
                 'form_type_takuhai' => 'text',
                 'delivery'          => 'text',
@@ -142,7 +151,7 @@ return [
         ],
 
         'shuccho' => [
-            'display' => 'shuccho',
+            'display' => '出張買取のお申し込み',
             'fields' => [
                 'form_type_shuccho'   => 'text',
                 'date_shuccho'        => 'text',
@@ -206,6 +215,59 @@ return [
                 [
                     'label'       => 'お問い合わせ',
                     'keys'        => ['description-shuccho'],
+                ],
+                [
+                    'label'       => '添付画像',
+                    'keys'        => ['file1'],
+                    'type'        => 'image',
+                ],
+            ],
+        ],
+
+        'contact' => [
+            'display' => 'ブラリバへのお問い合わせ',
+            'fields' => [
+                'form_type_contact'   => 'text',
+                'sei-contact'         => 'text',
+                'mei-contact'         => 'text',
+                'kana_sei-contact'    => 'text',
+                'kana_mei-contact'    => 'text',
+                'tel-contact'         => 'text',
+                'email-contact'       => 'email',
+                'description-contact' => 'text',
+                'file1'               => 'file',
+                'file1_name'          => 'text',
+            ],
+            'rows' => [
+                [
+                    'label'       => 'お申し込みの内容',
+                    'is_required' => true,
+                    'keys'        => ['form_type_contact'],
+                ],
+                [
+                    'label'       => 'お名前',
+                    'is_required' => true,
+                    'keys'        => ['sei-contact', 'mei-contact'],
+                ],
+                [
+                    'label'       => 'フリガナ',
+                    'is_required' => true,
+                    'keys'        => ['kana_sei-contact', 'kana_mei-contact'],
+                ],
+                [
+                    'label'       => '電話番号',
+                    'is_required' => true,
+                    'keys'        => ['tel-contact'],
+                ],
+                [
+                    'label'       => 'メールアドレス',
+                    'is_required' => true,
+                    'keys'        => ['email-contact'],
+                ],
+                [
+                    'label'       => 'お問い合わせ',
+                    'is_required' => true,
+                    'keys'        => ['description-contact'],
                 ],
                 [
                     'label'       => '添付画像',
