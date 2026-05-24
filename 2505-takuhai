@@ -1,0 +1,332 @@
+<?php
+$times = config('form-step-collection.times');
+$size_options = config('form-step-collection.size_options');
+?>
+
+<div class="c-rcm-form__panel-step js-panel-step">
+    <?php get_component(
+        'modules/form-step/field',
+        [
+            'text' => '宅配キット・伝票の選択',
+            'required' => true,
+        ],
+        function () use ($size_options) { ?>
+        <div class="c-delivery">
+            <?php foreach ($size_options as $key => $option):
+                if (empty($option['other'])) { ?>
+                    <?php get_component('modules/form-step/radio', [
+                        'type' => strtolower($key),
+                        'item' => $option,
+                    ], function () use ($option, $key) {
+                        $value       = $option['value'] ?? '';
+                        $label       = $option['text'] ?? $value ?? '';
+                        $description = $option['description'] ?? '';
+                        $steps       = $option['steps'] ?? 4;
+                        $size        = $option['size'] ?? '';
+                        $form_id     = "form_" . strtolower($key);
+                    ?>
+                        <input
+                            type="radio"
+                            id="<?= esc_attr($form_id); ?>"
+                            data-form="<?= esc_attr($form_id); ?>"
+                            data-steps="<?= esc_attr($steps); ?>"
+                            value="<?= esc_attr($value); ?>"
+                            name="form_type"
+                            class="js-form-radio c-delivery__btn">
+
+                        <span class="c-delivery__label">
+                            <?= wp_kses_post($label); ?>
+                        </span>
+
+                        <span class="c-delivery__size">
+                            <?= wp_kses_post($size); ?>
+                        </span>
+
+                        <span class="c-delivery__description">
+                            <?= wp_kses_post($description); ?>
+                        </span>
+                    <?php }); ?>
+
+                <?php } else {
+                    get_component('modules/form-step/radio', [
+                        'type' => $key,
+                        'item' => $option,
+                    ]);
+                }
+                ?>
+            <?php endforeach; ?>
+        </div>
+    <?php }
+    ); ?>
+</div>
+
+<div class="c-rcm-form__panel-step js-panel-step">
+    <?php get_component(
+        'modules/form-step/field',
+        [
+            'text' => 'キット・伝票のお届け日時を<br>選択してください',
+            'required' => true,
+        ],
+        function () use ($times) { ?>
+        <?php get_component('modules/form-step/field-content', [
+                'label' => 'キット・伝票のお届け希望日',
+            ], function () { ?>
+            <?php get_component('modules/form-step/select', [
+                    'name' => 'delivery_date',
+                    'custom_class' => 'js-form-select-date',
+                ]); ?>
+        <?php }) ?>
+
+        <?php get_component('modules/form-step/field-content', [
+                'label' => '時間を選択してください',
+            ], function () use ($times) { ?>
+            <?php get_component('modules/form-step/tab', [
+                    'name' => 'time-invoice',
+                    'data' => $times,
+                ]); ?>
+        <?php }) ?>
+
+        <p class="c-form-field__note c-form-field__note--time">
+            エリアによってはご希望の日時に添えない場合がございます。その場合はお問い合わせ後に弊社担当スタッフよりご連絡申し上げます。
+        </p>
+
+        <?php get_component('modules/form-step/field-content', [
+                'label' => '配送保証サービスの選択',
+            ], function () { ?>
+            <?php get_component('modules/form-step/radio', [
+                    'name' => 'delivery_service',
+                    'text' => '保証サービスを希望する',
+                ]); ?>
+
+            <?php get_component('modules/form-step/radio', [
+                    'name' => 'delivery_service',
+                    'text' => '保証サービスを希望しない',
+                ]); ?>
+        <?php }) ?>
+    <?php }
+    ); ?>
+</div>
+
+<div class="c-rcm-form__panel-step js-panel-step">
+    <?php get_component(
+        'modules/form-step/field',
+        [
+            'text' => '集荷依頼の選択',
+            'required' => true,
+        ],
+        function () { ?>
+        <div class="js-pickup-option-yes">
+            <?php get_component('modules/form-step/radio', [
+                'name' => 'pickup',
+                'text' => '集荷依頼を希望する',
+            ]); ?>
+
+            <div class="js-pickup-option-yes-content">
+                <?php get_component('modules/form-step/field-content', [
+                    'label' => '希望日をお選びください',
+                ], function () { ?>
+                    <?php get_component('modules/form-step/select', [
+                        'name' => 'pickup_date',
+                        'custom_class' => 'js-form-select-date',
+                    ]); ?>
+                <?php }) ?>
+
+                <?php get_component('modules/form-step/field-content', [
+                    'label' => '時間を選択してください',
+                ], function () use ($times) { ?>
+                    <?php get_component('modules/form-step/tab', [
+                        'name' => 'pickup_time',
+                        'data' => $times,
+                    ]); ?>
+                <?php }) ?>
+
+                <p class="c-form-field__note c-form-field__note--time">
+                    エリアによってはご希望の日時に添えない場合がございます。その場合はお問い合わせ後に弊社担当スタッフよりご連絡申し上げます。
+                </p>
+            </div>
+        </div>
+
+        <div class="js-pickup-option-no">
+            <?php get_component('modules/form-step/radio', [
+                'name' => 'pickup',
+                'text' => '集荷依頼を希望しない',
+            ]); ?>
+
+            <figure class="pickup-img">
+                <img loading="lazy" src="<?php echo get_s3_follow_device(); ?>/page_takuhai/pickup-img.jpg" alt="" <?php device_width_height(560, 312, 570, 315); ?>>
+            </figure>
+        </div>
+    <?php }
+    ); ?>
+</div>
+
+<div class="c-rcm-form__panel-step js-panel-step">
+    <?php get_component(
+        'modules/form-step/field',
+        [
+            'text' => 'お名前を入力してください',
+            'required' => true,
+        ],
+        function () { ?>
+        <?php get_component('modules/form-step/field-content', [
+                'label' => 'お名前',
+            ], function () { ?>
+            <?php get_component('modules/form-step/input', [
+                    'name' => 'sei-takuhai',
+                    'placeholder' => '例）山田',
+                ]); ?>
+
+            <?php get_component('modules/form-step/input', [
+                    'name' => 'mei-takuhai',
+                    'placeholder' => '例）太郎',
+                ]); ?>
+        <?php }) ?>
+
+        <?php get_component('modules/form-step/field-content', [
+                'label' => 'お名前（フリガナ）',
+            ], function () { ?>
+            <?php get_component('modules/form-step/input', [
+                    'name' => 'kana_sei-takuhai',
+                    'placeholder' => '例）ヤマダ',
+                ]); ?>
+
+            <?php get_component('modules/form-step/input', [
+                    'name' => 'kana_mei-takuhai',
+                    'placeholder' => '例）タロウ',
+                ]); ?>
+        <?php }) ?>
+    <?php }
+    ); ?>
+</div>
+
+<div class="c-rcm-form__panel-step js-panel-step">
+    <?php get_component(
+        'modules/form-step/field',
+        [
+            'text' => '住所を入力してください',
+            'required' => true,
+        ],
+        function () { ?>
+        <?php get_component('modules/form-step/field-content', [
+                'text' => '郵便番号',
+                'show_label' => true,
+            ], function () { ?>
+            <?php get_component('modules/form-step/input', [
+                    'name' => 'zip01-takuhai',
+                    'placeholder' => '例）1410022',
+                ]); ?>
+        <?php }) ?>
+
+        <?php get_component('modules/form-step/field-content', [
+                'text' => '都道府県',
+                'show_label' => true,
+                'required' => true,
+            ], function () { ?>
+            <?php get_component('modules/form-step/input', [
+                    'name' => 'pref01-takuhai',
+                    'placeholder' => '都道府県',
+                ]); ?>
+        <?php }) ?>
+
+        <?php get_component('modules/form-step/field-content', [
+                'text' => '市区町村',
+                'show_label' => true,
+                'required' => true,
+            ], function () { ?>
+            <?php get_component('modules/form-step/input', [
+                    'name' => 'addr01-takuhai',
+                    'placeholder' => '市区町村',
+                ]); ?>
+        <?php }) ?>
+
+        <?php get_component('modules/form-step/field-content', [
+                'text' => '番地・建物名・部屋番号',
+                'show_label' => true,
+                'required' => true,
+            ], function () { ?>
+            <?php get_component('modules/form-step/input', [
+                    'name' => 'blocknum-takuhai',
+                    'placeholder' => '番地、建物名・部屋番号をご記入ください',
+                ]); ?>
+        <?php }) ?>
+    <?php }
+    ); ?>
+</div>
+
+<div class="c-rcm-form__panel-step js-panel-step">
+    <?php get_component(
+        'modules/form-step/field',
+        [
+            'text' => '連絡先を入力してください',
+            'required' => true,
+        ],
+        function () { ?>
+        <?php get_component('modules/form-step/field-content', [
+                'label' => '電話番号',
+            ], function () { ?>
+            <?php get_component('modules/form-step/input', [
+                    'name' => 'tel-takuhai',
+                    'placeholder' => '例：09012345678',
+                ]); ?>
+        <?php }) ?>
+
+        <?php get_component('modules/form-step/field-content', [
+                'label' => 'メールアドレス',
+            ], function () { ?>
+            <?php get_component('modules/form-step/input', [
+                    'name' => 'email-takuhai',
+                    'placeholder' => '例：info@brandrevalue.com',
+                ]); ?>
+        <?php }) ?>
+    <?php }
+    ); ?>
+
+    <?php get_component(
+        'modules/form-step/field',
+        [
+            'text' => 'お客様の個人情報の取扱いについて',
+            'required' => true,
+            'hide_error' => true,
+            'custom_class' => 'c-form-field--privacy-policy',
+        ],
+        function () { ?>
+        <!-- Privacy Policy -->
+        <?php get_component('modules/form/privacy-policy', [
+                'custom_path' => 'recommend/rolex',
+            ]) ?>
+
+        <?php get_component('modules/form-step/checkbox', [
+                'text' => 'お客様の個人情報の取扱いについてに同意します',
+                'required' => true,
+                'type' => 'checkbox',
+                'name' => 'acceptanceData-takuhai',
+            ]); ?>
+    <?php }
+    ); ?>
+</div>
+
+<div class="c-rcm-form__panel-step js-panel-step">
+    <?php get_component(
+        'modules/form-step/field',
+        [
+            'text' => 'お客様の個人情報の取扱いについて',
+            'required' => true,
+            'custom_class' => 'c-form-field--privacy-policy js-hide-inline-error js-hide-summary js-summary-proxy',
+        ],
+        function () { ?>
+        <!-- Privacy Policy -->
+        <?php get_component('modules/form/privacy-policy', [
+                'custom_path' => 'recommend/rolex',
+            ]) ?>
+
+        <?php get_component('modules/form-step/checkbox', [
+                'text' => 'お客様の個人情報の取扱いについてに同意します',
+                'required' => true,
+                'type' => 'checkbox',
+                'name' => 'acceptanceData-takuhai',
+            ]); ?>
+
+        <?php get_component('modules/form-step/purchase-agreement') ?>
+    <?php }
+    ); ?>
+</div>
