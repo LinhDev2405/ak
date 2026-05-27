@@ -1,0 +1,41 @@
+@use "../../_abstracts" as *;
+
+.c-purchase-agreement {
+    line-height: 1.64;
+    color: #222;
+    background-color: #fff;
+    overflow: hidden;
+    overflow-y: auto;
+    border: 1px solid #b5b5b5;
+
+    @if sp() {
+        font-size: vw-sp(12);
+        padding: vw-sp(20) vw-sp(15);
+        height: vw-sp(150);
+        border-radius: vw-sp(5);
+    }
+
+    @if pc() {
+        font-size: 12px;
+        padding: 20px;
+        height: 183px;
+        border-radius: 5px;
+    }
+
+    &__item {
+        line-height: 1.7;
+        margin-bottom: if-sp(vw-sp(20), 20px);
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    &__title {
+        font-weight: 700;
+    }
+
+    &__sub {
+        margin-left: if-sp(vw-sp(12), 12px);
+    }
+}
