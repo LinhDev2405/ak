@@ -1,0 +1,62 @@
+<?php
+$text               = $args['text']         ?? '';
+$heading            = $args['heading']         ?? '';
+$heading_required   = $args['heading_required']     ?? false;
+$text_required      = $args['text_required']     ?? false;
+$custom_class       = $args['custom_class'] ?? '';
+$show_heading_label = $args['show_heading_label']   ?? false;
+$show_text_label    = $args['show_text_label']   ?? false;
+$hide_error         = $args['hide_error']   ?? true;
+
+if (!$has_slot(null) && !$text) return;
+
+$label   = $heading_required ? '必須' : '任意';
+$classes = clsx(
+    'c-form-field',
+    [
+        'is-required' => $required,
+        'js-form-field' => $required && !$hide_error
+    ],
+    $custom_class,
+);
+?>
+<div class="<?= esc_attr($classes) ?>">
+    <?php if ($heading) : ?>
+        <p class="c-form-field__title">
+            <?php if ($show_heading_label) : ?>
+                <span class="c-form-field__title-label">
+                    <?= esc_html($label) ?>
+                </span>
+            <?php endif ?>
+
+            <span class="c-form-field__title-text">
+                <?= wp_kses_post($heading) ?>
+            </span>
+        </p>
+    <?php endif ?>
+
+    <?php if (!$hide_error) : ?>
+        <p class="c-form-field__message js-form-field-error"></p>
+    <?php endif ?>
+
+    <?php if ($has_slot(null)) : ?>
+        <div class="c-form-field__box">
+
+            <?php if ($text) : ?>
+                <p class="c-form-field__title">
+                    <?php if ($show_text_label) : ?>
+                        <span class="c-form-field__title-label">
+                            <?= esc_html($label) ?>
+                        </span>
+                    <?php endif ?>
+
+                    <span class="c-form-field__title-text">
+                        <?= wp_kses_post($text) ?>
+                    </span>
+                </p>
+            <?php endif ?>
+
+            <?php $slot() ?>
+        </div>
+    <?php endif ?>
+</div>
